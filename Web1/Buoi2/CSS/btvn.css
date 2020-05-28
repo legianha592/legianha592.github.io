@@ -1,0 +1,40 @@
+.letter{
+    border-style: double;
+    height: 800px;
+    width: 60%;
+}
+
+p{
+    line-height: 30px;
+    margin: 2px;
+}
+
+.title{
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#quoc_hieu, #tieu_de{
+    text-transform: uppercase;
+}
+
+.body{
+    padding-top: 40px;
+    font-size: 18px;
+}
+
+.para_2{
+    padding-top: 40px;
+    padding-bottom: 100px;
+}
+
+#confirm, #time{
+    width: 50%;
+    float: left;
+}
+
+#time{
+    text-align: center;
+}

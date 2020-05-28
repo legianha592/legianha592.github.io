@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTVN</title>
+
+</head>
+
+<body>
+    <canvas id="myCanvas" height="900" width="900" style="background-color: coral"></canvas>
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const context = canvas.getContext("2d");
+        const width = canvas.width;
+        const height = canvas.height;
+
+        context.beginPath();
+        context.rect(0, 0, width, height);
+        context.fillStyle = "coral";
+        context.fill();
+        context.lineWidth = 10;
+        context.strokeStyle = "black";
+        context.stroke();
+
+        context.beginPath();
+        context.rect(50, 50, width - 100, height - 100);
+        context.lineWidth = 10;
+        context.strokeStyle = "black";
+        context.stroke();
+
+        fill_chess = (pos_i, pos_j) => {
+            if (pos_j == 0 || pos_j == 1 || pos_j == 6 || pos_j == 7) {
+                var link;
+                switch (pos_j) {
+                    case 0:
+                        switch (pos_i) {
+                            case 0:
+                            case 7:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Chess_rdt45.svg/800px-Chess_rdt45.svg.png'
+                                break;
+                            case 1:
+                            case 6:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/800px-Chess_ndt45.svg.png'
+                                break;
+                            case 2:
+                            case 5:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Chess_bdt45.svg/800px-Chess_bdt45.svg.png'
+                                break;
+                            case 3:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Chess_qdt45.svg/800px-Chess_qdt45.svg.png'
+                                break;
+                            case 4:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/800px-Chess_kdt45.svg.png'
+                                break;
+                        }
+                        break;
+                    case 1:
+                        link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Chess_pdt45.svg/800px-Chess_pdt45.svg.png'
+                        break;
+                    case 6:
+                        link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Chess_plt45.svg/800px-Chess_plt45.svg.png'
+                        break;
+                    case 7:
+                        switch (pos_i) {
+                            case 0:
+                            case 7:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Chess_rlt45.svg/800px-Chess_rlt45.svg.png'
+                                break;
+                            case 1:
+                            case 6:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/800px-Chess_nlt45.svg.png'
+                                break;
+                            case 2:
+                            case 5:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Chess_blt45.svg/800px-Chess_blt45.svg.png'
+                                break;
+                            case 3:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Chess_qlt45.svg/800px-Chess_qlt45.svg.png'
+                                break;
+                            case 4:
+                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/800px-Chess_klt45.svg.png'
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                var imageObj = new Image();
+                imageObj.onload = function () {
+                    context.drawImage(imageObj, 50 + pos_i * item_square, 50 + pos_j * item_square, item_square, item_square);
+                };
+                imageObj.src = link;
+            }
+        };
+
+        const item_square = (width - 100) / 8;
+        var letter = ["A", "B", "C", "D", "E", "F", "G", "H"]
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                context.beginPath();
+                context.rect(i * item_square + 50, j * item_square + 50, item_square, item_square);
+                if ((i + j) % 2 == 0) {
+                    context.fillStyle = "white";
+                }
+                else {
+                    context.fillStyle = "coral";
+                }
+                context.fill();
+
+                fill_chess(i, j)
+            }
+            context.font = "40pt Calibri";
+            context.fillStyle = "black"
+            context.fillText(8 - i, 10, 10 + item_square * (i + 1));
+            context.fillText(8 - i, 60 + item_square * 8, 10 + item_square * (i + 1));
+
+            context.fillText(letter[i], 30 + item_square * (i + 1 / 2), 40);
+            context.fillText(letter[i], 30 + item_square * (i + 1 / 2), 90 + item_square * 8);
+        }
+
+    </script>
+</body>
+
+</html>

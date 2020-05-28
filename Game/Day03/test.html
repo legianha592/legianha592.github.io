@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function waitFunc() {
+            console.log("This will be logged every 5 seconds"); 
+        }
+        var interval = window.setInterval(waitFunc, 5000);
+        window.setTimeout(function (){
+            clearInterval(interval); 
+        }, 32000);
+    </script>
+</body>
+
+</html>

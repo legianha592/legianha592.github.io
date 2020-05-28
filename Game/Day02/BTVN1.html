@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+
+        class Ball {
+            constructor(x, y, dx, dy, radius, color, _isMove) {
+                this.x = x;
+                this.y = y;
+                this.dx = 0;
+                this.dy = 0
+                this.radius = radius;
+                this.color = color;
+                this._isMove = _isMove;
+                this.direction = 'r';
+            }
+
+            draw() {
+                context.beginPath();
+                context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                context.fillStyle = this.color;
+                context.fill();
+                context.stroke();
+                context.closePath();
+            }
+
+
+            move() {
+                if (this.x - this.radius - 2 <= 0) {
+                    if (this.y - this.radius - 2 <= 0) {
+                        this.direction = 'r';
+                    }
+                    else if (this.y + this.radius + 2 >= canvas.height) {
+                        this.direction = 'u'
+                    }
+                }
+                if (this.x + this.radius + 2 >= canvas.width) {
+                    if (this.y - this.radius - 2 <= 0) {
+                        this.direction = 'd'
+                    }
+                    else if (this.y + this.radius + 2 >= canvas.height) {
+                        this.direction = 'l'
+                    }
+                }
+
+                switch (this.direction) {
+                    case 'r':
+                        this.dx = 2;
+                        this.dy = 0;
+                        break;
+                    case 'l':
+                        this.dx = -2;
+                        this.dy = 0
+                        break;
+                    case 'u':
+                        this.dx = 0;
+                        this.dy = -2;
+                        break;
+                    case 'd':
+                        this.dx = 0;
+                        this.dy = 2
+                        break;
+                }
+
+                // console.log("x and y = ", this.x, this.y);
+                this.x += this.dx;
+                this.y += this.dy;
+                this.draw();
+            }
+        }
+
+        var ball = new Ball(20, 20, 0, 0, 20, 'red', false);
+        ball.draw();
+
+        addEventListener('keydown', (event) => {
+            if (event.keyCode == 32) {
+                this._isMove = !this._isMove
+            }
+            if (this._isMove) {
+                console.log("moving")
+                this.animate();
+            }
+            else {
+                console.log("stop");
+                this.cancel_animate();
+            }
+        });
+
+        var id;
+
+        function animate(){
+            id = requestAnimationFrame(animate);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            ball.move();
+        }
+
+        function cancel_animate(){
+            cancelAnimationFrame(id);
+        }
+
+    </script>
+</body>
+
+</html>

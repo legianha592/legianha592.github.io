@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+
+        //Setup luc day va luc can, toc do scan = 60 fps
+        this.against_acceleration = -30;
+        this.move_acceleration = 400;
+        this.time_move = 0.3;
+        this.fps = 60;
+        this.velocity = 0;
+        this.delta_velocity = 0;
+        this.acceleration = 0;
+
+        //tao qua bong
+        class Ball {
+            constructor(x, y, dx, radius, color, _isMove) {
+                this.x = x;
+                this.y = y;
+                this.dx = 0;
+                this.radius = radius;
+                this.color = color;
+            }
+
+            draw() {
+                //Ve he truc toa do
+                context.beginPath();
+                context.moveTo(0, canvas.height / 2 + 2 * 20);
+                context.lineTo(canvas.width, canvas.height / 2 + 2 * 20);
+                context.stroke();
+
+                let max_point = (canvas.width - (canvas.width % 100)) / 100;
+                for (let i = 0; i <= max_point; i++) {
+                    context.font = "20pt Calibri";
+                    context.fillStyle = "black"
+                    context.fillText(i * 100, i * 100, canvas.height / 2 + 3 * 20);
+                }
+
+                //Ve qua bong
+                context.beginPath();
+                context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                context.fillStyle = this.color;
+                context.fill();
+                context.stroke();
+                context.closePath();
+            }
+
+            move(velocity) {
+                this.dx = velocity * (1 / 60);
+                this.x += this.dx;
+                this.draw()
+            }
+        }
+
+        var ball = new Ball(20, canvas.height / 2, 0, 20, 'red', false);
+        ball.draw();
+
+        addEventListener('keydown', (event) => {
+            if (event.keyCode == 39) {
+                this.count = 0;
+                this.animate();
+            }
+        });
+
+        this.count = 0;
+
+        function action_move() {
+            if (this.count <= this.fps * this.time_move) {
+                this.acceleration = this.against_acceleration + this.move_acceleration;
+            }
+            else {
+                this.acceleration = this.against_acceleration;
+            }
+            this.delta_velocity = this.acceleration / this.fps;
+            this.velocity += this.delta_velocity;
+            if (this.velocity >= 0) {
+                ball.move(this.velocity);
+            }
+            else {
+                this.cancel_animate()
+            }
+        }
+
+        var id;
+
+        function animate() {
+            id = requestAnimationFrame(animate);
+            this.count++;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            this.action_move();
+        }
+
+        function cancel_animate() {
+            cancelAnimationFrame(id);
+            ball.draw()
+        }
+    </script>
+</body>
+
+</html>
