@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <audio id="ball_hit">
+    <source src="ball.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <canvas id="canvas"></canvas>
+</body>
+
+</html>
+<!---
+Giá tốc trọng trường, bóng rơi, nhưng khi đập đất vẫn kêu bình bịch mãi không hết
+}
+-->
+<script>
+  const canvas = document.getElementById("canvas");
+  const c = canvas.getContext('2d');
+
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  addEventListener("resize", function () {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+  });
+
+
+  class Ball {
+    constructor(x, y, radius, color) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.color = color;
+      this.a = 300;
+      this.b = 100;
+      this.angle = 0;
+      this.delta = 2*Math.PI/360;
+    }
+
+    draw(active) {
+      if (active == false) {
+        c.beginPath();
+        c.arc(this.x + canvas.width / 2, this.y + canvas.height / 2, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.stroke();
+        c.closePath();
+
+        c.beginPath();
+        c.arc(canvas.width / 2, canvas.height / 2, 100, 0, Math.PI * 2, false);
+        c.fillStyle = 'red';
+        c.fill();
+        c.stroke();
+        c.closePath();
+      }
+
+      else {
+        c.beginPath();
+        c.arc(canvas.width / 2, canvas.height / 2, 100, 0, Math.PI * 2, false);
+        c.fillStyle = 'red';
+        c.fill();
+        c.stroke();
+        c.closePath();
+
+        c.beginPath();
+        c.arc(this.x + canvas.width / 2, this.y + canvas.height / 2, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.stroke();
+        c.closePath();
+      }
+    }
+
+    //mac dinh a2 = 300^2, b2 = 100^2
+    move() {
+      this.angle -= this.delta;
+      this.x = this.a*Math.cos(this.angle);
+      this.y = this.b*Math.sin(this.angle);
+      let active;
+      if (this.y>=0){
+        active = true; 
+      }
+      else{
+        active = false;
+      }
+      this.draw(active)
+    }
+  }
+
+  //---------
+  var earth = new Ball(300, 0, 30, 'green')
+
+  animate = () => {
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    earth.move();
+  }
+
+  animate();
+</script>

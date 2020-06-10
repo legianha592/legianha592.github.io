@@ -13,113 +13,194 @@
 
 <body>
     <div class="header">
-        <div class="row" style="height: 50px; width: 100%">
-            <div class="col-md-2">
-                <div class="row">
-                    <div>
-                        <i class="fas fa-bars"></i>
-                    </div>
-                    <div>
-                        <img src="https://heise.cloudimg.io/width/1210/q75.png-lossy-75.webp-lossy-75.foil1/_www-heise-de_/imgs/18/2/2/6/8/6/8/6/youtube-neues-logo-ddcf912e56ae7275.png"
-                            alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Recipient's username"
-                        aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-                            <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
-                                <path fill-rule="evenodd"
-                                    d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="row">
-                    <div class="col-md-3">
-                        <svg class="bi bi-camera-video-fill" width="1em" height="1em" viewBox="0 0 16 16"
-                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M2.667 3h6.666C10.253 3 11 3.746 11 4.667v6.666c0 .92-.746 1.667-1.667 1.667H2.667C1.747 13 1 12.254 1 11.333V4.667C1 3.747 1.746 3 2.667 3z" />
-                            <path
-                                d="M7.404 8.697l6.363 3.692c.54.313 1.233-.066 1.233-.697V4.308c0-.63-.693-1.01-1.233-.696L7.404 7.304a.802.802 0 0 0 0 1.393z" />
-                        </svg>
-                    </div>
-                    <div class="col-md-3">
-                        <svg class="bi bi-grid-3x3-gap" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M4 2H2v2h2V2zm1 12v-2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm5 10v-2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zM9 2H7v2h2V2zm5 0h-2v2h2V2zM4 7H2v2h2V7zm5 0H7v2h2V7zm5 0h-2v2h2V7zM4 12H2v2h2v-2zm5 0H7v2h2v-2zm5 0h-2v2h2v-2zM12 1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zm-1 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zm1 4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2z" />
-                        </svg>
-                    </div>
-                    <div class="col-md-3">
-                        <svg class="bi bi-alarm" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M8 15A6 6 0 1 0 8 3a6 6 0 0 0 0 12zm0 1A7 7 0 1 0 8 2a7 7 0 0 0 0 14z" />
-                            <path fill-rule="evenodd"
-                                d="M8 4.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.053.224l-1.5 3a.5.5 0 1 1-.894-.448L7.5 8.882V5a.5.5 0 0 1 .5-.5z" />
-                            <path
-                                d="M.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z" />
-                            <path fill-rule="evenodd"
-                                d="M11.646 14.146a.5.5 0 0 1 .708 0l1 1a.5.5 0 0 1-.708.708l-1-1a.5.5 0 0 1 0-.708zm-7.292 0a.5.5 0 0 0-.708 0l-1 1a.5.5 0 0 0 .708.708l1-1a.5.5 0 0 0 0-.708zM5.5.5A.5.5 0 0 1 6 0h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
-                            <path d="M7 1h2v2H7V1z" />
-                        </svg>
-                    </div>
-                    <div class="col-md-3">
-                        <svg class="bi bi-bootstrap-fill" width="1em" height="1em" viewBox="0 0 16 16"
-                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M4.002 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4h-8zm1.06 12h3.475c1.804 0 2.888-.908 2.888-2.396 0-1.102-.761-1.916-1.904-2.034v-.1c.832-.14 1.482-.93 1.482-1.816 0-1.3-.955-2.11-2.542-2.11H5.062V12zm1.313-4.875V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23H6.375zm0 3.762h1.898c1.184 0 1.81-.48 1.81-1.377 0-.885-.65-1.348-1.886-1.348H6.375v2.725z" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-2">
+            <i class="fas fa-bars"></i>
+            <img src="https://cdn.iconscout.com/icon/free/png-256/youtube-86-226404.png" alt="">
+        </div>
+        <div class="col-md-8">
+            <input type="text" style="width: 750px" placeholder="Tìm kiếm">
+            <i class="fas fa-keyboard" style="margin-left: -40px;"></i>
+            <button style="margin-left: 20px; width: 70px; height: 30px">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <div class="col-md-2">
+            <i class="fas fa-video"></i>
+            <i class="fas fa-th"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fab fa-adn"></i>
         </div>
     </div>
 
-    <div class="main-body row">
-        <div class="col-md-2">
-            <div class="row">
-                <div class="col-md-4">
-                    <svg class="bi bi-house-door-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z" />
-                        <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                    </svg>
-                </div>
-                <div class="col-md-8">
-                    <p>Trang chủ</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <i class="fas fa-crow"></i>
-                </div>
-                <div class="col-md-9">
+    <div class="side-bar">
+        <ul>
+            <li>
+                <i class="fas fa-home"></i>
+                <span>Trang chủ</span>
+            </li>
+            <li>
+                <i class="fas fa-fire"></i>
+                <span>Thịnh hành</span>
+            </li>
+            <li>
+                <i class="fab fa-youtube"></i>
+                <span>Kênh đăng ký</span>
+            </li>
+            <li class="hr">
+                <hr>
+            </li>
+            <li>
+                <i class="fas fa-photo-video"></i>
+                <span>Thư viện</span>
+            </li>
+            <li>
+                <i class="far fa-play-circle"></i>
+                <span>Video của bạn</span>
+            </li>
+            <li>
+                <i class="fas fa-clock"></i>
+                <span>Xem sau</span>
+            </li>
+            <li>
+                <i class="fas fa-thumbs-up"></i>
+                <span>Video đã thích</span>
+            </li>
+            <li class="hr">
+                <hr>
+            </li>
+            <li class="hr2">
+                <p>
+                    DỊCH VỤ KHÁC CỦA YOUTUBE
+                </p>
+            </li>
+            <li>
+                <i class="fas fa-gamepad"></i>
+                <span>Trò chơi</span>
+            </li>
+            <li>
+                <i class="fab fa-chromecast"></i>
+                <span>Sự kiện trực tiếp</span>
+            </li>
+        </ul>
+    </div>
 
-                </div>
+    <div class="section">
+        <div class="suggest row">
+            <p class="col-md-12">Đề xuất</p>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/9Swxv1QPnuM/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAo02dyMxOK2PYy9Cx6auHRYPLjOg" alt="">
+                <p class="title">Sau 4 năm, số phận của hơn 100 cây cổ thụ...</p>
+                <p>3.3N lượt xem</p>
+                <p>2 giờ trước</p>
             </div>
-            <div class="row">
-                <div class="col-md-3">
-
-                </div>
-                <div class="col-md-9">
-
-                </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/NxC7VzaUae8/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCIAIexRW_A8DF-37sgUYliNmdsWA" alt="">
+                <p class="title">Gặp lại cố nhạc sĩ Trần Lập trong dự án...</p>
+                <p>3.9N lượt xem</p>
+                <p>4 giờ trước</p>
             </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/6J3e2cQeeDg/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLBBhifG-RJwUGHiRH65iQoTdI_jHg" alt="">
+                <p class="title">Goldgame và 3 chữ T</p>
+                <p>104N lượt xem</p>
+                <p>8 giờ trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/khqugtowcYE/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLB9KIa3mndCPN06clWG3yRRkM9e-w" alt="">
+                <p class="title">Nhiều giáo viên mầm non mòn mỏi chờ...</p>
+                <p>16N lượt xem</p>
+                <p>9 giờ trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/G8vJWjF1p3U/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLC4L8MvpwQRBL4oaq-KHE6gmOEGbA" alt="">
+                <p class="title">Vỡ đập thủy lợi - người khóc, người cười</p>
+                <p>603N lượt xem</p>
+                <p>10 giờ trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/J7yHCWtO0iQ/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAhLEYw7mINWkZit7OlUuHRmpWdBw" alt="">
+                <p class="title">Giải pháp hỗ trợ doanh nghiệp hậu COVID-19</p>
+                <p>7N lượt xem</p>
+                <p>12 giờ trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/g8c-jj6Hh_c/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAnPYGaWJQ7tpJkegOCM3TnmISqfg" alt="">
+                <p class="title">Số đơn xin trợ cấp thất nghiệp lần đầu tại Mỹ...</p>
+                <p>4.8N lượt xem</p>
+                <p>13 giờ trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/Z7pbJIcz-fA/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCaiowjR-z9k1ztTLMSyz9E7N-LOg" alt="">
+                <p class="title">Xưởng giày ở quận 4 cháy lớn dưới trời mưa</p>
+                <p>42N lượt xem</p>
+                <p>1 ngày trước</p>
+            </div>
+            <hr class="col-md-12">
         </div>
-        <div class="col-md-10">
 
+        <div class="covid row">
+            <p class="col-md-12">Tin tức COVID-19</p>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/gboezHHDoy4/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLATDPOPXwGlDXGzg7rOP7vQOo7vGQ" alt="">
+                <p class="title">COVID-19 thế giới ngày 29/5: Số ca nhiễm virus Corona...</p>
+                <p>VTC NOW</p>
+                <p>95N lượt xem</p>
+                <p>16 giờ trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/8n27w0dTFxA/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLD9s8iDDHL2nb2V9rILb8JWupe_tQ" alt="">
+                <p class="title">Tin tức dịch bệnh Corona: sáng 29/5...</p>
+                <p>TIN TỨC 24H ONLINE</p>
+                <p>427N lượt xem</p>
+                <p>19 giờ trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/BtmhlbXcHXo/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLApg-gvB4B72960ptycT4g5G7Vm7Q" alt="">
+                <p class="title">Virus Corona tối 28/5: Mỹ vượt mốc 100.000...</p>
+                <p>BÁO THANH NIÊN</p>
+                <p>164N lượt xem</p>
+                <p>1 ngày trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/Hn1DAqE3Sis/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAFrNa3jkukDsiIIvcEpioRUW59Gw" alt="">
+                <p class="title">Tin tổng hợp Virus Corona: sáng 28/5...</p>
+                <p>VTC NOW</p>
+                <p>375N lượt xem</p>
+                <p>1 ngày trước</p>
+            </div>
+            <hr class="col-md-12">
+        </div>
+
+        <div class="trend row">
+            <p class="col-md-12">Xu hướng</p>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/xr2d_1h4U0Y/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDnZnXj8kAdDb-vi9CyC8qEjDBeNA" alt="">
+                <p class="title">ClassList Property</p>
+                <p>F8 Official</p>
+                <p>814 lượt xem</p>
+                <p>4 ngày trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/XoQK44Z2jY8/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAdEBwxk7-EAWgGx1K7dWAgLLZulw" alt="">
+                <p class="title">Tập 4 NGƯỜI ẤY LÀ AI Mùa 3</p>
+                <p>Vieshows</p>
+                <p>5.5N lượt xem</p>
+                <p>6 giờ trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/U26aioEQg2U/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLB2OmQ8f2urpy9b0YcSFAr1U3GLqA" alt="">
+                <p class="title">Chung kết Gương mặt thân quen 2019: Nhật Thủy...</p>
+                <p>Gương mặt thân quen Official</p>
+                <p>501N lượt xem</p>
+                <p>4 tháng trước</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://i.ytimg.com/vi/ZZWeuflyKN8/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDHYzWcvxlafOgFiZIKSY6WLNb9zw" alt="">
+                <p class="title">Cây xăng treo biển "HẾT XĂNG": hết thật hay...</p>
+                <p>VTV24</p>
+                <p>130N lượt xem</p>
+                <p>2 ngày trước</p>
+            </div>
         </div>
     </div>
 

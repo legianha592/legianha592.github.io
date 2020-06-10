@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        function draw() {
+            c.clearRect(0, 0, canvas.width, canvas.height);
+
+            c.beginPath();
+            c.rect(canvas.width * 0.05, canvas.height * 0.05, canvas.width * 0.9, canvas.height * 0.9);
+            c.lineWidth = 5;
+            c.strokeStyle = "black";
+            c.stroke();
+            c.closePath();
+
+            c.beginPath();
+            c.moveTo(canvas.width * 0.05, canvas.height * 0.05);
+            c.lineTo(canvas.width * 0.95, canvas.height * 0.95);
+            c.stroke();
+            c.closePath();
+
+            c.beginPath();
+            c.moveTo(canvas.width * 0.05, canvas.height * 0.95);
+            c.lineTo(canvas.width * 0.95, canvas.height * 0.05);
+            c.stroke();
+            c.closePath();
+        }
+
+        draw();
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            draw();
+        });
+    </script>
+</body>
+
+
+
+
+</html>

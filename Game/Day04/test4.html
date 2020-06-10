@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <!-- <audio id="ball_hit">
+    <source src="ball.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio> -->
+  <canvas id="canvas"></canvas>
+</body>
+
+</html>
+<!---
+Giá tốc trọng trường, bóng rơi, nhưng khi đập đất vẫn kêu bình bịch mãi không hết
+}
+-->
+<script>
+  const canvas = document.getElementById("canvas");
+  const c = canvas.getContext('2d');
+
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  addEventListener("resize", function () {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+  });
+
+
+  class Ball {
+    constructor(radius, color) {
+      this.radius = radius;
+      this.color = color;
+      this.sun_to_earth = 200;
+      this.earth_to_moon = 100;
+      this.earth_angle = 0;
+      this.moon_angle = 0;
+      this.speed = 1/2
+      this.earth_delta = 2*Math.PI/360 * this.speed;
+      this.moon_delta = 12*this.earth_delta * this.speed;
+    }
+
+    draw() {
+        c.beginPath();
+        c.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
+        c.fillStyle = 'red';
+        c.fill();
+        c.stroke();
+        c.closePath();
+
+        c.beginPath();
+        c.arc(this.earth_x + canvas.width / 2, this.earth_y + canvas.height / 2, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.stroke();
+        c.closePath();
+
+        c.beginPath();
+        c.arc(this.moon_x + canvas.width / 2, this.moon_y + canvas.height / 2, 10, 0, Math.PI * 2, false);
+        c.fillStyle = 'yellow';
+        c.fill();
+        c.stroke();
+        c.closePath();
+    }
+
+    move() {
+      this.earth_angle -= this.earth_delta;
+      this.moon_angle -= this.moon_delta;
+
+      this.earth_x = this.sun_to_earth*Math.cos(this.earth_angle);
+      this.earth_y = this.sun_to_earth*Math.sin(this.earth_angle);
+
+      this.moon_x = this.earth_x + this.earth_to_moon*Math.cos(this.moon_angle);
+      this.moon_y = this.earth_y + this.earth_to_moon*Math.sin(this.moon_angle);
+
+      this.draw()
+    }
+  }
+
+  //---------
+  var earth = new Ball(30, 'green')
+
+
+  animate = () => {
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    earth.move();
+  }
+
+  animate();
+</script>

@@ -1,0 +1,328 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    overflow: scroll;
+}
+
+span, p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    color: black;
+}
+
+.nav-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    box-shadow: 5px 0px 20px lightgrey;
+    z-index: 500;
+    background-color: white;
+}
+
+.nav-bar .inner-nav-bar{
+    padding: 13px 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-bar span{
+    position: relative;
+    top: -7px;
+    left: 5px;
+    background-color: #efeff4;
+    border-radius: 20px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+}
+
+.nav-bar .login{
+    position: relative;
+    top: 7px;
+    color: #1f9ffc;
+    border: 2px solid #1f9ffc;
+    box-sizing: border-box;
+    border-radius: 100px;
+    z-index: 500;
+    padding: 3px 30px;
+}
+
+.nav-bar .register{
+    position: relative;
+    top: 7px;
+    right: 5px;
+    color: #fff;
+    background: #1f9ffc;
+    border-radius: 100px;
+    box-sizing: border-box;
+    padding: 5px 30px;
+}
+
+#lotus-logo{
+    width: 33px;
+    height: 30px;
+    fill: #cd0f32;
+    stroke: transparent;
+}
+
+#lotus-text{
+    height: 22px;
+    fill: #002d64;
+    stroke: transparent;
+    position: relative;
+    top: -4px;
+}
+
+.side-bar{
+    position: fixed;
+    top: 130px;
+    left: 70px;
+    z-index: 500;
+    background-color: white;
+}
+
+.side-bar .list-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    box-shadow: 3px 3px 10px 3px lightgrey;
+}
+
+.side-bar .item{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    opacity: 0.5;
+}
+
+.side-bar .item:hover{
+    opacity: 1;
+}
+
+.side-bar span{
+    margin: 0 15px;
+}
+
+
+.side-bar svg{
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.side-bar .app{
+    display: flex;
+    box-shadow: 3px 3px 10px 3px lightgrey;
+    margin-top: 20px
+}
+
+.side-bar .app-item{
+    width: 50%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+}
+
+.side-bar .app-item > span{
+    margin: 0 2px;
+    font-size: 10pt;
+    font-weight: bolder;
+}
+
+.side-bar .copywrite{
+    margin-top: 20px;
+    width: 200px;
+}
+
+.side-bar .copywrite > span{
+    margin: 0 0;
+    font-size: 10pt;
+}
+
+
+.section{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 130px;
+    margin-left: 350px;
+    margin-right: 70px;
+}
+
+.section .main-info{
+    width: 60%;
+}
+
+.section .main-info .input-outer{
+    width: 100%;
+    box-shadow: 3px 3px 10px 3px lightgrey;
+}
+
+.section input{
+    width: 100%;
+    padding: 2px 0px 100px 0px;
+    font-size: 12pt;
+}
+
+.section .main-info .input-icon{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.section .left-icon, .section .right-icon{
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.section i{
+    margin: 0 8px;
+}
+
+.section .button1{
+    position: relative;
+    top: 2px;
+    right: 5px;
+    color: grey;
+    border: 2px solid grey;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 6px 20px;
+    margin-right: 5px;
+}
+
+.section .button2{
+    position: relative;
+    top: 2px;
+    right: 5px;
+    color: #fff;
+    background: #1f9ffc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 6px 20px;
+}
+
+.section .side-info{
+    width: 30%;
+}
+
+.information{
+    margin: 20px 0;
+    box-shadow: 3px 3px 10px 3px lightgrey;
+}
+
+.information > div{
+    padding: 5px 0;
+}
+
+.information .info-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.information .info-header img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.information .info-link img{
+    max-width: 100%;
+    height: auto;
+}
+
+.information .info-link > div{
+    background-color: rgb(235, 235, 235);
+}
+
+.information p{
+    margin: 2px 4px;
+}
+
+.information .info-statistic, .information .info-action{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 8px;
+}
+
+.information .info-bolt{
+    height: 40px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.information .info-bolt span{
+    padding: 3px;
+    border-radius: 3px;
+    background-color: lightgrey;
+}
+
+.side-info .direct{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.side-info .direct-icon{
+    width: 120px;
+    height: 186px;
+    padding: 8px;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 10px 3px lightgrey;
+}
+
+.side-info .direct-icon p{
+    font-size: 9pt;
+}
+
+.side-info .direct-icon img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.side-info .trend{
+    box-shadow: 3px 3px 10px 3px lightgrey;
+}
+
+.side-info .trend .trend-info{
+    width: 100%;
+    margin: 0;
+    display: flex;
+}
+
+.side-info .trend .trend-info > div{
+    padding: 4px;
+}
+
+.side-info .img-outer{
+    display: flex;
+    align-items: center;
+}
+
+.side-info .trend .trend-info p{
+    font-size: 9pt;
+}
+
+.side-info .trend .trend-info img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.side-info .banner{
+    margin: 20px 0;
+}
+
+.side-info .banner img{
+    width: 100%
+}

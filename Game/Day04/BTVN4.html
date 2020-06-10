@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #canvas {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas = document.getElementById("canvas");
+        let c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        addEventListener("resize", () => {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+        class Triangle {
+            constructor(pointA, pointB, pointC) {
+                this.pointA = pointA;
+                this.pointB = pointB;
+                this.pointC = pointC;
+                this.pointA1 = {x: (pointB.x+pointC.x)/2, y: (pointB.y+pointC.y)/2}
+                this.pointB1 = {x: (pointA.x+pointC.x)/2, y: (pointA.y+pointC.y)/2}
+                this.pointC1 = {x: (pointA.x+pointB.x)/2, y: (pointA.y+pointB.y)/2}
+            }
+
+            drawDashLine(){
+                c.beginPath();
+                c.setLineDash([5, 3])
+                c.strokeStyle = '#4472C4'
+                c.moveTo(this.pointA.x, this.pointA.y);
+                c.lineTo(this.pointA1.x, this.pointA1.y);
+                c.stroke();
+            
+                c.beginPath();
+                c.moveTo(this.pointB.x, this.pointB.y);
+                c.lineTo(this.pointB1.x, this.pointB1.y);
+                c.stroke();
+
+                c.beginPath();
+                c.moveTo(this.pointC.x, this.pointC.y);
+                c.lineTo(this.pointC1.x, this.pointC1.y);
+                c.stroke();
+            }
+
+            draw() {
+                c.beginPath();
+                c.lineWidth = 3;
+                c.moveTo(this.pointA.x, this.pointA.y);
+                c.lineTo(this.pointB.x, this.pointB.y);
+                c.stroke();
+            
+                c.beginPath();
+                c.moveTo(this.pointB.x, this.pointB.y);
+                c.lineTo(this.pointC.x, this.pointC.y);
+                c.stroke();
+
+                c.beginPath();
+                c.moveTo(this.pointA.x, this.pointA.y);
+                c.lineTo(this.pointC.x, this.pointC.y);
+                c.stroke();
+
+                this.drawDashLine();
+            }
+        }
+
+        class Point{
+            constructor(x, y){
+                this.x = x;
+                this.y = y;
+                return {x: this.x, y: this.y}
+            }
+        }
+        let pointA = new Point (280, 50)
+        let pointB = new Point (100, 550)
+        let pointC = new Point (1200, 550)
+
+        let triangle = new Triangle(pointA, pointB, pointC)
+
+        triangle.draw();
+
+    </script>
+</body>
+
+</html>

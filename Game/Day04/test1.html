@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <audio id="ball_hit">
+    <source src="ball.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <canvas id="canvas"></canvas>
+</body>
+<!---
+Chuyển động quỹ đạo Parabole.
+Người dùng click chuột là bắn ra một viên đạn hình cầu
+}
+-->
+<script>
+  const gravity = 0.2;
+  const friction = 0.7;
+  const canvas = document.getElementById("canvas");
+  const c = canvas.getContext('2d');
+
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  addEventListener("resize", function () {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+  });
+
+  class Box{
+    constructor(color, x, y, width, height){
+      this.color = color;
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      this.dx = 5;
+    }
+
+    draw(){
+      c.beginPath();
+      c.rect(this.x, this.y, this.width, this.height);
+      c.fillStyle = this.color;
+      c.fill();
+      c.stroke();
+      c.closePath();
+    }
+
+    move(){
+      if (this.x + this.dx > canvas.width || this.x + this.dx < 100){
+        this.dx = -this.dx
+      }
+      this.x += this.dx;
+      this.draw();
+    }
+  }
+
+
+  class Ball {
+    constructor(radius, color, x, y, dx, dy) {
+      this.radius = radius;
+      this.color = color;
+      this.x = x;
+      this.y = y;
+      this.dx = dx;
+      this.dy = dy;
+      this.isMoving = true;
+      this.trajectory = []; //Lưu quỹ đạo của tâm quả bóng
+      this.trajectory.push({ x: this.x, y: this.y });
+    }
+
+    draw() {
+      c.beginPath();
+      c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+      c.fillStyle = this.color;
+      c.fill();
+      c.stroke();
+      c.closePath();
+    }
+
+    /* Bổ xung logic chặn bóng không đi quá tường trái và phải
+    */
+    move() {
+      if (!this.isMoving) {
+        this.trajectory = [];
+        this.draw();
+        return;
+      }
+
+      if (this.y + this.radius + this.dy > canvas.height) { //đập đất phát tiếng và dừng lại
+        this.dx = 0;
+        this.dy = 0;
+        this.isMoving = false;
+        this.y = canvas.height - this.radius;
+        var x = document.getElementById("ball_hit");
+        x.play();
+      } else {
+        this.dy += gravity;
+      }
+      this.x += this.dx;
+      this.y += this.dy
+      this.draw();
+
+      //Vẽ quy đạo bay của từng quả bóng
+      this.trajectory.push({ x: this.x, y: this.y });
+      c.moveTo(this.trajectory[0].x, this.trajectory[0].y);
+      c.lineWidth = 2;
+      c.strokeStyle = 'black';
+      for (let i = 1; i < this.trajectory.length - 1; i++) {
+        c.lineTo(this.trajectory[i].x, this.trajectory[i].y);
+      }
+      c.stroke();
+    }
+  }
+
+  //---------
+  let balls = [];  //Danh sách các quả bóng bắn ra
+  let box = new Box ('yellow', 100, canvas.height-20, 40, 20)
+
+  addEventListener("click", (event) => {
+    let x = 30;
+    let y = canvas.height * 0.9;
+    let ball = new Ball(20, rgb(), x, y, randomIntFromRange(5, 10), randomIntFromRange(-15, -12));
+    balls.push(ball);
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.font = "20px Arial";
+    c.fillStyle = 'black';
+    c.textAlign = 'center';
+    c.fillText("Click để bắn bóng", canvas.width * 0.5, 20);
+
+    balls.forEach(ball => ball.move());  // Viết bằng Arrow function
+    /* Viết hàm cú pháp cổ điển
+    for (var i = 0; i < balls.length; i++) {
+      balls[i].move();
+    } 
+    */
+    box.move();
+  }
+
+  function rgb() {
+    color = 'rgb(';
+    for (var i = 0; i < 3; i++) {
+      color += Math.floor(Math.random() * 255) + ',';
+    }
+    return color.replace(/\,$/, ')');
+  }
+
+  function randomIntFromRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  animate();
+</script>
+
+
+</html>

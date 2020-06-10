@@ -1,13 +1,100 @@
-.header div, .header img, .header svg, .header i{
-    align-items: center;
-    justify-items: center;
-    max-height: 50px;
+.header{
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    display: inline-flex;
+    flex-direction: center;
+    align-items: center;  
+    z-index: 500;
+}
+
+.header i, .header img{
+    margin-left: 25px;
+    max-height: 70px;
+}
+
+.header .fa-search{
+    margin-left: 0;
+}
+
+.header .search-outer{
+    border: solid 1px black;
+}
+
+.side-bar{
+    background-color: white;
+    position: fixed;
+    top: 70px;
+    z-index: 500;
+}
+
+.side-bar li{
+    position: relative;
+    width: 200px;
+    height: 35px;
+    list-style: none;
+}
+
+.side-bar li:hover{
+    background-color: gray;
+    cursor: pointer;
+}
+
+.side-bar span{
+    position: absolute;
+    left: 50px;
+}
+
+.side-bar hr{
+    border-width: 3px;
+    size: 3px;
+    text-align: center;
+    color: black;
+    width: 200px;
+    margin-left: 0;
+}
+
+.side-bar .hr:hover, .side-bar .hr2:hover{
+    background-color: white;
+}
+
+.side-bar p{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.section{
+    position: relative;
+    margin-top: 70px;
+    margin-left: 250px;
+    width: calc(100% - 280px);
+}
+
+.section img{
     max-width: 100%;
 }
 
-.main-body div, .main-body img, .main-body svg{
+.section .suggest > p, .section .covid > p, .section .trend > p{
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.section .suggest > div > p, .section .covid > div > p, .section .trend > div > p{
+    margin-bottom: 0;
+}
+
+.section .title{
+    font-weight: bold;
+}
+
+.section hr{
+    border-width: 3px;
+    size: 3px;
     text-align: center;
-    justify-content: center;
-    max-height: 50px;
-    max-width: 100%;
+    color: black;
+    width: calc(100% - 250px);
+    height: 20px;
+    padding: 0;
 }

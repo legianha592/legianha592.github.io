@@ -1,0 +1,47 @@
+*{
+    font-family: 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+
+.btn-back{
+    width: 150px;
+    height: 30px;
+    border: solid 2px black;
+    border-radius: 5px;
+    background-color: lightyellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    width: 100%;
+    line-height: 40px;
+    font-size: 24pt;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+}
+
+.section{
+    display: flex;
+    justify-content: space-around;
+}
+
+.section .section-img{
+    width: 45%;
+}
+
+.section .section-paragraph{
+    width: 45%;
+}
+
+.section p{
+    font-size: 13pt;
+}
+
+img{
+    width: 100%;
+    padding: 10px;
+    border: solid 2px black;
+}

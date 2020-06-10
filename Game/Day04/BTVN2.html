@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #canvas {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    let canvas = document.getElementById("canvas");
+    let c = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    addEventListener("resize", () => {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    });
+
+    class Square {
+      constructor(centerx, centery, width, color, rotate) {
+        this.centerx = centerx;
+        this.centery = centery;
+        this.rect_width = width;
+        this.color = color;
+        this.rotate = rotate
+      }
+      draw() {
+        c.fillStyle = this.color;
+
+        if (!this.rotate) {
+          c.fillRect(this.centerx - this.rect_width / 2, this.centery - this.rect_width / 2, this.rect_width, this.rect_width);
+        } else {
+          c.save();
+          c.translate(this.centerx, this.centery);
+          c.rotate(Math.PI / 4);
+          c.fillRect(- this.rect_width / 2, - this.rect_width / 2, this.rect_width, this.rect_width);
+          c.restore();
+        }
+
+      }
+    }
+
+    let centerx = canvas.width / 2;
+    let centery = canvas.height /2;
+
+    let squares = [];
+
+    let N = 10;
+
+    for (let i=0; i<N; i++){
+        let rotate = (i%2 == 1) ? true : false;
+        let square = (i%2 == 1) ? new Square(centerx, centery, 400/(Math.pow(2, i/2)), 'white', true) : new Square(centerx, centery, 400/(Math.pow(2, i/2)), '#4472C4', false);
+        squares.push(square);
+    }
+
+    function draw() {
+        squares.forEach (square => square.draw());
+    }
+
+    draw();
+
+  </script>
+</body>
+
+</html>

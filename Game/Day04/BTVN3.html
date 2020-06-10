@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #canvas {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas = document.getElementById("canvas");
+        let c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        addEventListener("resize", () => {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+        class Geometry {
+            constructor(centerx, centery, size, color, circle) {
+                this.centerx = centerx;
+                this.centery = centery;
+                this.size = size;
+                this.color = color;
+                this.circle = circle;
+            }
+            draw() {
+                // console.log("size = ", this.size)
+
+                if (this.circle) {
+                    c.beginPath();
+                    c.arc(this.centerx, this.centery, this.size, 0, 2 * Math.PI, false);
+                    c.fillStyle = this.color;
+                    c.fill();
+                }
+                else{
+                    c.beginPath();
+                    c.rect(this.centerx - this.size/2, this.centery - this.size/2, this.size, this.size);
+                    c.fillStyle = this.color;
+                    c.fill();
+                }
+            }
+        }
+
+        let centerx = canvas.width / 2;
+        let centery = canvas.height / 2;
+
+        let geometries = [];
+
+        let N = 10;
+
+        for (let i = 0; i < N; i++) {
+            let circle = (i % 2 == 0) ? true : false;
+            let geometry = (i % 2 == 0) ? new Geometry(centerx, centery, 300 * (Math.pow(2, -i/4)), rgb(), true) : new Geometry(centerx, centery, 300 * (Math.pow(2, (-i+3)/4)), rgb(), false);
+            geometries.push(geometry);
+        }
+
+        function draw() {
+            geometries.forEach(geometry => geometry.draw());
+        }
+
+        function rgb() {
+            color = 'rgb(';
+            for (var i = 0; i < 3; i++) {
+                color += Math.floor(Math.random() * 255) + ',';
+            }
+            return color.replace(/\,$/, ')');
+        }
+
+        draw();
+
+    </script>
+</body>
+
+</html>
