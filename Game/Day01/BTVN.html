@@ -9,116 +9,1142 @@
 </head>
 
 <body>
-    <canvas id="myCanvas" height="900" width="900" style="background-color: coral"></canvas>
+    <canvas id="myCanvas"></canvas>
     <script>
-        const canvas = document.getElementById("myCanvas");
-        const context = canvas.getContext("2d");
-        const width = canvas.width;
-        const height = canvas.height;
+        var canvas = document.getElementById("myCanvas");
+        var context = canvas.getContext("2d");
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
 
-        context.beginPath();
-        context.rect(0, 0, width, height);
-        context.fillStyle = "coral";
-        context.fill();
-        context.lineWidth = 10;
-        context.strokeStyle = "black";
-        context.stroke();
+        //ve phan ban co phia ben trai
+        var ratio = 1.3;
+        var inner_square_ratio = 0.9;
+        var inner_line_ratio = (1 - inner_square_ratio) / 2
+        var outer_line_ratio = (1 - inner_square_ratio) / 4
+        var outer_square_ratio = 1 - 2 * outer_line_ratio;
 
-        context.beginPath();
-        context.rect(50, 50, width - 100, height - 100);
-        context.lineWidth = 10;
-        context.strokeStyle = "black";
-        context.stroke();
+        //ve cac cham tron hien thi isPlay va isCheck phia ben phai
+        let first_center = 1 + 1 / 3 * (ratio - 1);
+        let second_center = 1 + 2 / 3 * (ratio - 1);
 
-        fill_chess = (pos_i, pos_j) => {
-            if (pos_j == 0 || pos_j == 1 || pos_j == 6 || pos_j == 7) {
-                var link;
-                switch (pos_j) {
-                    case 0:
-                        switch (pos_i) {
-                            case 0:
-                            case 7:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Chess_rdt45.svg/800px-Chess_rdt45.svg.png'
-                                break;
-                            case 1:
-                            case 6:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/800px-Chess_ndt45.svg.png'
-                                break;
-                            case 2:
-                            case 5:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Chess_bdt45.svg/800px-Chess_bdt45.svg.png'
-                                break;
-                            case 3:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Chess_qdt45.svg/800px-Chess_qdt45.svg.png'
-                                break;
-                            case 4:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/800px-Chess_kdt45.svg.png'
-                                break;
+        var width, height, item_square;
+
+        var map = []
+
+
+        resetMapOfChess = () => {
+            for (let i = 0; i < 8; i++) {
+                if (i == 0) {
+                    map[i] = [-2, -3, -4, -5, -6, -4, -3, -2];
+                }
+                else if (i == 7) {
+                    map[i] = [2, 3, 4, 5, 6, 4, 3, 2]
+                }
+                else {
+                    map[i] = []
+                    for (let j = 0; j < 8; j++) {
+                        if (i == 1) {
+                            map[i].push(-1)
                         }
-                        break;
+                        else if (i == 6) {
+                            map[i].push(1)
+                        }
+                        else {
+                            map[i].push(0)
+                        }
+                    }
+                }
+            }
+            console.log("map = ", map);
+        }
+
+        checkInsideMap = (x, y) => {
+            if (x >= 0 && x < 8) {
+                if (y >= 0 && y < 8) {
+                    return true
+                }
+            }
+            return false
+        }
+
+        class Circle {
+            constructor (player, type, isPlaying, isChecked){
+                this.player = player;
+                this.type = type;
+                this.isPlaying = isPlaying;
+                this.isChecked = isChecked;
+            }
+
+            render(){
+                if (this.player == 1){
+                    if (this.type == 1){
+                        this.x = first_center*height;
+                    }
+                    else{
+                        this.x = second_center*height;
+                    }
+                    this.y = 0.9*height
+                }
+                else{
+                    if (this.type == 1){
+                        this.x = first_center*height;
+                    }
+                    else{
+                        this.x = second_center*height;
+                    }
+                    this.y = 0.1*height
+                }
+
+                this.color = "white";
+                if (this.isPlaying){
+                    this.color = "green"
+                }
+                if (this.isChecked){
+                    this.color = "red"
+                }
+
+                context.beginPath()
+                context.arc(this.x, this.y, item_square/10, 0, 2*Math.PI, false);
+                context.fillStyle = this.color;
+                context.fill();
+                context.lineWidth = 3;
+                context.strokeStyle = "black";
+                context.stroke()
+            }
+        }
+
+        class Board {
+            constructor() {
+
+            }
+
+            render() {
+                context.beginPath();
+                context.rect(0, 0, width, height);
+                context.fillStyle = "grey";
+                context.fill();
+                context.lineWidth = 3;
+                context.strokeStyle = "black";
+                context.stroke();
+
+
+                context.beginPath();
+                context.rect(outer_line_ratio * height, outer_line_ratio * height, outer_square_ratio * height, outer_square_ratio * height);
+                context.fillStyle = "coral";
+                context.fill();
+                context.lineWidth = 3;
+                context.strokeStyle = "black";
+                context.stroke();
+
+
+                context.beginPath();
+                context.rect(inner_line_ratio * height, inner_line_ratio * height, inner_square_ratio * height, inner_square_ratio * height);
+                context.lineWidth = 3;
+                context.strokeStyle = "black";
+                context.stroke();
+
+                for (let i = 0; i < 8; i++) {
+                    for (let j = 0; j < 8; j++) {
+                        context.beginPath();
+                        context.rect(i * item_square + inner_line_ratio * height, j * item_square + inner_line_ratio * height, item_square, item_square);
+                        if ((i + j) % 2 == 0) {
+                            context.fillStyle = "white";
+                            context.lineWidth = 3;
+                            context.strokeStyle = "black";
+                            context.stroke();
+                        }
+                        else {
+                            context.fillStyle = "coral";
+                            context.lineWidth = 3;
+                            context.strokeStyle = "black";
+                            context.stroke();
+                        }
+                        context.fill();
+                    }
+                }
+
+                for (let greySquare of listGreySquare) {
+                    context.beginPath();
+                    context.rect(greySquare[0] * item_square + inner_line_ratio * height, greySquare[1] * item_square + inner_line_ratio * height, item_square, item_square);
+                    context.fillStyle = "grey";
+                    context.fill();
+                    context.lineWidth = 3;
+                    context.strokeStyle = "black";
+                    context.stroke();
+                }
+            }
+        }
+
+        class Chess {
+            constructor(type, x, y) {
+                this.step = [];
+                this.moved = false;
+                this.type = type;
+                this.x = x;
+                this.y = y;
+
+                this.isEnPassant = 0;
+                this.EnPassantLocation = undefined;
+                this.moveToAnotherEnPassant = undefined;
+                if (type == 1) {
+                    this.EnPassantLocation = [x - 2, y];
+                }
+                if (type == -1) {
+                    this.EnPassantLocation = [x + 2, y]
+                }
+
+                this.isLeftCastling = false;
+                this.isRightCastling = false;
+
+                chesses.push(this);
+            }
+
+            move(x, y) {
+                map[this.x][this.y] = 0;
+                this.x = x;
+                this.y = y;
+                this.moved = true;
+                map[this.x][this.y] = this.type
+            }
+
+            stepCanGo() {
+                this.step = []
+                switch (this.type) {
+
+                    //Kiem tra tot
                     case 1:
-                        link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Chess_pdt45.svg/800px-Chess_pdt45.svg.png'
-                        break;
-                    case 6:
-                        link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Chess_plt45.svg/800px-Chess_plt45.svg.png'
-                        break;
-                    case 7:
-                        switch (pos_i) {
-                            case 0:
-                            case 7:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Chess_rlt45.svg/800px-Chess_rlt45.svg.png'
-                                break;
-                            case 1:
-                            case 6:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/800px-Chess_nlt45.svg.png'
-                                break;
-                            case 2:
-                            case 5:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Chess_blt45.svg/800px-Chess_blt45.svg.png'
-                                break;
-                            case 3:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Chess_qlt45.svg/800px-Chess_qlt45.svg.png'
-                                break;
-                            case 4:
-                                link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/800px-Chess_klt45.svg.png'
-                                break;
+                        if (map[this.x - 1][this.y - 1] < 0) {
+                            this.step.push([this.x - 1, this.y - 1])
+                        }
+                        if (map[this.x - 1][this.y + 1] < 0) {
+                            this.step.push([this.x - 1, this.y + 1])
+                        }
+                        if (map[this.x - 1][this.y] == 0) {
+                            this.step.push([this.x - 1, this.y]);
+                            if (this.moved == false && map[this.x - 2][this.y] == 0) {
+                                this.step.push([this.x - 2, this.y])
+                            }
+                        }
+
+                        // case nho: bat tot qua duong
+                        if (this.isEnPassant != 0) {
+                            this.step.push([this.x - 1, this.y + this.isEnPassant])
+                            this.moveToAnotherEnPassant = [this.x - 1, this.y + this.isEnPassant]
                         }
                         break;
+                    case -1:
+                        if (map[this.x + 1][this.y - 1] > 0) {
+                            this.step.push([this.x + 1, this.y - 1])
+                        }
+                        if (map[this.x + 1][this.y + 1] > 0) {
+                            this.step.push([this.x + 1, this.y + 1])
+                        }
+                        if (map[this.x + 1][this.y] == 0) {
+                            this.step.push([this.x + 1, this.y]);
+                            if (!this.moved && map[this.x + 2][this.y] == 0) {
+                                this.step.push([this.x + 2, this.y])
+                            }
+                        }
+                        if (this.isEnPassant != 0) {
+                            this.step.push([this.x + 1, this.y + this.isEnPassant])
+                            this.moveToAnotherEnPassant = [this.x + 1, this.y + this.isEnPassant]
+                        }
+                        break;
+
+                    // Kiem tra xe
+                    case 2:
+                    case -2:
+                        var up = this.x, down = this.x, left = this.y, right = this.y;
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x - count, this.y)) {
+                                up = 0;
+                                break;
+                            }
+                            if (map[this.x - count][this.y] != 0) {
+                                if (map[this.x - count][this.y] * this.type > 0) {
+                                    up = this.x - count + 1;
+                                }
+                                else {
+                                    up = this.x - count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x + count, this.y)) {
+                                down = 7;
+                                break;
+                            }
+                            if (map[this.x + count][this.y] != 0) {
+                                if (map[this.x + count][this.y] * this.type > 0) {
+                                    down = this.x + count - 1;
+                                }
+                                else {
+                                    down = this.x + count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x, this.y - count)) {
+                                left = 0;
+                                break;
+                            }
+                            if (map[this.x][this.y - count] != 0) {
+                                if (map[this.x][this.y - count] * this.type > 0) {
+                                    left = this.y - count + 1;
+                                }
+                                else {
+                                    left = this.y - count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x, this.y + count)) {
+                                right = 7;
+                                break;
+                            }
+                            if (map[this.x][this.y + count] != 0) {
+                                if (map[this.x][this.y + count] * this.type > 0) {
+                                    right = this.y + count - 1;
+                                }
+                                else {
+                                    right = this.y + count;
+                                }
+                                break;
+                            }
+                        }
+                        for (let i = up; i <= down; i++) {
+                            if (i == this.x) {
+                                continue;
+                            }
+                            this.step.push([i, this.y])
+                        }
+                        for (let i = left; i <= right; i++) {
+                            if (i == this.y) {
+                                continue;
+                            }
+                            this.step.push([this.x, i]);
+                        }
+                        break;
+
+                    // Kiem tra ma
+                    case 3:
+                    case -3:
+                        for (let i = -2; i <= 2; i++) {
+                            for (let j = -2; j <= 2; j++) {
+                                if (Math.abs(i) + Math.abs(j) == 3) {
+                                    if (checkInsideMap(this.x + i, this.y + j)) {
+                                        if (map[this.x + i][this.y + j] * this.type <= 0) {
+                                            this.step.push([this.x + i, this.y + j])
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
+                    // Kiem tra tuong
+                    case 4:
+                    case -4:
+                        var up_left = 0, down_left = 0, up_right = 0, down_right = 0;
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x - count, this.y - count)) {
+                                up_left = count - 1;
+                                break;
+                            }
+                            if (map[this.x - count][this.y - count] != 0) {
+                                if (map[this.x - count][this.y - count] * this.type > 0) {
+                                    up_left = count - 1
+                                }
+                                else {
+                                    up_left = count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x + count, this.y + count)) {
+                                down_right = count - 1;
+                                break;
+                            }
+                            if (map[this.x + count][this.y + count] != 0) {
+                                if (map[this.x + count][this.y + count] * this.type > 0) {
+                                    down_right = count - 1
+                                }
+                                else {
+                                    down_right = count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x - count, this.y + count)) {
+                                up_right = count - 1;
+                                break;
+                            }
+                            if (map[this.x - count][this.y + count] != 0) {
+                                if (map[this.x - count][this.y + count] * this.type > 0) {
+                                    up_right = count - 1
+                                }
+                                else {
+                                    up_right = count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x + count, this.y - count)) {
+                                down_left = count - 1;
+                                break;
+                            }
+                            if (map[this.x + count][this.y - count] != 0) {
+                                if (map[this.x + count][this.y - count] * this.type > 0) {
+                                    down_left = count - 1
+                                }
+                                else {
+                                    down_left = count;
+                                }
+                                break;
+                            }
+                        }
+                        for (let i = -up_left; i <= down_right; i++) {
+                            if (i == 0) {
+                                continue;
+                            }
+                            this.step.push([this.x + i, this.y + i])
+                        }
+                        for (let i = -down_left; i <= up_right; i++) {
+                            if (i == 0) {
+                                continue;
+                            }
+                            this.step.push([this.x - i, this.y + i]);
+                        }
+                        break;
+
+                    // Kiem tra hau
+                    case 5:
+                    case -5:
+                        //nuoc di giong xe
+                        var up = this.x, down = this.x, left = this.y, right = this.y;
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x - count, this.y)) {
+                                up = 0;
+                                break;
+                            }
+                            if (map[this.x - count][this.y] != 0) {
+                                if (map[this.x - count][this.y] * this.type > 0) {
+                                    up = this.x - count + 1;
+                                }
+                                else {
+                                    up = this.x - count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x + count, this.y)) {
+                                down = 7;
+                                break;
+                            }
+                            if (map[this.x + count][this.y] != 0) {
+                                if (map[this.x + count][this.y] * this.type > 0) {
+                                    down = this.x + count - 1;
+                                }
+                                else {
+                                    down = this.x + count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x, this.y - count)) {
+                                left = 0;
+                                break;
+                            }
+                            if (map[this.x][this.y - count] != 0) {
+                                if (map[this.x][this.y - count] * this.type > 0) {
+                                    left = this.y - count + 1;
+                                }
+                                else {
+                                    left = this.y - count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x, this.y + count)) {
+                                right = 7;
+                                break;
+                            }
+                            if (map[this.x][this.y + count] != 0) {
+                                if (map[this.x][this.y + count] * this.type > 0) {
+                                    right = this.y + count - 1;
+                                }
+                                else {
+                                    right = this.y + count;
+                                }
+                                break;
+                            }
+                        }
+                        for (let i = up; i <= down; i++) {
+                            if (i == this.x) {
+                                continue;
+                            }
+                            this.step.push([i, this.y])
+                        }
+                        for (let i = left; i <= right; i++) {
+                            if (i == this.y) {
+                                continue;
+                            }
+                            this.step.push([this.x, i]);
+                        }
+                        // nuoc di giong tuong
+                        var up_left = 0, down_left = 0, up_right = 0, down_right = 0;
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x - count, this.y - count)) {
+                                up_left = count - 1;
+                                break;
+                            }
+                            if (map[this.x - count][this.y - count] != 0) {
+                                if (map[this.x - count][this.y - count] * this.type > 0) {
+                                    up_left = count - 1
+                                }
+                                else {
+                                    up_left = count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x + count, this.y + count)) {
+                                down_right = count - 1;
+                                break;
+                            }
+                            if (map[this.x + count][this.y + count] != 0) {
+                                if (map[this.x + count][this.y + count] * this.type > 0) {
+                                    down_right = count - 1
+                                }
+                                else {
+                                    down_right = count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x - count, this.y + count)) {
+                                up_right = count - 1;
+                                break;
+                            }
+                            if (map[this.x - count][this.y + count] != 0) {
+                                if (map[this.x - count][this.y + count] * this.type > 0) {
+                                    up_right = count - 1
+                                }
+                                else {
+                                    up_right = count;
+                                }
+                                break;
+                            }
+                        }
+                        var count = 0;
+                        while (true) {
+                            count++;
+                            if (!checkInsideMap(this.x + count, this.y - count)) {
+                                down_left = count - 1;
+                                break;
+                            }
+                            if (map[this.x + count][this.y - count] != 0) {
+                                if (map[this.x + count][this.y - count] * this.type > 0) {
+                                    down_left = count - 1
+                                }
+                                else {
+                                    down_left = count;
+                                }
+                                break;
+                            }
+                        }
+                        for (let i = -up_left; i <= down_right; i++) {
+                            if (i == 0) {
+                                continue;
+                            }
+                            this.step.push([this.x + i, this.y + i])
+                        }
+                        for (let i = -down_left; i <= up_right; i++) {
+                            if (i == 0) {
+                                continue;
+                            }
+                            this.step.push([this.x - i, this.y + i]);
+                        }
+                        break;
+
+
+                    // Kiem tra vua
+                    case 6:
+                    case -6:
+                        for (let i = -1; i <= 1; i++) {
+                            for (let j = -1; j <= 1; j++) {
+                                if (checkInsideMap(this.x + i, this.y + j)) {
+                                    if (i != 0 || j != 0) {
+                                        if (map[this.x + i][this.y + j] * this.type <= 0) {
+                                            this.step.push([this.x + i, this.y + j])
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
                     default:
                         break;
                 }
-                var imageObj = new Image();
-                imageObj.onload = function () {
-                    context.drawImage(imageObj, 50 + pos_i * item_square, 50 + pos_j * item_square, item_square, item_square);
-                };
-                imageObj.src = link;
-            }
-        };
 
-        const item_square = (width - 100) / 8;
-        var letter = ["A", "B", "C", "D", "E", "F", "G", "H"]
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
-                context.beginPath();
-                context.rect(i * item_square + 50, j * item_square + 50, item_square, item_square);
-                if ((i + j) % 2 == 0) {
-                    context.fillStyle = "white";
+                return this.step
+            }
+
+            render() {
+                if (this.x !== undefined && this.y !== undefined) {
+                    var link = ''
+                    switch (this.type) {
+                        case 1:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Chess_plt45.svg/800px-Chess_plt45.svg.png'
+                            break;
+                        case 2:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Chess_rlt45.svg/800px-Chess_rlt45.svg.png'
+                            break;
+                        case 3:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/800px-Chess_nlt45.svg.png'
+                            break;
+                        case 4:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Chess_blt45.svg/800px-Chess_blt45.svg.png'
+                            break;
+                        case 5:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Chess_qlt45.svg/800px-Chess_qlt45.svg.png'
+                            break;
+                        case 6:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/800px-Chess_klt45.svg.png'
+                            break;
+                        case -1:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Chess_pdt45.svg/800px-Chess_pdt45.svg.png'
+                            break;
+                        case -2:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Chess_rdt45.svg/800px-Chess_rdt45.svg.png'
+                            break;
+                        case -3:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/800px-Chess_ndt45.svg.png'
+                            break;
+                        case -4:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Chess_bdt45.svg/800px-Chess_bdt45.svg.png'
+                            break;
+                        case -5:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Chess_qdt45.svg/800px-Chess_qdt45.svg.png'
+                            break;
+                        case -6:
+                            link = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/800px-Chess_kdt45.svg.png'
+                            break;
+                        default:
+                            break;
+                    }
+                    var imageObj = new Image();
+                    imageObj.onload = () => {
+                        context.drawImage(imageObj, inner_line_ratio * height + this.y * item_square, inner_line_ratio * height + this.x * item_square, item_square, item_square);
+                    };
+                    if (link != '') {
+                        imageObj.src = link;
+                    }
+                }
+            }
+        }
+
+        calculateCanvas = () => {
+            if (canvas.width / canvas.height >= ratio) {
+                height = canvas.height;
+                width = height * ratio;
+            }
+            else {
+                width = canvas.width;
+                height = width / ratio;
+            }
+            item_square = inner_square_ratio * height / 8
+        }
+
+        renderBoardAndChesses = () => {
+            board.render();
+            for (let chess of chesses) {
+                chess.stepCanGo()
+            }
+            checkCastling()
+            for (let chess of chesses) {
+                chess.render()
+            }
+            console.log("chesses = ", chesses)
+            console.log("map = ", map)
+        }
+
+        calculateGreySquare = (x, y) => {
+            let listPreviousGreySquare = listGreySquare;
+            listGreySquare = [];
+
+            listGreySquare.push([x, y]);
+
+            //TH1: neu o truoc do undefined
+            if (currentChess == undefined) {
+                //TH1.1: neu o duoc tro vao co quan co => gan currentChess va tinh toan o grey
+                console.log("TH1")
+                if (map[y][x] * player > 0) {
+                    let stepCanGo;
+                    for (let chess of chesses) {
+                        if (y == chess.x && x == chess.y) {
+                            currentChess = chess
+                            stepCanGo = chess.step
+                            break;
+                        }
+                    }
+                    for (let step of stepCanGo) {
+                        listGreySquare.push([step[1], step[0]])
+                    }
+                }
+                //TH1.2: neu o duoc tro vao khong co quan co => khong thuc hien them gi ca
+            }
+            //TH2: neu o truoc do da tro vao 1 quan co khac
+            else {
+                let previousStep = undefined;
+                for (let step of listPreviousGreySquare) {
+                    if (x == step[0] && y == step[1]) {
+                        previousStep = step;
+                        break;
+                    }
+                }
+                //TH2.1: neu tro vao o di duoc va khac o dang dung => xoa bo phan tu dang dung o vi tri do khoi mang
+                // => thuc hien nuoc di va gan currentChess = undefined
+                if (previousStep != undefined) {
+                    console.log("TH2.1 can move to = ", x, y);
+                    for (let i = 0; i < chesses.length; i++) {
+                        if (chesses[i].x == y && chesses[i].y == x) {
+                            // console.log(chesses[i])
+                            chesses.splice(i, 1)
+                            break;
+                        }
+                    }
+                    for (let chess of chesses) {
+                        if (currentChess.x == chess.x && currentChess.y == chess.y) {
+                            //Case nho: xet truong hop bat tot qua duong
+                            //Case nho 1: xet truong hop chu dong an tot qua duong
+                            if (chess.moveToAnotherEnPassant != undefined) {
+                                if (chess.moveToAnotherEnPassant[0] == y && chess.moveToAnotherEnPassant[1] == x) {
+                                    console.log("do en passant")
+                                    doEnPassant(chess.type, y, x);
+                                }
+                            }
+                            // Buoc reset nuoc di truoc do
+                            for (let chess of chesses) {
+                                chess.isEnPassant = 0;
+                            }
+                            //Case nho 2: xet truong hop chu dong roi vao the bat tot qua duong
+                            if (Math.abs(chess.type) == 1) {
+                                if (!chess.moved && chess.EnPassantLocation[0] == y && chess.EnPassantLocation[1] == x) {
+                                    console.log("maybe en passant")
+                                    checkEnPassant(chess.type, y, x)
+                                }
+                            }
+
+                            //case nho: xet truong hop nhap thanh
+                            if (Math.abs(chess.type) == 6 && Math.abs(chess.y - x) == 2) {
+                                doCastling(chess.type, y, x)
+                            }
+
+                            chess.move(y, x)
+
+                            //Case nho: phong tot
+                            checkPromotion()
+
+                            player = -player;
+                            break;
+                        }
+                    }
+                    currentChess = undefined;
+                }
+                //TH2.2: neu tro vao o khong di duoc
+                //TH2.2.1: neu la o trong => gan currentChess = undefined
+                //TH2.2.2: neu la o co quan co khac cua ben dang choi => gan lai currentChess va tinh toan o grey
+                else {
+                    if (map[y][x] == 0) {
+                        currentChess = undefined;
+                        console.log("TH2.2.1")
+                    }
+                    else {
+                        console.log("TH2.2.2")
+                        if (map[y][x] * player > 0) {
+                            let stepCanGo;
+                            for (let chess of chesses) {
+                                if (y == chess.x && x == chess.y) {
+                                    currentChess = chess
+                                    stepCanGo = chess.stepCanGo()
+                                    break;
+                                }
+                            }
+                            for (let step of stepCanGo) {
+                                listGreySquare.push([step[1], step[0]])
+                            }
+                        }
+                    }
+                }
+            }
+            console.log("player = ", player);
+        }
+
+        checkEnPassant = (type, x, y) => {
+            console.log(type, x, y)
+            for (let chess of chesses) {
+                if (chess.type == -type && chess.x == x && chess.y == y - 1) {
+                    console.log("en passant to right")
+                    chess.isEnPassant = 1;
+                    break;
+                }
+            }
+            for (let chess of chesses) {
+                if (chess.type == -type && chess.x == x && chess.y == y + 1) {
+                    console.log("en passant to left")
+                    chess.isEnPassant = -1;
+                    break;
+                }
+            }
+        }
+
+        doEnPassant = (type, x, y) => {
+            if (type == 1) {
+                for (let i = 0; i < chesses.length; i++) {
+                    if (chesses[i].type == -1 && chesses[i].x == x + 1 && chesses[i].y == y) {
+                        chesses.splice(i, 1)
+                        map[x + 1][y] = 0;
+                        console.log("removed")
+                        break;
+                    }
+                }
+            }
+            if (type == -1) {
+                for (let i = 0; i < chesses.length; i++) {
+                    if (chesses[i].type == 1 && chesses[i].x == x - 1 && chesses[i].y == y) {
+                        chesses.splice(i, 1)
+                        map[x - 1][y] = 0;
+                        console.log("removed")
+                        break;
+                    }
+                }
+            }
+        }
+
+        checkPromotion = () => {
+            for (let i = 0; i < chesses.length; i++) {
+                if (chesses[i].type == 1 && chesses[i].x == 0) {
+                    let x = chesses[i].x, y = chesses[i].y
+                    chesses.splice(i, 1);
+                    let chess = new Chess(5, x, y)
+                    map[x][y] = 5;
+                    break;
+                }
+                if (chesses[i].type == -1 && chesses[i].x == 7) {
+                    let x = chesses[i].x, y = chesses[i].y
+                    chesses.splice(i, 1);
+                    let chess = new Chess(-5, x, y)
+                    map[x][y] = -5;
+                    break;
+                }
+            }
+        }
+
+        doCastling = (type, x, y) => {
+            if (type == 6) {
+                if (y == 2) {
+                    for (let chess of chesses) {
+                        if (chess.type == 2 && chess.y == 0) {
+                            chess.y = 3;
+                            chess.stepCanGo()
+                            map[7][3] = 2;
+                            map[7][0] = 0;
+                            break;
+                        }
+                    }
                 }
                 else {
-                    context.fillStyle = "coral";
+                    for (let chess of chesses) {
+                        if (chess.type == 2 && chess.y == 7) {
+                            chess.y = 5;
+                            chess.stepCanGo()
+                            map[7][5] = 2;
+                            map[7][7] = 0;
+                            break;
+                        }
+                    }
                 }
-                context.fill();
-
-                fill_chess(i, j)
             }
-            context.font = "40pt Calibri";
-            context.fillStyle = "black"
-            context.fillText(8 - i, 10, 10 + item_square * (i + 1));
-            context.fillText(8 - i, 60 + item_square * 8, 10 + item_square * (i + 1));
-
-            context.fillText(letter[i], 30 + item_square * (i + 1 / 2), 40);
-            context.fillText(letter[i], 30 + item_square * (i + 1 / 2), 90 + item_square * 8);
+            else {
+                if (y == 2) {
+                    for (let chess of chesses) {
+                        if (chess.type == -2 && chess.y == 0) {
+                            chess.y = 3;
+                            chess.stepCanGo()
+                            map[0][3] = -2;
+                            map[0][0] = 0;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    for (let chess of chesses) {
+                        if (chess.type == -2 && chess.y == 7) {
+                            chess.y = 5;
+                            chess.stepCanGo()
+                            map[0][5] = -2;
+                            map[0][7] = 0;
+                            break;
+                        }
+                    }
+                }
+            }
         }
+
+        checkCastling = () => {
+            //Dieu kien
+            //1. Vua va xe nhap thanh chua di chuyen
+            //2. Giua vua va xe nhap thanh ko co vat can
+            //3. Cac vi tri vua se di chuyen nam tren duong chieu cua bat ki quan doi phuong nao
+
+            //B1: Xac dinh vua va cac xe da di chuyen hay chua
+            let whiteKing = false, leftWhiteRook = false, rightWhiteRook = false;
+            let blackKing = false, leftBlackRook = false, rightBlackRook = false;
+            for (let chess of chesses) {
+                if (!chess.moved) {
+                    switch (chess.type) {
+                        case 6:
+                            whiteKing = true;
+                            break;
+                        case -6:
+                            blackKing = true;
+                            break;
+                        case 2:
+                            if (chess.y == 0) {
+                                leftWhiteRook = true;
+                            }
+                            else {
+                                rightWhiteRook = true;
+                            }
+                            break;
+                        case -2:
+                            if (chess.y == 0) {
+                                leftBlackRook = true;
+                            }
+                            else {
+                                rightBlackRook = true;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            console.log("white = ", whiteKing, leftWhiteRook, rightWhiteRook)
+            console.log("black = ", blackKing, leftBlackRook, rightBlackRook)
+
+            //B2: xac dinh cac o tren duong di co nam trong vung chieu hay khong
+            let leftWhiteFree = true, rightWhiteFree = true, leftBlackFree = true, rightBlackFree = true;
+            for (let chess of chesses) {
+                if (chess.type < 0) {
+                    for (let i = 0; i < chess.step.length; i++) {
+                        if (chess.step[i][0] == 7) {
+                            if (chess.step[i][1] == 4) {
+                                leftWhiteFree = false;
+                                rightWhiteFree = false;
+                                break;
+                            }
+                            else if (chess.step[i][1] >= 1 && chess.step[i][1] <= 3) {
+                                leftWhiteFree = false;
+                                break;
+                            }
+                            else if (chess.step[i][1] >= 5 && chess.step[i][1] <= 6) {
+                                rightWhiteFree = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else {
+                    for (let i = 0; i < chess.step.length; i++) {
+                        if (chess.step[i][0] == 0) {
+                            if (chess.step[i][1] == 4) {
+                                leftBlackFree = false;
+                                rightBlackFree = false;
+                                break;
+                            }
+                            else if (chess.step[i][1] >= 1 && chess.step[i][1] <= 3) {
+                                leftBlackFree = false;
+                                break;
+                            }
+                            else if (chess.step[i][1] >= 5 && chess.step[i][1] <= 6) {
+                                rightBlackFree = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            console.log("can castling step 2= ", leftWhiteFree, rightWhiteFree, leftBlackFree, rightBlackFree)
+
+            //B3: xac dinh cac o o giua co trong hay khong => ket hop dieu kien
+            if (map[7][1] != 0 || map[7][2] != 0 || map[7][3] != 0 || !whiteKing || !leftWhiteRook) {
+                leftWhiteFree = false;
+            }
+            if (map[7][5] != 0 || map[7][6] != 0 || !whiteKing || !rightWhiteRook) {
+                rightWhiteFree = false;
+            }
+            if (map[0][1] != 0 || map[0][2] != 0 || map[0][3] != 0 || !blackKing || !leftBlackRook) {
+                leftBlackFree = false;
+            }
+            if (map[0][5] != 0 || map[0][6] != 0 || !blackKing || !rightBlackRook) {
+                rightBlackFree = false;
+            }
+            console.log("can castling step 3= ", leftWhiteFree, rightWhiteFree, leftBlackFree, rightBlackFree)
+
+
+            //B4: gan co cho vua 
+            for (let chess of chesses) {
+                if (chess.type == 6) {
+                    if (leftWhiteFree) {
+                        chess.isLeftCastling = true;
+                        chess.step.push([7, 2])
+                    }
+                    if (rightWhiteFree) {
+                        chess.isRightCastling = true;
+                        chess.step.push([7, 6])
+                    }
+                }
+                if (chess.type == -6) {
+                    if (leftBlackFree) {
+                        chess.isLeftCastling = true;
+                        chess.step.push([0, 2])
+                    }
+                    if (rightBlackFree) {
+                        chess.isRightCastling = true;
+                        chess.step.push([0, 6])
+                    }
+                }
+            }
+
+        }
+
+        renderSituation = () => {
+            for (let circle of circles){
+                circle.render()
+            }
+        }
+
+        checkIsChecked = () => {
+            let king_x, king_y;
+            for (let chess of chesses) {
+                if (chess.type * player > 0 && Math.abs(chess.type) == 6) {
+                    king_x = chess.x;
+                    king_y = chess.y;
+                    break;
+                }
+            }
+            for (let chess of chesses) {
+                if (chess.type * player < 0) {
+                    for (let i = 0; i < chess.step.length; i++) {
+                        if (chess.step[i][0] == king_x && chess.step[i][1] == king_y) {
+                            console.log("is checked")
+                            return true;
+                        }
+                    }
+                }
+            }
+            console.log("is not checked")
+            return false
+        }
+
+
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            calculateCanvas();
+            renderBoardAndChesses()
+            renderSituation()
+            // console.log("canvas = ", canvas.width, canvas.height)
+        })
+
+        addEventListener("click", function (e) {
+            let posX = e.clientX, posY = e.clientY;
+            let x = Math.floor((posX - inner_line_ratio * height) / item_square);
+            let y = Math.floor((posY - inner_line_ratio * height) / item_square);
+
+            if (currentX != x || currentY != y) {
+                currentX = x, currentY = y;
+                calculateGreySquare(x, y);
+                renderBoardAndChesses()
+                checkIsChecked()
+                renderSituation()
+            }
+        })
+
+        resetMapOfChess();
+        calculateCanvas();
+        let board = new Board();
+        let chesses = [];
+        let currentChess = undefined, currentX = undefined, currentY = undefined;
+        let listGreySquare = [];
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                if (map[i][j] != 0) {
+                    let chess = new Chess(map[i][j], i, j);
+                }
+            }
+        }
+        let player = 1;
+        let isChecked = false;
+
+        let circles = [];
+        let circle1 = new Circle(1, 1, true, false);
+        circles.push(circle1)
+        let circle2 = new Circle(1, 2, false, false);
+        circles.push(circle2)
+        let circle3 = new Circle(-1, 1, false, false);
+        circles.push(circle3)
+        let circle4 = new Circle(-1, 2, false, false);
+        circles.push(circle4)
+
+        renderBoardAndChesses()
+        renderSituation()
+
 
     </script>
 </body>

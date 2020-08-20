@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    function telephoneCheck(str) {
+      let arr = str.split(/\D+/)
+      if (arr.length == 1 && arr[0] == str && arr[0].length == 10) {
+        return true
+      }
+      if (arr.length == 3) {
+        let str1 = arr.join('-')
+        let str2 = '(' + arr[0] + ')' + arr[1] + '-' + arr[2]
+        let str3 = '(' + arr[0] + ') ' + arr[1] + '-' + arr[2]
+        let str4 = arr.join(' ');
+        if (str.match(str1) != null || str.match(str2) != null || str.match(str3) != null || str.match(str4) != null) {
+          return true
+        }
+      }
+      if (arr.length == 4) {
+        let str1 = '1 ' + arr[1] + '-' + arr[2] + '-' + arr[3];
+        let str2 = '1(' + arr[1] + ')' + arr[2] + '-' + arr[3]
+        let str3 = '1 (' + arr[1] + ') ' + arr[2] + '-' + arr[3]
+        let str4 = '1 ' + arr[1] + ' ' + arr[2] + ' ' + arr[3]
+        console.log(str)
+        console.log(str2)
+        console.log(arr)
+        console.log(str.match(str2))
+        if (str.match(str1) != null || str.match(str2) != null || str.match(str3) != null || str.match(str4) != null) {
+          return true
+        }
+      }
+
+      return false
+    }
+
+    telephoneCheck("1(555)555-5555");
+
+  </script>
+</body>
+
+</html>

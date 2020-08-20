@@ -1,0 +1,355 @@
+<!-- 
+  Bổ xung thêm this.data là mảng 2 chiều
+  và hàm create2DArray
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #canvas {
+      position: absolute;
+      top: 5;
+      bottom: 5;
+      left: 5;
+      right: 5;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" style="background-color:#DDDDDD"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const c = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+
+    class Board {
+      constructor(cellWidth, row, col) {
+        this.cellWidth = cellWidth;
+        this.row = row;
+        this.col = col;
+        //Bổ xung margin cho tổng quát hơn
+        this.marginTop = 100;
+        this.marginLeft = 5;
+        this.marginBottom = 5;
+        this.marginRight = 5;
+        canvas.width = this.col * this.cellWidth + this.marginLeft + this.marginRight;
+        canvas.height = this.row * this.cellWidth + this.marginTop + this.marginBottom;
+
+        //
+        this.allMove = [];
+        this.currentPlayer = 1;
+        this.create2DArray();
+      }
+
+      create2DArray() {
+        // Loop to create 2D array using 1D array 
+
+        for (let i = 0; i < this.row; i++) {
+          this.allMove.push([]);
+          for (let j = 0; j < this.col; j++) {
+            this.allMove[i].push(0);
+          }
+        }
+        console.log("allMove = ", this.allMove)
+      }
+
+      //Vẽ lại 
+      drawGrid() {
+
+        c.lineWidth = 1;  // set line color
+        // Vẽ kẻ ngang
+        c.strokeStyle = '#000000';
+        for (let i = 0; i < this.row + 1; i++) {
+          c.beginPath()
+          if (i == 0 || i == this.row) {
+            c.lineWidth = 5
+          }
+          else {
+            c.lineWidth = 1
+          }
+          c.moveTo(this.marginLeft, this.marginTop + i * this.cellWidth);
+          c.lineTo(this.marginLeft + this.col * this.cellWidth, this.marginTop + i * this.cellWidth);
+          c.stroke()
+        }
+
+        //Vẽ kẻ dọc
+        for (let j = 0; j < this.col + 1; j++) {
+          c.beginPath()
+          if (j == 0 || j == this.col) {
+            c.lineWidth = 5
+          }
+          else {
+            c.lineWidth = 1
+          }
+          c.moveTo(this.marginLeft + j * this.cellWidth, this.marginTop);
+          c.lineTo(this.marginLeft + j * this.cellWidth, this.marginTop + this.row * this.cellWidth);
+          c.stroke()
+        }
+      }
+
+      drawWinLine(x1, y1, x2, y2, type) {
+        console.log("line = ", x1, y1, x2, y2, type)
+        if (type == 1) {
+          c.beginPath();
+          c.lineWidth = 2;
+          c.strokeStyle = "black"
+          c.moveTo(x1 * this.cellWidth + this.marginLeft, (y1 + 0.5) * this.cellWidth + this.marginTop)
+          c.lineTo((x2 + 1) * this.cellWidth + this.marginLeft, (y2 + 0.5) * this.cellWidth + this.marginTop)
+          c.stroke()
+        }
+        if (type == 2) {
+          c.beginPath();
+          c.lineWidth = 2;
+          c.strokeStyle = "black"
+          c.moveTo((x1 + 0.5) * this.cellWidth + this.marginLeft, y1 * this.cellWidth + this.marginTop)
+          c.lineTo((x2 + 0.5) * this.cellWidth + this.marginLeft, (y2 + 1) * this.cellWidth + this.marginTop)
+          c.stroke()
+        }
+        if (type == 3) {
+          c.beginPath();
+          c.lineWidth = 2;
+          c.strokeStyle = "black"
+          c.moveTo(x1 * this.cellWidth + this.marginLeft, y1 * this.cellWidth + this.marginTop)
+          c.lineTo((x2 + 1) * this.cellWidth + this.marginLeft, (y2 + 1) * this.cellWidth + this.marginTop)
+          c.stroke()
+        }
+        if (type == 4) {
+          c.beginPath();
+          c.lineWidth = 2;
+          c.strokeStyle = "black"
+          c.moveTo((x1 + 1) * this.cellWidth + this.marginLeft, y1 * this.cellWidth + this.marginTop)
+          c.lineTo((x2) * this.cellWidth + this.marginLeft, (y2 + 1) * this.cellWidth + this.marginTop)
+          c.stroke()
+        }
+      }
+
+      checkInsideMap(pos_x, pos_y) {
+        if (pos_x < 0 || pos_x >= this.row) {
+          return false
+        }
+        if (pos_y < 0 || pos_y >= this.col) {
+          return false
+        }
+        return true
+      }
+
+      checkRow(pos_x, pos_y) {
+        let count = 0;
+        let start_x = pos_x, start_y, finish_x = pos_x, finish_y;
+        for (let i = pos_y + 1; i <= pos_y + 5; i++) {
+          if (board.checkInsideMap(pos_x, i) && this.allMove[pos_x][i] == this.allMove[pos_x][pos_y]) {
+            count++;
+          }
+          else {
+            finish_y = i - 1
+            break;
+          }
+        }
+        for (let i = pos_y - 1; i >= pos_y - 5; i--) {
+          if (board.checkInsideMap(pos_x, i) && this.allMove[pos_x][i] == this.allMove[pos_x][pos_y]) {
+            count++;
+          }
+          else {
+            start_y = i + 1
+            break;
+          }
+        }
+        if (count >= 4) {
+          board.drawWinLine(start_y, start_x, finish_y, finish_x, 1)
+          return true;
+        }
+        return false
+      }
+
+      checkColumn(pos_x, pos_y) {
+        let count = 0;
+        let start_x, start_y = pos_y, finish_x, finish_y = pos_y
+        for (let i = pos_x + 1; i <= pos_x + 5; i++) {
+          if (board.checkInsideMap(i, pos_y) && this.allMove[i][pos_y] == this.allMove[pos_x][pos_y]) {
+            count++;
+          }
+          else {
+            finish_x = i - 1
+            break;
+          }
+        }
+        for (let i = pos_x - 1; i >= pos_x - 5; i--) {
+          if (board.checkInsideMap(i, pos_y) && this.allMove[i][pos_y] == this.allMove[pos_x][pos_y]) {
+            count++;
+          }
+          else {
+            start_x = i + 1
+            break;
+          }
+        }
+        if (count >= 4) {
+          board.drawWinLine(start_y, start_x, finish_y, finish_x, 2)
+          return true;
+        }
+        return false
+      }
+
+
+      checkDiagonalDown(pos_x, pos_y) {
+        let count = 0;
+        let start_x, start_y, finish_x, finish_y
+        for (let i = 1; i <= 5; i++) {
+          if (board.checkInsideMap(pos_x + i, pos_y + i) && this.allMove[pos_x + i][pos_y + i] == this.allMove[pos_x][pos_y]) {
+            count++;
+          }
+          else {
+            finish_x = pos_x + i - 1
+            finish_y = pos_y + i - 1
+            break;
+          }
+        }
+        for (let i = 1; i <= 5; i++) {
+          if (board.checkInsideMap(pos_x - i, pos_y - i) && this.allMove[pos_x - i][pos_y - i] == this.allMove[pos_x][pos_y]) {
+            count++;
+          }
+          else {
+            start_x = pos_x - i + 1
+            start_y = pos_y - i + 1
+            break;
+          }
+        }
+        if (count >= 4) {
+          board.drawWinLine(start_y, start_x, finish_y, finish_x, 3)
+          return true;
+        }
+        return false
+      }
+
+
+      checkDiagonalUp(pos_x, pos_y) {
+        let count = 0;
+        let start_x, start_y, finish_x, finish_y
+        for (let i = 1; i <= 5; i++) {
+          if (board.checkInsideMap(pos_x + i, pos_y - i) && this.allMove[pos_x + i][pos_y - i] == this.allMove[pos_x][pos_y]) {
+            count++;
+          }
+          else {
+            finish_x = pos_x + i - 1
+            finish_y = pos_y - i + 1
+            break;
+          }
+        }
+        for (let i = 1; i <= 5; i++) {
+          if (board.checkInsideMap(pos_x - i, pos_y + i) && this.allMove[pos_x - i][pos_y + i] == this.allMove[pos_x][pos_y]) {
+            count++;
+          }
+          else {
+            start_x = pos_x - i + 1
+            start_y = pos_y + i - 1
+            break;
+          }
+        }
+        if (count >= 4) {
+          board.drawWinLine(start_y, start_x, finish_y, finish_x, 4)
+          return true;
+        }
+        return false
+      }
+
+
+      checkMove(pos_x, pos_y) {
+        console.log("allMove =  ", this.allMove)
+        if (board.checkRow(pos_x, pos_y)) {
+          return true;
+        }
+        if (board.checkColumn(pos_x, pos_y)) {
+          return true;
+        }
+        if (board.checkDiagonalDown(pos_x, pos_y)) {
+          return true;
+        }
+        if (board.checkDiagonalUp(pos_x, pos_y)) {
+          return true;
+        }
+        return false;
+      }
+
+      draw(xPosition, yPosition) {
+        //gia tri tren mang gan nguoc lai
+        this.allMove[yPosition][xPosition] = this.currentPlayer;
+        console.log("map = ", this.allMove)
+
+        //ve hinh
+        if (this.currentPlayer == 1) {
+          c.save();
+          c.translate((xPosition + 0.5) * this.cellWidth + this.marginLeft, (yPosition + 0.5) * this.cellWidth + this.marginTop)
+
+          c.beginPath();
+          c.lineWidth = 5;
+          c.strokeStyle = "blue"
+          c.moveTo(-this.cellWidth / 4, -this.cellWidth / 4)
+          c.lineTo(this.cellWidth / 4, this.cellWidth / 4)
+          c.stroke()
+
+          c.beginPath();
+          c.lineWidth = 5;
+          c.strokeStyle = "blue"
+          c.moveTo(this.cellWidth / 4, -this.cellWidth / 4)
+          c.lineTo(-this.cellWidth / 4, this.cellWidth / 4)
+          c.stroke()
+
+          c.restore()
+        }
+        else {
+          c.beginPath();
+          c.arc((xPosition + 0.5) * this.cellWidth + this.marginLeft, (yPosition + 0.5) * this.cellWidth + this.marginTop, this.cellWidth * 0.3, 0, Math.PI * 2, false)
+          c.lineWidth = 5;
+          c.strokeStyle = "red";
+          c.stroke()
+        }
+      }
+
+      getPosition(e) {
+        var xPosition = Math.floor((e.clientX - this.marginLeft) / this.cellWidth);
+        var yPosition = Math.floor((e.clientY - this.marginTop) / this.cellWidth);
+
+        console.log("x and y = ", xPosition, yPosition)
+
+        let min_x = xPosition * this.cellWidth + 0.1 * this.cellWidth + this.marginLeft;
+        let max_x = xPosition * this.cellWidth + 0.9 * this.cellWidth + this.marginLeft;
+        let min_y = yPosition * this.cellWidth + 0.1 * this.cellWidth + this.marginTop;
+        let max_y = yPosition * this.cellWidth + 0.9 * this.cellWidth + this.marginTop;
+
+        if (e.clientX >= min_x && e.clientX <= max_x && e.clientY >= min_y && e.clientY <= max_y) {
+          if (this.allMove[yPosition][xPosition] == 0) {
+            board.draw(xPosition, yPosition);
+            if (board.checkMove(yPosition, xPosition)) {
+              console.log("Ván đấu kết thúc!!!")
+            }
+            this.currentPlayer = -this.currentPlayer;
+          }
+        }
+      }
+
+    }
+
+
+    let board = new Board(40, 15, 10);
+    board.drawGrid();
+
+
+
+    function getClickPosition(e) {
+      board.getPosition(e)
+      // console.log("x and y = ", e.clientX, e.clientY)
+    }
+
+    canvas.addEventListener("click", getClickPosition);
+
+  </script>
+</body>

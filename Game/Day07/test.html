@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        class Ball {
+            constructor(x, y, color, r) {
+                this.x = x;
+                this.y = y;
+                this.color = color
+                this.radius = r
+                this.dx = 2;
+                this.dy = 2;
+            }
+
+            draw() {
+                c.beginPath();
+                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                c.fillStyle = this.color;
+                c.fill();
+                c.stroke();
+                c.closePath();
+            }
+
+            checkMove() {
+                // console.log("inside check move = ", rect.x, rect.y)
+                if (this.x >= rect.x - this.radius && this.x <= rect.x + this.radius + 200) {
+                    this.dy = -this.dy
+                }
+                else {
+                    this.dx = 0;
+                    this.dy = 0;
+                    window.alert("GAME OVER!!!")
+                }
+            }
+
+            move() {
+                if (this.x + this.radius + this.dx > canvas.width || this.x - this.radius + this.dx < 0) {
+                    this.dx = -this.dx
+                }
+                if (this.y - this.radius + this.dy < 0) {
+                    this.dy = -this.dy
+                }
+                if (this.y + this.radius + this.dy > canvas.height - 40) {
+                    this.checkMove()
+                }
+                this.x += this.dx;
+                this.y += this.dy;
+                this.draw()
+            }
+        }
+
+        class Rectangle {
+            constructor(x, y, color, width, height) {
+                this.x = x;
+                this.y = y;
+                this.color = color
+                this.width = width;
+                this.height = height
+            }
+
+            draw() {
+                c.beginPath();
+                c.rect(this.x, this.y, this.width, this.height)
+                c.fillStyle = this.color;
+                c.fill();
+                c.stroke();
+                c.closePath();
+            }
+
+            setPosition(x, y) {
+                this.x = x;
+                // this.y = y;
+            }
+        }
+
+        class Obstacle{
+            constructor(number, color, width, height){
+                this.number = number
+                this.color = color;
+                this.width = width;
+                this.height = height;
+                this.number_x = number%10;
+                this.number_y = Math.floor(number/10)
+                this.collision = false;
+
+                let delta = (canvas.width - 10*this.width)/11;
+                this.x = delta + this.number_x*(this.width + delta);
+                this.y = 10 + this.number_y*(this.height + 10)
+            }
+
+            draw(){
+                c.beginPath();
+                c.rect(this.x, this.y, this.width, this.height)
+                c.fillStyle = this.color;
+                c.fill();
+                c.stroke();
+                c.closePath();
+            }
+
+            checkCollision(){
+                if (this.x - ball.radius <= ball.x && this.x + this.width + ball.radius >= ball.x &&
+                        this.y - ball.radius <= ball.y && this.y + this.height + ball.radius >= ball.y){
+                    this.collision = true;
+                }
+                if (!this.collision){
+                    this.draw()
+                }
+            }
+        }
+
+        let obstacles = []
+        let ball = new Ball(canvas.width / 2, canvas.height / 2, "green", 20)
+        let rect = new Rectangle(canvas.width / 2 - 100, canvas.height - 40, "red", 200, 40)
+        for (let i=0; i<30; i++){
+            let obstacle = new Obstacle(i, "yellow", 100, 40)
+            obstacles.push(obstacle)
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            ball.move();
+            rect.draw()
+            obstacles.map(obj => obj.checkCollision())
+        }
+
+        animate()
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+        addEventListener("mousemove", function (e) {
+            let positionX = e.clientX
+            let positionY = e.clientY
+            rect.setPosition(positionX, positionY)
+        })
+
+    </script>
+</body>
+
+</html>
