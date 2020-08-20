@@ -115,6 +115,14 @@ class Board {
         context.lineWidth = 3;
         context.strokeStyle = "black"
         context.stroke()
+
+        context.beginPath()
+        context.rect(left_corner_2.x * height, left_corner_2.y * height, (right_corner_2.x - left_corner_2.x) * height, (right_corner_2.y - left_corner_2.y) * height)
+        context.fillStyle = "white"
+        context.fill();
+        context.lineWidth = 3;
+        context.strokeStyle = "black"
+        context.stroke()
     }
 }
 
@@ -137,6 +145,22 @@ class Picture {
 
     }
 }
+
+class Button {
+    constructor(){
+        this.link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess4.jpg"
+    }
+
+    render(){
+        var imageObj = new Image();
+        imageObj.onload = () => { 
+            context.drawImage(imageObj, left_corner_2.x * height, left_corner_2.y * height, (right_corner_2.x - left_corner_2.x) * height, (right_corner_2.y - left_corner_2.y) * height);
+            console.log("picture = ", imageObj)
+        };
+        imageObj.src = this.link
+    }
+}
+
 
 class Chess {
     constructor(type, x, y) {

@@ -121,8 +121,9 @@ renderBoardAndChesses = () => {
     console.log("map = ", map)
 }
 
-renderPicture = () => {
+renderPictureAndButton = () => {
     picture.render()
+    button.render()
 }
 
 calculateMove = () => {
@@ -285,7 +286,7 @@ replay = () => {
     calculateMove()
     renderBoardAndChesses()
     renderSituation()
-    renderPicture()
+    renderPictureAndButton()
 }
 
 
@@ -298,7 +299,7 @@ addEventListener("resize", function () {
     calculateMove()
     renderBoardAndChesses()
     renderSituation()
-    renderPicture()
+    renderPictureAndButton()
     // console.log("canvas = ", canvas.width, canvas.height)
 
 })
@@ -308,6 +309,13 @@ addEventListener("click", function (e) {
     let min = inner_line_ratio * height, max = (inner_line_ratio + inner_square_ratio) * height;
 
     if (posX > max || posX < min || posY > max || posY < min) {
+        let replay_x = {min: left_corner_2.x*height, max: right_corner_2.x*height};
+        let replay_y = {min: left_corner_2.y*height, max: right_corner_2.y*height};
+        if (posX < replay_x.max && posX > replay_x.min){
+            if (posY <replay_y.max && posY > replay_y.min){
+                replay();
+            }
+        }
         return;
     }
 
@@ -321,7 +329,7 @@ addEventListener("click", function (e) {
         renderBoardAndChesses()
         checkIsChecked()
         renderSituation()
-        renderPicture()
+        renderPictureAndButton()
 
         if (checkmate){
             var link

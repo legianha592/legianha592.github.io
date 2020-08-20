@@ -31,6 +31,7 @@ calculateCanvas();
 
 var board = new Board();
 var picture = new Picture();
+var button = new Button();
 
 var chesses = [];
 var currentChess = undefined, currentX = undefined, currentY = undefined;
@@ -59,5 +60,5 @@ circles.push(circle4)
 calculateMove()
 renderBoardAndChesses()
 renderSituation()
-renderPicture()
+renderPictureAndButton()
 
