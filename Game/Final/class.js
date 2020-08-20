@@ -107,7 +107,7 @@ class Board {
             context.stroke();
         }
 
-        
+
         context.beginPath()
         context.rect(left_corner.x * height, left_corner.y * height, (right_corner.x - left_corner.x) * height, (right_corner.y - left_corner.y) * height)
         context.fillStyle = "white"
@@ -118,21 +118,23 @@ class Board {
     }
 }
 
-class Picture{
-    constructor(){
-        this.link = pic
+class Picture {
+    constructor() {
+        this.link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess1.jpg"
     }
 
-    changeLink(link){
+    changeLink(link) {
         this.link = link
     }
 
-    render(){
+    render() {
         var imageObj = new Image();
-        imageObj.onload = () => {
+        imageObj.onload = () => { 
             context.drawImage(imageObj, left_corner.x * height, left_corner.y * height, (right_corner.x - left_corner.x) * height, (right_corner.y - left_corner.y) * height);
+            console.log("picture = ", imageObj)
         };
-            imageObj.src = this.link
+        imageObj.src = this.link
+
     }
 }
 

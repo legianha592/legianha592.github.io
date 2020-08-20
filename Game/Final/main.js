@@ -28,6 +28,8 @@ resetMapOfChess();
 calculateCanvas();
 
 var board = new Board();
+var picture = new Picture();
+
 var chesses = [];
 var currentChess = undefined, currentX = undefined, currentY = undefined;
 var listGreySquare = [];
@@ -55,4 +57,5 @@ circles.push(circle4)
 calculateMove()
 renderBoardAndChesses()
 renderSituation()
+renderPicture()
 

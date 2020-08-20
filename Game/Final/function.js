@@ -121,6 +121,10 @@ renderBoardAndChesses = () => {
     console.log("map = ", map)
 }
 
+renderPicture = () => {
+    picture.render()
+}
+
 calculateMove = () => {
     //hoan thanh tinh toan moi nuoc di
     for (let chess of chesses) {
@@ -252,6 +256,8 @@ replay = () => {
     map = []
     resetMapOfChess()
 
+    var link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess1.jpg"
+    picture.changeLink(link)
     chesses = []
     currentChess = undefined, currentX = undefined, currentY = undefined;
     listGreySquare = [];
@@ -279,6 +285,7 @@ replay = () => {
     calculateMove()
     renderBoardAndChesses()
     renderSituation()
+    renderPicture()
 }
 
 
@@ -291,6 +298,7 @@ addEventListener("resize", function () {
     calculateMove()
     renderBoardAndChesses()
     renderSituation()
+    renderPicture()
     // console.log("canvas = ", canvas.width, canvas.height)
 
 })
@@ -313,6 +321,7 @@ addEventListener("click", function (e) {
         renderBoardAndChesses()
         checkIsChecked()
         renderSituation()
+        renderPicture()
 
         if (checkmate){
             var finish;
