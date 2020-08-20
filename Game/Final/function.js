@@ -324,16 +324,15 @@ addEventListener("click", function (e) {
         renderPicture()
 
         if (checkmate){
-            var finish;
+            var link
             if (player == 1){
-                finish = window.confirm("BLACK WIN!!! PRESS OK TO REPLAY")
+                link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess3.jpg"
             }
             else{
-                finish = window.confirm("WHITE WIN!!! PRESS OK TO REPLAY")
+                link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess2.jpg"
             }
-            if (finish){
-                replay();
-            }
+            picture.changeLink(link);
+            picture.render()
             return
         }
     }

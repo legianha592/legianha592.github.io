@@ -16,6 +16,8 @@ var first_center = 1 + 1 / 3 * (ratio - 1);
 var second_center = 1 + 2 / 3 * (ratio - 1);
 var left_corner = {x: 1.05, y: 0.4}
 var right_corner = {x: 1.25, y: 0.6}
+var left_corner_2 = {x: 1.05, y: 0.7}
+var right_corner_2 = {x: 1.25, y: 0.8}
 var width, height, item_square;
 
 //thanh phan luu tru mang du lieu chuan => thanh lap nuoc di gia dinh
