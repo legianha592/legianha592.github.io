@@ -200,7 +200,6 @@ class Chess {
     stepCanGo() {
         this.step = []
         switch (this.type) {
-
             //Kiem tra tot
             case 1:
                 whitePawnMove.call(this)
@@ -233,7 +232,6 @@ class Chess {
                 rookMove.call(this)
                 bishopMove.call(this)
                 break;
-
 
             // Kiem tra vua
             case 6:

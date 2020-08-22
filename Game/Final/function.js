@@ -254,39 +254,42 @@ calculateGreySquare = (x, y) => {
 }
 
 replay = () => {
-    map = []
-    resetMapOfChess()
+    let answer = window.prompt("Do you want to replay? Y for 'Yes'");
+    if (answer == "Y") {
+        map = []
+        resetMapOfChess()
 
-    var link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess1.jpg"
-    picture.changeLink(link)
-    chesses = []
-    currentChess = undefined, currentX = undefined, currentY = undefined;
-    listGreySquare = [];
-    for (let i = 0; i < 8; i++) {
-        for (let j = 0; j < 8; j++) {
-            if (map[i][j] != 0) {
-                let chess = new Chess(map[i][j], i, j);
-                chesses.push(chess)
+        var link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess1.jpg"
+        picture.changeLink(link)
+        chesses = []
+        currentChess = undefined, currentX = undefined, currentY = undefined;
+        listGreySquare = [];
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                if (map[i][j] != 0) {
+                    let chess = new Chess(map[i][j], i, j);
+                    chesses.push(chess)
+                }
             }
         }
+        player = 1;
+        isChecked = false;
+
+        circles = [];
+        circle1 = new Circle(1, 1, true, false);
+        circles.push(circle1)
+        circle2 = new Circle(1, 2, false, false);
+        circles.push(circle2)
+        circle3 = new Circle(-1, 1, false, false);
+        circles.push(circle3)
+        circle4 = new Circle(-1, 2, false, false);
+        circles.push(circle4)
+
+        calculateMove()
+        renderBoardAndChesses()
+        renderSituation()
+        renderPictureAndButton()
     }
-    player = 1;
-    isChecked = false;
-
-    circles = [];
-    circle1 = new Circle(1, 1, true, false);
-    circles.push(circle1)
-    circle2 = new Circle(1, 2, false, false);
-    circles.push(circle2)
-    circle3 = new Circle(-1, 1, false, false);
-    circles.push(circle3)
-    circle4 = new Circle(-1, 2, false, false);
-    circles.push(circle4)
-
-    calculateMove()
-    renderBoardAndChesses()
-    renderSituation()
-    renderPictureAndButton()
 }
 
 
@@ -296,7 +299,6 @@ addEventListener("resize", function () {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
     calculateCanvas();
-    calculateMove()
     renderBoardAndChesses()
     renderSituation()
     renderPictureAndButton()
@@ -309,10 +311,10 @@ addEventListener("click", function (e) {
     let min = inner_line_ratio * height, max = (inner_line_ratio + inner_square_ratio) * height;
 
     if (posX > max || posX < min || posY > max || posY < min) {
-        let replay_x = {min: left_corner_2.x*height, max: right_corner_2.x*height};
-        let replay_y = {min: left_corner_2.y*height, max: right_corner_2.y*height};
-        if (posX < replay_x.max && posX > replay_x.min){
-            if (posY <replay_y.max && posY > replay_y.min){
+        let replay_x = { min: left_corner_2.x * height, max: right_corner_2.x * height };
+        let replay_y = { min: left_corner_2.y * height, max: right_corner_2.y * height };
+        if (posX < replay_x.max && posX > replay_x.min) {
+            if (posY < replay_y.max && posY > replay_y.min) {
                 replay();
             }
         }
@@ -331,12 +333,12 @@ addEventListener("click", function (e) {
         renderSituation()
         renderPictureAndButton()
 
-        if (checkmate){
+        if (checkmate) {
             var link
-            if (player == 1){
+            if (player == 1) {
                 link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess3.jpg"
             }
-            else{
+            else {
                 link = "https://raw.githubusercontent.com/legianha592/legianha592.github.io/master/Game/Final/Picture/chess2.jpg"
             }
             picture.changeLink(link);
@@ -399,17 +401,29 @@ checkPromotion = () => {
         if (chesses[i].type == 1 && chesses[i].x == 0) {
             let x = chesses[i].x, y = chesses[i].y
             chesses.splice(i, 1);
-            let chess = new Chess(5, x, y)
+
+            let type = window.prompt("Which kind of chess do you want?\n2: Rook; 3: Knight; 4: Bishop; 5: Queen")
+            if (type != 2 && type != 3 && type != 4) {
+                type = 5
+            }
+            type = Number(type)
+            let chess = new Chess(type, x, y)
             chesses.push(chess)
-            map[x][y] = 5;
+            map[x][y] = type;
             break;
         }
         if (chesses[i].type == -1 && chesses[i].x == 7) {
             let x = chesses[i].x, y = chesses[i].y
             chesses.splice(i, 1);
-            let chess = new Chess(-5, x, y)
+
+            let type = window.prompt("Which kind of chess do you want?\n2: Rook; 3: Knight; 4: Bishop; 5: Queen")
+            if (type != 2 && type != 3 && type != 4) {
+                type = 5
+            }
+            type = Number(type)
+            let chess = new Chess(-type, x, y)
             chesses.push(chess)
-            map[x][y] = -5;
+            map[x][y] = -type;
             break;
         }
     }
@@ -648,8 +662,8 @@ returnACopyChessesAndMap = () => {
 
 
 renderChessFromMap = () => {
-    for (let i = 0; i<chesses.length; i++){
-        if (map[chesses[i].x][chesses[i].y] != chesses[i].type){
+    for (let i = 0; i < chesses.length; i++) {
+        if (map[chesses[i].x][chesses[i].y] != chesses[i].type) {
             chesses.splice(i, 1);
             break;
         }
@@ -676,7 +690,7 @@ tryNewMove = () => {
                 map[old_x][old_y] = 0;
                 map[new_x][new_y] = copy_chesses[i].type;
 
-                
+
                 console.log("new map", map)
                 checkCheckmate(chesses[i].type, old_x, old_y, new_x, new_y)
             }
@@ -701,7 +715,7 @@ checkCheckmate = (type, old_x, old_y, new_x, new_y) => {
                 king_y = chess.y
             }
         }
-        else{
+        else {
             chess.stepCanGo()
         }
     }
@@ -732,18 +746,18 @@ checkCheckmate = (type, old_x, old_y, new_x, new_y) => {
 
 removeWrongMove = () => {
     // phai luu ca type + toa do cu + toa do moi de de phong truong hop co 2 quan cung type va cung di den cho giong nhau
-    for (let move of wrong_move){
-        for (let chess of chesses){
-            if (move.type == chess.type && move.old_x == chess.x && move.old_y == chess.y){
+    for (let move of wrong_move) {
+        for (let chess of chesses) {
+            if (move.type == chess.type && move.old_x == chess.x && move.old_y == chess.y) {
                 let check = false;
-                for (let i=0; i<chess.step.length; i++){
-                    if (move.new_x == chess.step[i][0] && move.new_y == chess.step[i][1]){
+                for (let i = 0; i < chess.step.length; i++) {
+                    if (move.new_x == chess.step[i][0] && move.new_y == chess.step[i][1]) {
                         chess.step.splice(i, 1)
                         check = true;
                         break;
                     }
                 }
-                if (check){
+                if (check) {
                     break;
                 }
             }
