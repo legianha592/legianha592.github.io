@@ -1,0 +1,111 @@
+Câu 1.
+SELECT Name FROM Products
+
+Câu 2.
+SELECT Name, Price FROM Products
+
+Câu 3.
+SELECT Name, Price FROM Products WHERE Price<=200
+
+Câu 4.
+SELECT Name, Price FROM Products WHERE Price<=120 AND Price>=60
+
+Câu 5.
+SELECT Name, Price FROM Products WHERE Price<60 OR Price>200
+
+Câu 6.
+SELECT Name, Price FROM Products WHERE Name LIKE '%a%'
+
+Câu 7.
+SELECT Name, Price FROM Products WHERE Name LIKE '%a%' OR Name LIKE 'P%'
+
+Câu 8.
+SELECT AVG(Price) FROM Products
+
+Câu 9.
+SELECT Name FROM Products WHERE Price>(SELECT AVG(Price) FROM Products)
+
+Câu 10.
+SELECT AVG(Price) FROM Products WHERE Manufacturer=2
+
+Câu 11.
+SELECT COUNT(*) FROM Products WHERE Price>=180
+
+Câu 12.
+SELECT COUNT(*) FROM Products WHERE Price<(SELECT AVG(Price) FROM Products)
+
+Câu 13.
+SELECT Name, Price FROM Products ORDER BY Name
+
+Câu 14.
+SELECT Name, Price FROM Products WHERE Price>=180
+ORDER BY Price DESC, Name
+
+Câu 15.
+SELECT Products.Name, Price, Manufacturers.Name FROM Products LEFT JOIN Manufacturers
+ON Products.Manufacturer = Manufacturers.Code
+
+Câu 16.
+SELECT Products.Name, Price FROM Products LEFT JOIN Manufacturers
+ON Products.Manufacturer = Manufacturers.Code
+WHERE Manufacturers.Name = 'Sony'
+
+Câu 17.
+SELECT Manufacturers.Name, AVG(Price) FROM Products LEFT JOIN Manufacturers
+ON Products.Manufacturer = Manufacturers.Code
+GROUP BY Manufacturers.Name
+
+Câu 18.
+SELECT NAME FROM
+(SELECT Manufacturers.Name AS NAME, AVG(Price) AS AVG_PRICE FROM Products LEFT JOIN Manufacturers
+ON Products.Manufacturer = Manufacturers.Code
+GROUP BY Manufacturers.Name) Temp
+WHERE AVG_PRICE>=150
+
+Câu 19.
+SELECT Name, Price FROM Products WHERE Price=(SELECT MIN(Price) FROM Products)
+
+Câu 20.
+SELECT Temp2.NAME, Products.Name, Products.Price FROM Products 
+RIGHT JOIN 
+    (SELECT Temp.NAME AS NAME, Manufacturers.Code AS CODE, Temp.MAX_PRICE AS MAX_PRICE FROM Manufacturers 
+    LEFT JOIN 
+        (SELECT Manufacturers.Name AS NAME, MAX(Price) AS MAX_PRICE FROM Products 
+        LEFT JOIN Manufacturers 
+        ON Products.Manufacturer = Manufacturers.Code 
+        GROUP BY Manufacturers.Name) Temp 
+    ON Manufacturers.Name = Temp.NAME) Temp2 
+ON Temp2.CODE = Products.Code
+
+Câu 21.
+SELECT ABS(HEWLETT_COUNT-SONY_COUNT)
+FROM
+(SELECT COUNT(*) AS SONY_COUNT, 1 AS NUMBER FROM Products LEFT JOIN Manufacturers
+ON Products.Manufacturer = Manufacturers.Code
+WHERE Manufacturers.Name = 'Sony') Temp
+LEFT JOIN
+(SELECT COUNT(*) AS HEWLETT_COUNT, 1 AS NUMBER FROM Products LEFT JOIN Manufacturers
+ON Products.Manufacturer = Manufacturers.Code
+WHERE Manufacturers.Name = 'Hewlett-Packard') Temp2
+ON Temp.NUMBER = Temp2.NUMBER
+
+Câu 22.
+SELECT Products.Name, Manufacturers.Name FROM Products LEFT JOIN Manufacturers
+ON Products.Manufacturer = Manufacturers.Code
+WHERE Price = (SELECT MAX(Price) FROM Products)
+
+Câu 23.
+INSERT INTO Products VALUES (400, 'CD1', 250, 1)
+INSERT INTO Products VALUES (401, 'CD2', 150, 1)
+INSERT INTO Products VALUES (402, 'CD3', 200, 1)
+INSERT INTO Products VALUES (403, 'CD4', 300, 1)
+INSERT INTO Products VALUES (404, 'CD5', 320, 1)
+
+Câu 24.
+UPDATE Products
+SET Price = Price*0.9
+
+Câu 25.
+UPDATE Products LEFT JOIN Manufacturers ON Products.Manufacturer = Manufacturers.Code
+SET Price = Price*0.9
+WHERE Manufacturers.Name = 'Sony' OR Manufacturers.Name = 'Hewlett-Packard'
