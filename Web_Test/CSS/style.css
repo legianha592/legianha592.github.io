@@ -1,0 +1,45 @@
+body{
+    border: double 5px black;
+}
+
+.introduction{
+    display: flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    flex-wrap: wrap;
+    height: 200px;
+    margin: 5px 5px 30px 5px;
+    background-image: linear-gradient(rgb(153, 209, 211), rgb(255, 255, 255) )
+}
+
+.introduction img{
+    margin: 0 50px;
+    max-height: 100%;
+    border: solid 1px black;
+}
+
+.introduction .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.main-info div{
+    margin: 20px 10px;
+    background-image: linear-gradient(rgb(255, 251, 209), rgb(255, 255, 255) )
+}
+
+p, li{
+    font-size: 14pt;
+    margin: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+b{
+    font-size: 18pt;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+i{
+    margin: 0 10px;
+}
