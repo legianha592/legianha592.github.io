@@ -142,7 +142,6 @@ class Picture {
             console.log("picture = ", imageObj)
         };
         imageObj.src = this.link
-
     }
 }
 
