@@ -73,6 +73,7 @@ public class CompleteClock {
                 countDown();
             }
         }
+
     }
 
     private void countUp(){
@@ -91,7 +92,8 @@ public class CompleteClock {
 
                 int currentTime = second.getIndex() + minute.getIndex()*60 + hour.getIndex()*3600;
                 int maxTime = maxSecond + maxMinute*60 + maxHour*3600;
-                if (currentTime > maxTime){
+                if (currentTime == maxTime){
+                    timeToString(hour.getIndex(), minute.getIndex(), second.getIndex());
                     time.cancel();
                 }
             }
@@ -114,7 +116,8 @@ public class CompleteClock {
 
                 int currentTime = second.getIndex() + minute.getIndex()*60 + hour.getIndex()*3600;
                 int minTime = minSecond + minMinute*60 + minHour*3600;
-                if (currentTime < minTime){
+                if (currentTime == minTime){
+                    timeToString(hour.getIndex(), minute.getIndex(), second.getIndex());
                     time.cancel();
                 }
             }

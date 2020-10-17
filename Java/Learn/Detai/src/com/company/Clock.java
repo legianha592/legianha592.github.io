@@ -5,7 +5,7 @@ import java.util.Timer;
 public class Clock {
     private int minRange, maxRange;
     private int index;
-    private Clock clock;
+    public Clock clock;
 
     public Clock(int index) {
         this.index = index;
@@ -39,7 +39,9 @@ public class Clock {
         index++;
         if (index > maxRange){
             index = minRange;
-            clock.countUp();
+            if (clock != null){
+                clock.countUp();
+            }
         }
     }
 
@@ -47,7 +49,9 @@ public class Clock {
         index--;
         if (index < minRange) {
             index = maxRange;
-            clock.countDown();
+            if (clock != null){
+                clock.countDown();
+            }
         }
     }
 }
