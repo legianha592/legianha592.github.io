@@ -1,10 +1,7 @@
 package org.example.RestAPI.controller;
 
 import org.example.RestAPI.model.Todo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -33,5 +30,10 @@ public class RestAPIController {
     @GetMapping("/todo/{todoId}")
     public Todo getTodo(@PathVariable(name="todoId") Integer todoId){
         return list.get(todoId-1);
+    }
+
+    @PutMapping("/todo/{todoId}")
+    public Todo editTodo(@PathVariable(name="todoId") Integer todoId, @RequestBody Todo todo){
+        return todo;
     }
 }
