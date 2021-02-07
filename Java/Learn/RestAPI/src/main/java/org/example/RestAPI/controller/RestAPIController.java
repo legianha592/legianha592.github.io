@@ -1,6 +1,7 @@
 package org.example.RestAPI.controller;
 
 import org.example.RestAPI.model.Todo;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -32,8 +33,21 @@ public class RestAPIController {
         return list.get(todoId-1);
     }
 
-//    @PutMapping("/todo/{todoId}")
-//    public Todo editTodo(@PathVariable(name="todoId") Integer todoId, @RequestBody Todo todo){
-//        return todo;
-//    }
+    @PutMapping("/todo/{todoId}")
+    public Todo editTodo(@PathVariable(name="todoId") Integer todoId, @RequestBody Todo todo){
+        list.set(todoId, todo);
+        return todo;
+    }
+
+    @PostMapping("/todo")
+    public ResponseEntity addTodo(@RequestBody Todo todo){
+        list.add(todo);
+        return ResponseEntity.ok().body(todo);
+    }
+
+    @DeleteMapping("/todo/{todoId}")
+    public ResponseEntity deleteTodo(@PathVariable(name="todoId") Integer todoId){
+        list.remove(todoId.intValue());
+        return ResponseEntity.ok().build();
+    }
 }
