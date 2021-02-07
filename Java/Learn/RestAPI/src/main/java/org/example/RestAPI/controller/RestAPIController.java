@@ -32,8 +32,8 @@ public class RestAPIController {
         return list.get(todoId-1);
     }
 
-    @PutMapping("/todo/{todoId}")
-    public Todo editTodo(@PathVariable(name="todoId") Integer todoId, @RequestBody Todo todo){
-        return todo;
-    }
+//    @PutMapping("/todo/{todoId}")
+//    public Todo editTodo(@PathVariable(name="todoId") Integer todoId, @RequestBody Todo todo){
+//        return todo;
+//    }
 }
