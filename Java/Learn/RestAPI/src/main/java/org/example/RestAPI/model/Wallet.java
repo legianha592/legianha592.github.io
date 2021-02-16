@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "wallet")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +24,6 @@ public class Wallet {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "record")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
     private List<Record> listRecord = new ArrayList<>();
 }

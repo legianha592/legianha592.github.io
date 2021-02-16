@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "user")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +22,6 @@ public class User {
     private Date created_date;
     private Date modified_date;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Wallet> listWallet = new ArrayList<>();
 }

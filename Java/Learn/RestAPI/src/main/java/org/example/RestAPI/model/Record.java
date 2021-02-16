@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table
+@Table(name = "record")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
