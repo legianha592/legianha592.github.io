@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @Id
+    @Id @GeneratedValue
     private long id;
     private String user_name;
     private String password;

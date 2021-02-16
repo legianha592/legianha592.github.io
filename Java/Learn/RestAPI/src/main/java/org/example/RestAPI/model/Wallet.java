@@ -13,9 +13,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Wallet {
-    @Id
+    @Id @GeneratedValue
     private long id;
     private String wallet_name;
     private Date created_date;
     private Date modified_date;
+
+    @ManyToOne
+    private User user;
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Record {
-    @Id
+    @Id @GeneratedValue
     private long id;
     private float amount;
     private String title;
