@@ -19,6 +19,6 @@ public class Wallet {
     private Date created_date;
     private Date modified_date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 }

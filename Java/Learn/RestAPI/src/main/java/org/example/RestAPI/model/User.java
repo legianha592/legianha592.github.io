@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -19,4 +20,7 @@ public class User {
     private String password;
     private Date created_date;
     private Date modified_date;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    private ArrayList<Wallet> listWallet;
 }
