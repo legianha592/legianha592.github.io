@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -22,5 +23,5 @@ public class User {
     private Date modified_date;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
-    private ArrayList<Wallet> listWallet;
+    private List<Wallet> listWallet = new ArrayList<>();
 }

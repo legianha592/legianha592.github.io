@@ -20,4 +20,7 @@ public class Record {
     private String note;
     private Date created_date;
     private Date modified_date;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Wallet wallet;
 }
