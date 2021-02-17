@@ -1,6 +1,7 @@
 package org.example.RestAPI.controller;
 
 
+import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> addUser(@RequestBody User user){
+    public ResponseEntity<Message<Boolean>> addUser(@RequestBody User user){
         userService.addUser(user);
 
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        Message<Boolean> message = new Message<>(
+                new String("Đăng kí thành công"),
+                Boolean.TRUE
+        );
+        return new ResponseEntity<Message<Boolean>>(message, HttpStatus.OK);
     }
 
     @PostMapping("/login")
