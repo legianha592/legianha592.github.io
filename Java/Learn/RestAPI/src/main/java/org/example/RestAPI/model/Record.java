@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,8 +19,8 @@ public class Record {
     private float amount;
     private String title;
     private String note;
-    private Date created_date;
-    private Date modified_date;
+    private LocalDateTime created_date;
+    private LocalDateTime modified_date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Wallet wallet;

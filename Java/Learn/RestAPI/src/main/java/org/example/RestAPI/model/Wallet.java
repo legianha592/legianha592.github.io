@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +20,8 @@ public class Wallet {
     @Id @GeneratedValue
     private long id;
     private String wallet_name;
-    private Date created_date;
-    private Date modified_date;
+    private LocalDateTime created_date;
+    private LocalDateTime modified_date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;

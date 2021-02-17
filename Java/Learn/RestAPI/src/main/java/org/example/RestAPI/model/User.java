@@ -19,8 +19,8 @@ public class User {
     private long id;
     private String user_name;
     private String password;
-    private Date created_date;
-    private Date modified_date;
+    private LocalDateTime created_date;
+    private LocalDateTime modified_date;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Wallet> listWallet = new ArrayList<>();
