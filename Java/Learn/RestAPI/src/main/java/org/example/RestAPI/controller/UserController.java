@@ -23,16 +23,14 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity addUser(@RequestBody User user){
-//        System.out.println("id = " + user.getId());
-//        System.out.println(user.getUser_name());
-//        System.out.println(user.getPassword());
-//        System.out.println(user.getCreated_date());
-//        System.out.println(user.getModified_date());
-
         userService.addUser(user);
 
         return ResponseEntity.ok().body(user);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody User user){
 
+        return ResponseEntity.ok().body(user);
+    }
 }
