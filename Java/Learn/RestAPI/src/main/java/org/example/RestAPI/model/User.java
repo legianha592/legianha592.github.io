@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,16 @@ public class User {
     private String user_name;
     private String password;
     private LocalDateTime created_date;
+    @PrePersist
+    public void prePersist(){
+        created_date = LocalDateTime.now();
+        modified_date = LocalDateTime.now();
+    }
     private LocalDateTime modified_date;
+    @PreUpdate
+    public void preUpdate(){
+        modified_date = LocalDateTime.now();
+    }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Wallet> listWallet = new ArrayList<>();

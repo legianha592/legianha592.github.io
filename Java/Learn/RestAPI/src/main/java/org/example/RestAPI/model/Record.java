@@ -20,7 +20,16 @@ public class Record {
     private String title;
     private String note;
     private LocalDateTime created_date;
+    @PrePersist
+    public void prePersist(){
+        created_date = LocalDateTime.now();
+        modified_date = LocalDateTime.now();
+    }
     private LocalDateTime modified_date;
+    @PreUpdate
+    public void preUpdate(){
+        modified_date = LocalDateTime.now();
+    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Wallet wallet;
