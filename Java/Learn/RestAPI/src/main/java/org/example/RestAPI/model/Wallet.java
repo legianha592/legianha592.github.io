@@ -31,7 +31,7 @@ public class Wallet {
     public void preUpdate(){
         modified_date = LocalDateTime.now();
     }
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
