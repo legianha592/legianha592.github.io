@@ -1,6 +1,5 @@
 package org.example.RestAPI.controller;
 
-
 import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
@@ -39,7 +38,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody User user){
-        System.out.println(user.getUser_name());
+//        System.out.println(user.getUser_name());
         Optional<User> findUser = userService.findByUser_name(user.getUser_name());
 
         Message<User> message;
