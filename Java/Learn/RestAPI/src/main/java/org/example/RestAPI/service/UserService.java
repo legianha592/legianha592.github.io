@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService{
@@ -18,5 +19,9 @@ public class UserService implements IUserService{
 
     public void addUser(User user){
         userRepository.saveAndFlush(user);
+    }
+
+    public Optional<User> findByUser_name(String name){
+        return userRepository.findByUser_name(name);
     }
 }

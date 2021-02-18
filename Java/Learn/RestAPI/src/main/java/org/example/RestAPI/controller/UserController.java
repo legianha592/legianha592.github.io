@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -37,7 +38,21 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody User user){
+        System.out.println(user.getUser_name());
+        Optional<User> findUser = userService.findByUser_name(user.getUser_name());
 
-        return new ResponseEntity(user, HttpStatus.OK);
+        Message<User> message;
+        if (findUser.isEmpty()){
+            message = new Message<>(new String("Không tồn tại user"), null);
+        }
+        else{
+            if (!user.getPassword().equals(findUser.get().getPassword())){
+                message = new Message<>(new String("Sai password"), null);
+            }
+            else{
+                message = new Message<>(new String("Đăng nhập thành công"), findUser.get());
+            }
+        }
+        return new ResponseEntity(message, HttpStatus.OK);
     }
 }
