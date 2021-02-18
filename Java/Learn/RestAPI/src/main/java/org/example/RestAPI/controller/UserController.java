@@ -1,6 +1,7 @@
 package org.example.RestAPI.controller;
 
 
+import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.service.IUserService;
@@ -30,7 +31,7 @@ public class UserController {
         userService.addUser(user);
 
         Message<User> message = new Message<>(
-                new String("Đăng kí thành công"),
+                FinalMessage.SIGNUP_SUCCESS,
                 user
         );
         return new ResponseEntity<Message<User>>(message, HttpStatus.OK);
@@ -43,14 +44,14 @@ public class UserController {
 
         Message<User> message;
         if (findUser.isEmpty()){
-            message = new Message<>(new String("Không tồn tại user"), null);
+            message = new Message<>(FinalMessage.NO_USER, null);
         }
         else{
             if (!user.getPassword().equals(findUser.get().getPassword())){
-                message = new Message<>(new String("Sai password"), null);
+                message = new Message<>(FinalMessage.WRONG_PASSWORD, null);
             }
             else{
-                message = new Message<>(new String("Đăng nhập thành công"), findUser.get());
+                message = new Message<>(FinalMessage.SIGNUP_SUCCESS, findUser.get());
             }
         }
         return new ResponseEntity(message, HttpStatus.OK);
