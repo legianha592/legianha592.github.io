@@ -27,12 +27,15 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<Message<User>> addUser(@RequestBody User user){
-        userService.addUser(user);
-
-        Message<User> message = new Message<>(
-                FinalMessage.SIGNUP_SUCCESS,
-                user
-        );
+        Optional<User> findUser = userService.findByUser_name(user.getUser_name());
+        Message<User> message;
+        if (findUser.isEmpty()){
+            userService.addUser(user);
+            message = new Message<>(FinalMessage.SIGNUP_SUCCESS, user);
+        }
+        else{
+            message = new Message<>(FinalMessage.USERNAME_EXISTED, null);
+        }
         return new ResponseEntity<Message<User>>(message, HttpStatus.OK);
     }
 
@@ -40,7 +43,6 @@ public class UserController {
     public ResponseEntity login(@RequestBody User user){
 //        System.out.println(user.getUser_name());
         Optional<User> findUser = userService.findByUser_name(user.getUser_name());
-
         Message<User> message;
         if (findUser.isEmpty()){
             message = new Message<>(FinalMessage.NO_USER, null);
@@ -50,7 +52,7 @@ public class UserController {
                 message = new Message<>(FinalMessage.WRONG_PASSWORD, null);
             }
             else{
-                message = new Message<>(FinalMessage.SIGNUP_SUCCESS, findUser.get());
+                message = new Message<>(FinalMessage.LOGIN_SUCCESS, findUser.get());
             }
         }
         return new ResponseEntity(message, HttpStatus.OK);
