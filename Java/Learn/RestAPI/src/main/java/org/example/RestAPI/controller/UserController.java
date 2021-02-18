@@ -7,6 +7,7 @@ import org.example.RestAPI.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,14 +25,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Message<Boolean>> addUser(@RequestBody User user){
+    public ResponseEntity<Message<User>> addUser(@RequestBody User user){
         userService.addUser(user);
 
-        Message<Boolean> message = new Message<>(
+        Message<User> message = new Message<>(
                 new String("Đăng kí thành công"),
-                Boolean.TRUE
+                user
         );
-        return new ResponseEntity<Message<Boolean>>(message, HttpStatus.OK);
+        return new ResponseEntity<Message<User>>(message, HttpStatus.OK);
     }
 
     @PostMapping("/login")
