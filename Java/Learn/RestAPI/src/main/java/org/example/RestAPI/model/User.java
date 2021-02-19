@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     public User(String user_name, String password) {
         this.user_name = user_name;
