@@ -36,6 +36,6 @@ public class User {
     private List<Wallet> listWallet = new ArrayList<>();
     public void addWallet(Wallet wallet){
         listWallet.add(wallet);
-        wallet.setUser(this);
+//        wallet.setUser(this);
     }
 }
