@@ -24,4 +24,8 @@ public class UserService implements IUserService{
     public Optional<User> findByUser_name(String name){
         return userRepository.findByUser_name(name);
     }
+
+    public Optional<User> findById(Long id){
+        return userRepository.findById(id);
+    }
 }

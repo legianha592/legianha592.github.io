@@ -11,4 +11,6 @@ public interface IUserService {
     void addUser(User user);
 
     Optional<User> findByUser_name(String name);
+
+    Optional<User> findById(Long id);
 }

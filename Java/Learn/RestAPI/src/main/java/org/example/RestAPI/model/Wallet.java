@@ -34,6 +34,9 @@ public class Wallet {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
+    public void setUser(User user){
+        this.user = user;
+    }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
     private List<Record> listRecord = new ArrayList<>();
