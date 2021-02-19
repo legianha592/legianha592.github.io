@@ -31,6 +31,6 @@ public class Record {
         modified_date = LocalDateTime.now();
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Wallet wallet;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    private Wallet wallet;
 }
