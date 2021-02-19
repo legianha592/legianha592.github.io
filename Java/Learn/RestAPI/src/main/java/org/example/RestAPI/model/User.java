@@ -3,6 +3,7 @@ package org.example.RestAPI.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,9 +14,12 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
+    public User(String user_name, String password) {
+        this.user_name = user_name;
+        this.password = password;
+    }
+
     @Id @GeneratedValue
     private long id;
     private String user_name;
@@ -36,6 +40,6 @@ public class User {
     private List<Wallet> listWallet = new ArrayList<>();
     public void addWallet(Wallet wallet){
         listWallet.add(wallet);
-//        wallet.setUser(this);
+        wallet.setUser(this);
     }
 }

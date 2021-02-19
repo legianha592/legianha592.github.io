@@ -4,7 +4,7 @@ import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
-import org.example.RestAPI.request.WalletRequest;
+import org.example.RestAPI.request.wallet.WalletRequest;
 import org.example.RestAPI.service.IUserService;
 import org.example.RestAPI.service.IWalletService;
 import org.springframework.beans.factory.annotation.Autowired;

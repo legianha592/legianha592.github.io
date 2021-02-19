@@ -1,4 +1,4 @@
-package org.example.RestAPI.request;
+package org.example.RestAPI.request.wallet;
 
 public class WalletRequest {
     private Long user_id;
