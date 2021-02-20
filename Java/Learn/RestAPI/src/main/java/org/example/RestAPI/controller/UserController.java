@@ -27,12 +27,18 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<Message<SignupResponse>> addUser(@RequestBody SignupRequest request){
+        System.out.println(request.getResult());
         Optional<User> findUser = userService.findByUser_name(request.getUser_name());
         Message<SignupResponse> message;
         if (findUser.isEmpty()){
-            User user = new User(request.getUser_name(), request.getPassword());
-            userService.addUser(user);
-            message = new Message<>(FinalMessage.SIGNUP_SUCCESS, new SignupResponse(user.getId()));
+            if (request.getResult().equals("OK")){
+                User user = new User(request.getUser_name(), request.getPassword());
+                userService.addUser(user);
+                message = new Message<>(FinalMessage.SIGNUP_SUCCESS, new SignupResponse(user.getId()));
+            }
+            else{
+                message = new Message<>(request.getResult(), null);
+            }
         }
         else{
             message = new Message<>(FinalMessage.USERNAME_EXISTED, null);
