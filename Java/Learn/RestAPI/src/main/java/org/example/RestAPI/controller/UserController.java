@@ -3,7 +3,9 @@ package org.example.RestAPI.controller;
 import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
+import org.example.RestAPI.request.user.LoginRequest;
 import org.example.RestAPI.request.user.SignupRequest;
+import org.example.RestAPI.response.user.LoginResponse;
 import org.example.RestAPI.response.user.SignupResponse;
 import org.example.RestAPI.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<Message<SignupResponse>> addUser(@RequestBody SignupRequest request){
-        System.out.println(request.getResult());
+//        System.out.println(request.getResult());
         Optional<User> findUser = userService.findByUser_name(request.getUser_name());
         Message<SignupResponse> message;
         if (findUser.isEmpty()){
@@ -47,21 +49,22 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody User user){
+    public ResponseEntity login(@RequestBody LoginRequest request){
 //        System.out.println(user.getUser_name());
-        Optional<User> findUser = userService.findByUser_name(user.getUser_name());
-        Message<User> message;
+        Optional<User> findUser = userService.findByUser_name(request.getUser_name());
+        Message<LoginResponse> message;
         if (findUser.isEmpty()){
             message = new Message<>(FinalMessage.NO_USER, null);
         }
         else{
-            if (!user.getPassword().equals(findUser.get().getPassword())){
+            if (!request.getPassword().equals(findUser.get().getPassword())){
                 message = new Message<>(FinalMessage.WRONG_PASSWORD, null);
             }
             else{
-                message = new Message<>(FinalMessage.LOGIN_SUCCESS, findUser.get());
+                message = new Message<>(FinalMessage.LOGIN_SUCCESS,
+                        new LoginResponse(findUser.get()));
             }
         }
-        return new ResponseEntity(message, HttpStatus.OK);
+        return new ResponseEntity<Message<LoginResponse>>(message, HttpStatus.OK);
     }
 }
