@@ -18,21 +18,25 @@ public class LoginResponse {
     class MyWallet{
         long id;
         String wallet_name;
-        LocalDateTime create_date;
+        LocalDateTime created_date;
         LocalDateTime modified_date;
         long total_amount;
     }
 
     public LoginResponse(User user){
         this.id = user.getId();
+        this.addList_wallet(user);
+    }
+    private long id;
+    private List<MyWallet> list_wallet = new ArrayList<>();
+
+    private void addList_wallet(User user){
         List<Wallet> list = user.getListWallet();
         for (int i = 0; i < list.size(); i++){
             Wallet wallet = list.get(i);
             MyWallet myWallet = new MyWallet(wallet.getId(), wallet.getWallet_name(),
-                    wallet.getCreate_date(), wallet.getModified_date(), wallet.getTotal_amount());
+                    wallet.getCreated_date(), wallet.getModified_date(), wallet.getTotal_amount());
             list_wallet.add(myWallet);
         }
     }
-    private long id;
-    private List<MyWallet> list_wallet = new ArrayList<>();
 }
