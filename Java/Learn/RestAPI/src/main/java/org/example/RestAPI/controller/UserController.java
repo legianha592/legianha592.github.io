@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Message<SignupResponse>> addUser(@RequestBody SignupRequest request){
+    public ResponseEntity addUser(@RequestBody SignupRequest request){
 //        System.out.println(request.getResult());
         Optional<User> findUser = userService.findByUser_name(request.getUser_name());
         Message<SignupResponse> message;
@@ -66,5 +66,10 @@ public class UserController {
             }
         }
         return new ResponseEntity<Message<LoginResponse>>(message, HttpStatus.OK);
+    }
+
+    @PutMapping("/changepassword")
+    public ResponseEntity changePassword(){
+        
     }
 }
