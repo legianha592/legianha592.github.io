@@ -86,7 +86,9 @@ public class UserController {
                     message = new Message<>(request.getResult(), null);
                 }
                 else{
-                    findUser.get().setPassword(request.getNew_password());
+                    User user = findUser.get();
+                    user.setPassword(request.getNew_password());
+                    userService.addUser(user);
                     message = new Message<>(FinalMessage.CHANGE_PASSWORD_SUCCESS,
                             new ChangePasswordResponse(request.getId()));
                 }
