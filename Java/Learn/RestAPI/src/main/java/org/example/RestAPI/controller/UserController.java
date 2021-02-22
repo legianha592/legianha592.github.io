@@ -78,11 +78,18 @@ public class UserController {
             message = new Message<>(FinalMessage.NO_USER, null);
         }
         else{
-            if (!request.getPassword().equals(findUser.get().getPassword())){
+            if (!request.getOld_password().equals(findUser.get().getPassword())){
                 message = new Message<>(FinalMessage.WRONG_PASSWORD, null);
             }
             else{
-
+                if (!request.getResult().equals("OK")){
+                    message = new Message<>(request.getResult(), null);
+                }
+                else{
+                    findUser.get().setPassword(request.getNew_password());
+                    message = new Message<>(FinalMessage.CHANGE_PASSWORD_SUCCESS,
+                            new ChangePasswordResponse(request.getId()));
+                }
             }
         }
         return new ResponseEntity<Message<ChangePasswordResponse>>(message, HttpStatus.OK);

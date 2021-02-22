@@ -12,21 +12,25 @@ public class ChangePasswordRequest {
     private String new_password;
     private String result;
 
-
+    public ChangePasswordRequest(long id, String old_password, String new_password) {
+        this.id = id;
+        this.old_password = old_password;
+        this.new_password = new_password;
+        this.checkValidRequest();
+    }
 
     private void checkValidRequest(){
-        if (this.password.length() > MAX_LENGTH || this.password.length() < MIN_LENGTH){
+        if (this.new_password.length() > MAX_LENGTH || this.new_password.length() < MIN_LENGTH){
             result = FinalMessage.INVALID_PASSWORD_LENGTH;
             return;
         }
-        for (int i=0; i<this.password.length(); i++){
-            int val = (int) (this.password.charAt(i));
+        for (int i=0; i<this.new_password.length(); i++){
+            int val = (int) (this.new_password.charAt(i));
             if (!checkRange(val)){
                 result = FinalMessage.INVALID_PASSWORD_VALUE;
                 return;
             }
         }
-
         result = new String("OK");
     }
 
