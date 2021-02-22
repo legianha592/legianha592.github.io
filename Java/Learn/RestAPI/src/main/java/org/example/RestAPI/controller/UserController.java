@@ -3,6 +3,7 @@ package org.example.RestAPI.controller;
 import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
+import org.example.RestAPI.request.user.ChangePasswordRequest;
 import org.example.RestAPI.request.user.LoginRequest;
 import org.example.RestAPI.request.user.SignupRequest;
 import org.example.RestAPI.response.user.LoginResponse;
@@ -69,7 +70,7 @@ public class UserController {
     }
 
     @PutMapping("/changepassword")
-    public ResponseEntity changePassword(){
+    public ResponseEntity changePassword(@RequestBody ChangePasswordRequest request){
 
     }
 }
