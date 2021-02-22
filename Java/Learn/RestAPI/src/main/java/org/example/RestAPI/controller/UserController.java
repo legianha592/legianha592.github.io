@@ -70,6 +70,6 @@ public class UserController {
 
     @PutMapping("/changepassword")
     public ResponseEntity changePassword(){
-        
+
     }
 }
