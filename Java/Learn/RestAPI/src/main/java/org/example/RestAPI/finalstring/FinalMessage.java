@@ -7,6 +7,8 @@ public class FinalMessage {
     public static final String INVALID_USERNAME_VALUE = "Tên chứa kí tự không hợp lệ";
     public static final String INVALID_PASSWORD_LENGTH = "Độ dài mật khẩu không hợp lệ";
     public static final String INVALID_PASSWORD_VALUE = "Mật khẩu chứa kí tự không hợp lệ";
+    public static final String INVALID_NEW_PASSWORD_LENGTH = "Độ dài mật khẩu mới không hợp lệ";
+    public static final String INVALID_NEW_PASSWORD_VALUE = "Mật khẩu mới chứa kí tự không hợp lệ";
     public static final String CHANGE_PASSWORD_SUCCESS = "Đổi mật khẩu thành công";
 
     public static final String USERNAME_EXISTED = "Tên đăng kí đã tồn tại";

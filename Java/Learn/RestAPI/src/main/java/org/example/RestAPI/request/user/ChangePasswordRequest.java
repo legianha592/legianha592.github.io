@@ -21,13 +21,13 @@ public class ChangePasswordRequest {
 
     private void checkValidRequest(){
         if (this.new_password.length() > MAX_LENGTH || this.new_password.length() < MIN_LENGTH){
-            result = FinalMessage.INVALID_PASSWORD_LENGTH;
+            result = FinalMessage.INVALID_NEW_PASSWORD_LENGTH;
             return;
         }
         for (int i=0; i<this.new_password.length(); i++){
             int val = (int) (this.new_password.charAt(i));
             if (!checkRange(val)){
-                result = FinalMessage.INVALID_PASSWORD_VALUE;
+                result = FinalMessage.INVALID_NEW_PASSWORD_VALUE;
                 return;
             }
         }
