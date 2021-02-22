@@ -6,6 +6,7 @@ import org.example.RestAPI.model.User;
 import org.example.RestAPI.request.user.ChangePasswordRequest;
 import org.example.RestAPI.request.user.LoginRequest;
 import org.example.RestAPI.request.user.SignupRequest;
+import org.example.RestAPI.response.user.ChangePasswordResponse;
 import org.example.RestAPI.response.user.LoginResponse;
 import org.example.RestAPI.response.user.SignupResponse;
 import org.example.RestAPI.service.IUserService;
@@ -71,6 +72,19 @@ public class UserController {
 
     @PutMapping("/changepassword")
     public ResponseEntity changePassword(@RequestBody ChangePasswordRequest request){
+        Optional<User> findUser = userService.findById(request.getId());
+        Message<ChangePasswordResponse> message;
+        if (findUser.isEmpty()){
+            message = new Message<>(FinalMessage.NO_USER, null);
+        }
+        else{
+            if (!request.getPassword().equals(findUser.get().getPassword())){
+                message = new Message<>(FinalMessage.WRONG_PASSWORD, null);
+            }
+            else{
 
+            }
+        }
+        return new ResponseEntity<Message<ChangePasswordResponse>>(message, HttpStatus.OK);
     }
 }
