@@ -13,6 +13,7 @@ public class CreateWalletRequest {
     public CreateWalletRequest(long user_id, String wallet_name) {
         this.user_id = user_id;
         this.wallet_name = wallet_name;
+        this.checkValidRequest();
     }
 
     private void checkValidRequest(){
