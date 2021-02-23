@@ -4,6 +4,8 @@ import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
+import org.example.RestAPI.request.wallet.CreateWalletRequest;
+import org.example.RestAPI.response.wallet.CreateWalletResponse;
 import org.example.RestAPI.service.IUserService;
 import org.example.RestAPI.service.IWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,20 +28,21 @@ public class WalletController {
     IWalletService walletService;
 
     @PostMapping("/create")
-    public ResponseEntity<Message<Wallet>> createWallet(@RequestBody WalletRequest request){
-        Optional<User> user = userService.findById(request.getUser_id());
-        Message<Wallet> message;
-        if (user.isEmpty()){
+    public ResponseEntity createWallet(@RequestBody CreateWalletRequest request){
+        Optional<User> findUser = userService.findById(request.getUser_id());
+        Message<CreateWalletResponse> message;
+        if (findUser.isEmpty()){
             message = new Message<>(FinalMessage.NO_USER, null);
         }
         else{
             Wallet wallet = new Wallet();
             wallet.setWallet_name(request.getWallet_name());
-            user.get().addWallet(wallet);
+            findUser.get().addWallet(wallet);
             walletService.addWallet(wallet);
 
-            message = new Message<>(FinalMessage.CREATE_WALLET_SUCCESS, wallet);
+            message = new Message<>(FinalMessage.CREATE_WALLET_SUCCESS,
+                    new CreateWalletResponse(wallet.getId()));
         }
-        return new ResponseEntity<Message<Wallet>>(message, HttpStatus.OK);
+        return new ResponseEntity<Message<CreateWalletResponse>>(message, HttpStatus.OK);
     }
 }
