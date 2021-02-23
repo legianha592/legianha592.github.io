@@ -1,14 +1,9 @@
 package org.example.RestAPI.request.wallet;
 
+import lombok.Data;
+
+@Data
 public class WalletRequest {
     private Long user_id;
     private String wallet_name;
-
-    public Long getUser_id() {
-        return user_id;
-    }
-
-    public String getWallet_name() {
-        return wallet_name;
-    }
 }
