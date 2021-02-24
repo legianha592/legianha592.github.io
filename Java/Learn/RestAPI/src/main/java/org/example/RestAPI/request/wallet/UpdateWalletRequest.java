@@ -1,2 +1,4 @@
-package org.example.RestAPI.request.wallet;public class UpdateWalletRequest {
+package org.example.RestAPI.request.wallet;
+
+public class UpdateWalletRequest {
 }
