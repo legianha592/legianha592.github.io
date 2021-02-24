@@ -5,16 +5,14 @@ import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.wallet.CreateWalletRequest;
+import org.example.RestAPI.request.wallet.UpdateWalletRequest;
 import org.example.RestAPI.response.wallet.CreateWalletResponse;
 import org.example.RestAPI.service.IUserService;
 import org.example.RestAPI.service.IWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -51,5 +49,8 @@ public class WalletController {
         return new ResponseEntity<Message<CreateWalletResponse>>(message, HttpStatus.OK);
     }
 
-    
+    @PutMapping("/update")
+    public ResponseEntity updateWallet(@RequestBody UpdateWalletRequest request){
+        
+    }
 }
