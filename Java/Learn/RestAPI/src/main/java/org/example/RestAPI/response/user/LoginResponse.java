@@ -20,7 +20,7 @@ public class LoginResponse {
         String wallet_name;
         LocalDateTime created_date;
         LocalDateTime modified_date;
-        long total_amount;
+        double total_amount;
     }
 
     public LoginResponse(User user){

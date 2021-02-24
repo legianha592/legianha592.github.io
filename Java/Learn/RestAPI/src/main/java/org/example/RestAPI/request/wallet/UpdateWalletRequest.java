@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import org.example.RestAPI.finalstring.FinalMessage;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class UpdateWalletRequest {
     private final int MAX_LENGTH = 50;
     private long wallet_id;
