@@ -51,6 +51,6 @@ public class WalletController {
 
     @PutMapping("/update")
     public ResponseEntity updateWallet(@RequestBody UpdateWalletRequest request){
-        
+
     }
 }
