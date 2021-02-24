@@ -50,4 +50,6 @@ public class WalletController {
         }
         return new ResponseEntity<Message<CreateWalletResponse>>(message, HttpStatus.OK);
     }
+
+    
 }
