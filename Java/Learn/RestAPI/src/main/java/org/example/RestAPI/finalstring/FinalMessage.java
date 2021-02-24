@@ -17,5 +17,9 @@ public class FinalMessage {
     //Tạo ví
     public static final String WRONG_PASSWORD = "Sai mật khẩu";
     public static final String CREATE_WALLET_SUCCESS = "Tạo ví thành công";
+    public static final String NO_WALLET = "Không tồn tại ví";
     public static final String INVALID_WALLET_NAME_LENGTH = "Độ dài của tên ví không hợp lệ";
+    public static final String INVALID_NEW_WALLET_NAME_LENGTH = "Độ dài của tên ví mới không hợp lệ";
+    //Update ví
+    public static final String CHANGE_WALLET_NAME_SUCCESS = "Đổi tên ví thành công";
 }

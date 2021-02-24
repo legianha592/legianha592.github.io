@@ -7,6 +7,7 @@ import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.wallet.CreateWalletRequest;
 import org.example.RestAPI.request.wallet.UpdateWalletRequest;
 import org.example.RestAPI.response.wallet.CreateWalletResponse;
+import org.example.RestAPI.response.wallet.UpdateWalletResponse;
 import org.example.RestAPI.service.IUserService;
 import org.example.RestAPI.service.IWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,26 @@ public class WalletController {
 
     @PutMapping("/update")
     public ResponseEntity updateWallet(@RequestBody UpdateWalletRequest request){
+        Optional<Wallet> findWallet = walletService.findById(request.getWallet_id());
+        Message<UpdateWalletResponse> message;
 
+        if (findWallet.isEmpty()){
+            message = new Message<>(FinalMessage.NO_WALLET, null);
+        }
+        else{
+            if (!request.getResult().equals("OK")){
+                message = new Message<>(request.getResult(), null);
+            }
+            else{
+                Wallet wallet = findWallet.get();
+                wallet.setWallet_name(request.getWallet_name());
+                walletService.addWallet(wallet);
+
+                message = new Message<>(FinalMessage.CHANGE_WALLET_NAME_SUCCESS,
+                        new UpdateWalletResponse(wallet.getId(), wallet.getWallet_name(),
+                                wallet.getCreated_date(), wallet.getModified_date(), wallet.getTotal_amount()));
+            }
+        }
+        return new ResponseEntity<Message<UpdateWalletResponse>>(message, HttpStatus.OK);
     }
 }
