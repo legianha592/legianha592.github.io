@@ -76,8 +76,8 @@ public class WalletController {
         return new ResponseEntity<Message<UpdateWalletResponse>>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/list?userId={user_id}")
-    public ResponseEntity getListWallet(@PathVariable long user_id){
+    @GetMapping("/")
+    public ResponseEntity getListWallet(@RequestParam(name = "userId") long user_id){
         Optional<User> findUser = userService.findById(user_id);
         Message<GetListWalletResponse> message;
 
