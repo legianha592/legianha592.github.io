@@ -7,6 +7,7 @@ import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.wallet.CreateWalletRequest;
 import org.example.RestAPI.request.wallet.UpdateWalletRequest;
 import org.example.RestAPI.response.wallet.CreateWalletResponse;
+import org.example.RestAPI.response.wallet.GetListWalletResponse;
 import org.example.RestAPI.response.wallet.UpdateWalletResponse;
 import org.example.RestAPI.service.IUserService;
 import org.example.RestAPI.service.IWalletService;
@@ -73,5 +74,20 @@ public class WalletController {
             }
         }
         return new ResponseEntity<Message<UpdateWalletResponse>>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/list?userId={user_id}")
+    public ResponseEntity getListWallet(@PathVariable long user_id){
+        Optional<User> findUser = userService.findById(user_id);
+        Message<GetListWalletResponse> message;
+
+        if (findUser.isEmpty()){
+            message = new Message<>(FinalMessage.NO_USER, null);
+        }
+        else{
+            GetListWalletResponse response = new GetListWalletResponse(findUser.get());
+            message = new Message<>(FinalMessage.GET_LIST_WALLET_SUCCESS, response);
+        }
+        return new ResponseEntity<Message<GetListWalletResponse>>(message, HttpStatus.OK);
     }
 }
