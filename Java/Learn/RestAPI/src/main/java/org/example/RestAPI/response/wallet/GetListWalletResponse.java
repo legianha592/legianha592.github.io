@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
+import org.example.RestAPI.service.IWalletService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +13,9 @@ import java.util.List;
 
 @Data
 public class GetListWalletResponse {
+    @Autowired
+    IWalletService walletService;
+
     @Data
     @AllArgsConstructor
     class MyWallet{
@@ -23,7 +28,7 @@ public class GetListWalletResponse {
 
     public GetListWalletResponse(User user){
         long user_id = user.getId();
-        List<Wallet> list;
+        List<Wallet> list = walletService.findByUser_id(user_id);
     }
 
 
