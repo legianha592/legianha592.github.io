@@ -24,4 +24,8 @@ public class FinalMessage {
     public static final String CHANGE_WALLET_NAME_SUCCESS = "Đổi tên ví thành công";
     //Lấy danh sách ví theo user id
     public static final String GET_LIST_WALLET_SUCCESS = "Lấy danh sách ví thành công";
+    //Tạo record
+    public static final String INVALID_TITLE_RECORD_LENGTH = "Độ dài tiêu đề bản ghi không hợp lệ";
+    public static final String INVALID_NOTE_RECORD_LENGTH = "Độ dài nội dung bản ghi không hợp lệ";
+    public static final String CREATE_RECORD_SUCCESS = "Tạo bản ghi thành công";
 }

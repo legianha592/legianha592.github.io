@@ -16,7 +16,7 @@ import java.util.Date;
 public class Record {
     @Id @GeneratedValue
     private long id;
-    private float amount;
+    private double amount;
     private String title;
     private String note;
     private LocalDateTime created_date;

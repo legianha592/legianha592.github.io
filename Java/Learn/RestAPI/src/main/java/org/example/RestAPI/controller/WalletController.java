@@ -41,7 +41,9 @@ public class WalletController {
             else{
                 Wallet wallet = new Wallet();
                 wallet.setWallet_name(request.getWallet_name());
+
                 findUser.get().addWallet(wallet);
+
                 walletService.addWallet(wallet);
 
                 message = new Message<>(FinalMessage.CREATE_WALLET_SUCCESS,
