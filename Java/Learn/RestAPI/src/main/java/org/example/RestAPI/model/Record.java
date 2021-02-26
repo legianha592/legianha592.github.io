@@ -33,4 +33,7 @@ public class Record {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Wallet wallet;
+    public void setWallet(Wallet wallet){
+        this.wallet = wallet;
+    }
 }

@@ -41,4 +41,7 @@ public class Wallet {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
     private List<Record> listRecord = new ArrayList<>();
+    public void addRecord(Record record){
+        record.setWallet(this);
+    }
 }
