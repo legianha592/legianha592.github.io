@@ -39,7 +39,7 @@ public class Wallet {
         }
     }
     public double getTotal_amount() {
-        this.setTotal_amount();
+//        this.setTotal_amount();
         return total_amount;
     }
 

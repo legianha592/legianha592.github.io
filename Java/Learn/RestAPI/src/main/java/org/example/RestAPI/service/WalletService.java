@@ -31,6 +31,11 @@ public class WalletService implements IWalletService{
 
     @Override
     public void updateWallet(User user) {
-        
+        List<Wallet> listWallet = user.getListWallet();
+        for (int i=0; i<listWallet.size(); i++){
+            Wallet wallet = listWallet.get(i);
+            wallet.setTotal_amount();
+            walletRepository.saveAndFlush(wallet);
+        }
     }
 }
