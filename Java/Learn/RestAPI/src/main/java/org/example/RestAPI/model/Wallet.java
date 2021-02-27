@@ -32,16 +32,6 @@ public class Wallet {
         modified_date = LocalDateTime.now();
     }
     private double total_amount;
-    public void setTotal_amount(){
-        total_amount = 0;
-        for (int i=0; i<listRecord.size(); i++){
-            total_amount += listRecord.get(i).getAmount();
-        }
-    }
-    public double getTotal_amount() {
-//        this.setTotal_amount();
-        return total_amount;
-    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
