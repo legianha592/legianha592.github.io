@@ -14,6 +14,9 @@ import java.util.List;
 
 @Data
 public class GetListWalletResponse {
+    @Autowired
+    IWalletService walletService;
+
     @Data
     @AllArgsConstructor
     class MyWallet{
@@ -34,7 +37,11 @@ public class GetListWalletResponse {
     private void addList_wallet(User user){
         List<Wallet> list = user.getListWallet();
         for (int i = 0; i < list.size(); i++){
+            //B1: Cập nhật lại ví xuống database
             Wallet wallet = list.get(i);
+            wallet.setTotal_amount();
+            walletService.addWallet(wallet);
+            //B2: lấy lại thông tin của ví => cập nhật sang request
             MyWallet myWallet = new MyWallet(wallet.getId(), wallet.getWallet_name(),
                     wallet.getCreated_date(), wallet.getModified_date(), wallet.getTotal_amount());
             list_wallet.add(myWallet);

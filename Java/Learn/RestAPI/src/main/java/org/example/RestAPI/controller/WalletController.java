@@ -87,6 +87,7 @@ public class WalletController {
             message = new Message<>(FinalMessage.NO_USER, null);
         }
         else{
+            //Bước cập nhật lại total amount của ví có trong response
             GetListWalletResponse response = new GetListWalletResponse(findUser.get());
             message = new Message<>(FinalMessage.GET_LIST_WALLET_SUCCESS, response);
         }
