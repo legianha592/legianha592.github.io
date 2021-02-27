@@ -45,6 +45,7 @@ public class RecordController {
 
                 findWallet.get().addRecord(record);
 
+                //sau khi add record cần cập nhật ngay total amount của ví tại db
                 recordService.addRecord(record);
                 walletService.updateWallet(request.getWallet_id(), record.getAmount());
 
