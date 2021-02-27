@@ -33,6 +33,14 @@ public class Wallet {
     }
     private double total_amount;
 
+    public double getTotal_amount() {
+        total_amount = 0;
+        for (int i=0; i<listRecord.size(); i++){
+            total_amount += listRecord.get(i).getAmount();
+        }
+        return total_amount;
+    }
+
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     public void setUser(User user){
