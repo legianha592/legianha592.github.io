@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface IWalletService {
     void addWallet(Wallet wallet);
 
-    void updateWallet(User user);
+    void updateWallet(long wallet_id, double amount);
 
     Optional<Wallet> findById(long id);
 

@@ -87,8 +87,6 @@ public class WalletController {
             message = new Message<>(FinalMessage.NO_USER, null);
         }
         else{
-            walletService.updateWallet(findUser.get());
-
             GetListWalletResponse response = new GetListWalletResponse(findUser.get());
             message = new Message<>(FinalMessage.GET_LIST_WALLET_SUCCESS, response);
         }

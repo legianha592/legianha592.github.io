@@ -46,6 +46,7 @@ public class RecordController {
                 findWallet.get().addRecord(record);
 
                 recordService.addRecord(record);
+                walletService.updateWallet(request.getWallet_id(), record.getAmount());
 
                 message = new Message<>(FinalMessage.CREATE_RECORD_SUCCESS, new CreateRecordResponse(
                        record.getId(), request.getWallet_id()));
