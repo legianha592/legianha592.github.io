@@ -38,7 +38,7 @@ public class User {
         modified_date = LocalDateTime.now();
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Wallet> listWallet = new ArrayList<>();
     public void addWallet(Wallet wallet){
 //        listWallet.add(wallet);

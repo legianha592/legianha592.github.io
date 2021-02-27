@@ -47,7 +47,7 @@ public class Wallet {
         this.user = user;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wallet")
     private List<Record> listRecord = new ArrayList<>();
     public void addRecord(Record record){
         record.setWallet(this);
