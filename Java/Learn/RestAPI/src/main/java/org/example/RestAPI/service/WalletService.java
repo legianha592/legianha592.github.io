@@ -30,6 +30,7 @@ public class WalletService implements IWalletService{
     }
 
     @Override
+    //Tăng ví có id là wallet_id lên một lượng là amount
     public void updateWallet(long wallet_id, double amount) {
         Optional<Wallet> findWallet = walletRepository.findById(wallet_id);
         if (findWallet.isPresent()){

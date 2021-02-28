@@ -30,4 +30,5 @@ public class FinalMessage {
     public static final String CREATE_RECORD_SUCCESS = "Tạo bản ghi thành công";
     //Update record
     public static final String NO_RECORD = "Không tồn tại bản ghi";
+    public static final String UPDATE_RECORD_SUCCESS = "Cập nhật bản ghi thành công";
 }
