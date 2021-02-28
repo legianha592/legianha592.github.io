@@ -5,6 +5,8 @@ import org.example.RestAPI.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class RecordService implements IRecordService{
     @Autowired
@@ -14,4 +16,11 @@ public class RecordService implements IRecordService{
     public void addRecord(Record record) {
         recordRepository.saveAndFlush(record);
     }
+
+    @Override
+    public Optional<Record> findById(long record_id) {
+        return recordRepository.findById(record_id);
+    }
+
+
 }

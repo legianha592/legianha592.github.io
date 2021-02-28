@@ -59,6 +59,7 @@ public class RecordController {
 
     @PutMapping("/update")
     public ResponseEntity updateRecord(@RequestBody UpdateRecordRequest request){
+        Optional<Record> findRecord = recordService.findById(request.getRecord_id());
         
     }
 }
