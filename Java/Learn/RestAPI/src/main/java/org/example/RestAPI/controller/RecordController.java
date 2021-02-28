@@ -5,6 +5,7 @@ import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.Record;
 import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.record.CreateRecordRequest;
+import org.example.RestAPI.request.record.UpdateRecordRequest;
 import org.example.RestAPI.response.record.CreateRecordResponse;
 import org.example.RestAPI.service.IRecordService;
 import org.example.RestAPI.service.IWalletService;
@@ -56,5 +57,8 @@ public class RecordController {
         return new ResponseEntity<Message<CreateRecordResponse>>(message, HttpStatus.OK);
     }
 
-
+    @PutMapping("/update")
+    public ResponseEntity updateRecord(@RequestBody UpdateRecordRequest request){
+        
+    }
 }
