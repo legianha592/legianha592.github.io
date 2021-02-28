@@ -67,7 +67,12 @@ public class RecordController {
             message = new Message<>(FinalMessage.NO_RECORD, null);
         }
         else{
-            
+            if (!request.getResult().equals("OK")){
+                message = new Message<>(request.getResult(), null);
+            }
+            else{
+                Record record = findRecord.get();
+            }
         }
     }
 }
