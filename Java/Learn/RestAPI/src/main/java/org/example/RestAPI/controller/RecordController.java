@@ -72,9 +72,9 @@ public class RecordController {
             }
             else{
                 Record record = findRecord.get();
-                Wallet wallet = walletService.findById(record.getWallet());
+                Wallet wallet = record.getWallet();
                 //sự chênh lệch giữa số cũ và số mới trong bản ghi
-                long delta = request.getAmount() - record.getAmount();
+                double delta = request.getAmount() - record.getAmount();
                 record.setTitle(request.getTitle());
                 record.setNote(request.getNote());
                 record.setAmount(request.getAmount());
@@ -87,5 +87,6 @@ public class RecordController {
                 ));
             }
         }
+        return new ResponseEntity<Message<UpdateRecordResponse>>(message, HttpStatus.OK);
     }
 }
