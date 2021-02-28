@@ -7,6 +7,7 @@ import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.record.CreateRecordRequest;
 import org.example.RestAPI.request.record.UpdateRecordRequest;
 import org.example.RestAPI.response.record.CreateRecordResponse;
+import org.example.RestAPI.response.record.UpdateRecordResponse;
 import org.example.RestAPI.service.IRecordService;
 import org.example.RestAPI.service.IWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,13 @@ public class RecordController {
     @PutMapping("/update")
     public ResponseEntity updateRecord(@RequestBody UpdateRecordRequest request){
         Optional<Record> findRecord = recordService.findById(request.getRecord_id());
-        
+        Message<UpdateRecordResponse> message;
+
+        if (findRecord.isEmpty()){
+            message = new Message<>(FinalMessage.NO_RECORD, null);
+        }
+        else{
+            
+        }
     }
 }
