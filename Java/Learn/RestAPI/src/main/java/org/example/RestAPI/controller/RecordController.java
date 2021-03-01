@@ -92,6 +92,6 @@ public class RecordController {
 
     @GetMapping("/list")
     public ResponseEntity getListRecord(@RequestParam(name = "walletId") long wallet_id){
-        
+        Optional<Wallet> findWallet = walletService.findById(wallet_id);
     }
 }
