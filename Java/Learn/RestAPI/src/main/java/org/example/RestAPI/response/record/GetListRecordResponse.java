@@ -2,6 +2,7 @@ package org.example.RestAPI.response.record;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.RestAPI.model.Record;
 import org.example.RestAPI.model.Wallet;
 
 import java.time.LocalDateTime;
@@ -29,7 +30,7 @@ public class GetListRecordResponse {
     private List<MyRecord> list_record = new ArrayList<>();
 
     private void addList_record(Wallet wallet){
-        List<Record> list = wallet.getListRecord();
+        List<Record> list = new ArrayList<>();
         for (int i=0; i<list.size(); i++){
             Record record = list.get(i);
 
