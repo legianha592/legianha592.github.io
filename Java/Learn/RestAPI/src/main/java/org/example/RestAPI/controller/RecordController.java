@@ -89,4 +89,9 @@ public class RecordController {
         }
         return new ResponseEntity<Message<UpdateRecordResponse>>(message, HttpStatus.OK);
     }
+
+    @GetMapping("/list")
+    public ResponseEntity getListRecord(@RequestParam(name = "walletId") long wallet_id){
+        
+    }
 }
