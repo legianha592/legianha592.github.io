@@ -30,7 +30,7 @@ public class GetListRecordResponse {
     private List<MyRecord> list_record = new ArrayList<>();
 
     private void addList_record(Wallet wallet){
-        List<Record> list = new ArrayList<>();
+        List<Record> list = wallet.getListRecord();
         for (int i=0; i<list.size(); i++){
             Record record = list.get(i);
 
