@@ -99,5 +99,11 @@ public class RecordController {
         if (findWallet.isEmpty()){
             message = new Message<>(FinalMessage.NO_WALLET, null);
         }
+        else{
+            GetListRecordResponse response = new GetListRecordResponse(findWallet.get());
+            message = new Message<>(FinalMessage.GET_LIST_RECORD_SUCCESS, response);
+        }
+
+        return new ResponseEntity<Message<GetListRecordResponse>>(message, HttpStatus.OK);
     }
 }

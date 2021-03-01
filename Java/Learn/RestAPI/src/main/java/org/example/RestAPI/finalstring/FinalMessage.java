@@ -31,4 +31,6 @@ public class FinalMessage {
     //Update record
     public static final String NO_RECORD = "Không tồn tại bản ghi";
     public static final String UPDATE_RECORD_SUCCESS = "Cập nhật bản ghi thành công";
+    //lấy danh sách record theo wallet id
+    public static final String GET_LIST_RECORD_SUCCESS = "Lấy danh sách bản ghi thành công";
 }
