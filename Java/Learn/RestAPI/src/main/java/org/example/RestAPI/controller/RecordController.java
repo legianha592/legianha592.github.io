@@ -7,6 +7,7 @@ import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.record.CreateRecordRequest;
 import org.example.RestAPI.request.record.UpdateRecordRequest;
 import org.example.RestAPI.response.record.CreateRecordResponse;
+import org.example.RestAPI.response.record.GetListRecordResponse;
 import org.example.RestAPI.response.record.UpdateRecordResponse;
 import org.example.RestAPI.service.IRecordService;
 import org.example.RestAPI.service.IWalletService;
@@ -93,5 +94,10 @@ public class RecordController {
     @GetMapping("/list")
     public ResponseEntity getListRecord(@RequestParam(name = "walletId") long wallet_id){
         Optional<Wallet> findWallet = walletService.findById(wallet_id);
+        Message<GetListRecordResponse> message;
+
+        if (findWallet.isEmpty()){
+            message = new Message<>(FinalMessage.NO_WALLET, null);
+        }
     }
 }
