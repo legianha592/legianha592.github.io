@@ -29,6 +29,13 @@ public class GetListRecordResponse {
     private List<MyRecord> list_record = new ArrayList<>();
 
     private void addList_record(Wallet wallet){
+        List<Record> list = wallet.getListRecord();
+        for (int i=0; i<list.size(); i++){
+            Record record = list.get(i);
 
+            MyRecord myRecord = new MyRecord(record.getId(), record.getTitle(), record.getNote(),
+                    record.getCreated_date(), record.getModified_date(), record.getAmount());
+            this.list_record.add(myRecord);
+        }
     }
 }
