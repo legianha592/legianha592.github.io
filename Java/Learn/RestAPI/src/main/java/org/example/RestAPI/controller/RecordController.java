@@ -5,6 +5,7 @@ import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.Record;
 import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.record.CreateRecordRequest;
+import org.example.RestAPI.request.record.DeleteRecordRequest;
 import org.example.RestAPI.request.record.UpdateRecordRequest;
 import org.example.RestAPI.response.record.CreateRecordResponse;
 import org.example.RestAPI.response.record.GetListRecordResponse;
@@ -105,5 +106,10 @@ public class RecordController {
         }
 
         return new ResponseEntity<Message<GetListRecordResponse>>(message, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteRecord(@RequestBody DeleteRecordRequest request){
+        
     }
 }
