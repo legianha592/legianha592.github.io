@@ -1,2 +1,4 @@
-package org.example.RestAPI.request.record;public class DeleteRecordRequest {
+package org.example.RestAPI.request.record;
+
+public class DeleteRecordRequest {
 }
