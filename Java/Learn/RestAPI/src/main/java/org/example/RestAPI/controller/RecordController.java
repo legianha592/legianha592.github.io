@@ -8,6 +8,7 @@ import org.example.RestAPI.request.record.CreateRecordRequest;
 import org.example.RestAPI.request.record.DeleteRecordRequest;
 import org.example.RestAPI.request.record.UpdateRecordRequest;
 import org.example.RestAPI.response.record.CreateRecordResponse;
+import org.example.RestAPI.response.record.DeleteRecordResponse;
 import org.example.RestAPI.response.record.GetListRecordResponse;
 import org.example.RestAPI.response.record.UpdateRecordResponse;
 import org.example.RestAPI.service.IRecordService;
@@ -111,5 +112,10 @@ public class RecordController {
     @DeleteMapping("/delete")
     public ResponseEntity deleteRecord(@RequestBody DeleteRecordRequest request){
         Optional<Record> findRecord = recordService.findById(request.getRecord_id());
+        Message<DeleteRecordResponse> message;
+
+        if (findRecord.isEmpty()){
+            message = new Message<>(FinalMessage.NO_RECORD, null);
+        }
     }
 }
