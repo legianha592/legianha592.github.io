@@ -120,6 +120,8 @@ public class RecordController {
         else{
             Record record = findRecord.get();
             Wallet wallet = record.getWallet();
+
+            double delta = request.getAmount();
         }
     }
 }
