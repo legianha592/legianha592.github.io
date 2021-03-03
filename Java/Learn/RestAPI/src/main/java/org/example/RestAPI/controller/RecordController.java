@@ -110,6 +110,6 @@ public class RecordController {
 
     @DeleteMapping("/delete")
     public ResponseEntity deleteRecord(@RequestBody DeleteRecordRequest request){
-        
+        Optional<Record> findRecord = recordService.findById(request.getRecord_id());
     }
 }
