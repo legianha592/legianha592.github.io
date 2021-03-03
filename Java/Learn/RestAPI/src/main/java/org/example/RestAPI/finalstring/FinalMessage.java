@@ -33,4 +33,6 @@ public class FinalMessage {
     public static final String UPDATE_RECORD_SUCCESS = "Cập nhật bản ghi thành công";
     //lấy danh sách record theo wallet id
     public static final String GET_LIST_RECORD_SUCCESS = "Lấy danh sách bản ghi thành công";
+    //Xóa record
+    public static final String DELETE_RECORD_SUCCESS = "Xóa bản ghi thành công";
 }

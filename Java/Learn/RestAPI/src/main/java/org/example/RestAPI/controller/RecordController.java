@@ -121,12 +121,15 @@ public class RecordController {
             Record record = findRecord.get();
             Wallet wallet = record.getWallet();
 
-            double delta = request.getAmount();
+            double delta = record.getAmount();
 
-            recordService.deleteRecord(record.getId());
+            recordService.deleteRecord(record);
             walletService.updateWallet(wallet.getId(), -delta);
 
-            
+            message = new Message<>(FinalMessage.DELETE_RECORD_SUCCESS, new DeleteRecordResponse(
+                    request.getRecord_id()));
         }
+
+        return new ResponseEntity<Message<DeleteRecordResponse>>(message, HttpStatus.OK);
     }
 }
