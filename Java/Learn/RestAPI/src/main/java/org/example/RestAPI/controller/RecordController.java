@@ -122,6 +122,8 @@ public class RecordController {
             Wallet wallet = record.getWallet();
 
             double delta = request.getAmount();
+
+            recordService.deleteRecord(record.getId());
         }
     }
 }
