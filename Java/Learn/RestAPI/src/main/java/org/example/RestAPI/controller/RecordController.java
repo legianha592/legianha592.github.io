@@ -117,5 +117,9 @@ public class RecordController {
         if (findRecord.isEmpty()){
             message = new Message<>(FinalMessage.NO_RECORD, null);
         }
+        else{
+            Record record = findRecord.get();
+            Wallet wallet = record.getWallet();
+        }
     }
 }
