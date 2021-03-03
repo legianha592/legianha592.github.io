@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class DeleteRecordRequest {
-    private long wallet_id;
+    private long record_id;
 }
