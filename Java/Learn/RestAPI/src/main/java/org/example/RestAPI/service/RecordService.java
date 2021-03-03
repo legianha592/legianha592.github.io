@@ -18,6 +18,11 @@ public class RecordService implements IRecordService{
     }
 
     @Override
+    public void deleteRecord(Record record) {
+        recordRepository.delete(record);
+    }
+
+    @Override
     public Optional<Record> findById(long record_id) {
         return recordRepository.findById(record_id);
     }
