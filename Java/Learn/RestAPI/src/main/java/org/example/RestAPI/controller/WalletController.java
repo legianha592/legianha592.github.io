@@ -94,4 +94,7 @@ public class WalletController {
     }
     
     @DeleteMapping("/delete")
+    public ResponseEntity deleteWallet(@RequestBody DeleteWalletRequest request){
+        
+    }
 }
