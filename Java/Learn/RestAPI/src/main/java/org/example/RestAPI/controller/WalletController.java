@@ -92,4 +92,6 @@ public class WalletController {
         }
         return new ResponseEntity<Message<GetListWalletResponse>>(message, HttpStatus.OK);
     }
+    
+    @DeleteMapping("/delete")
 }
