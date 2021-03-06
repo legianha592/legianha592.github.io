@@ -4,5 +4,5 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class DeleteWalletResponse {
-    
+    private long wallet_id;
 }
