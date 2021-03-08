@@ -2,6 +2,7 @@ package org.example.RestAPI.service;
 
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
+import org.example.RestAPI.repository.RecordRepository;
 import org.example.RestAPI.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ import java.util.Optional;
 public class WalletService implements IWalletService{
     @Autowired
     WalletRepository walletRepository;
+
+    @Autowired
+    RecordRepository recordRepository;
 
     @Override
     public void addWallet(Wallet wallet){
@@ -45,7 +49,13 @@ public class WalletService implements IWalletService{
     public void deleteWallet(long wallet_id) {
         Optional<Wallet> findWallet = walletRepository.findById(wallet_id);
         if (findWallet.isPresent()){
-            
+            Wallet wallet = findWallet.get();
+            List<Record> listRecord = wallet.getListRecord();
+
+            for (Record record : listRecord){
+                updateWallet(wallet_id, -record.getAmount());
+
+            }
         }
     }
 }
