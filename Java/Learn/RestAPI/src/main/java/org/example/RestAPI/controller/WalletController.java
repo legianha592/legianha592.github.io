@@ -8,6 +8,7 @@ import org.example.RestAPI.request.wallet.CreateWalletRequest;
 import org.example.RestAPI.request.wallet.DeleteWalletRequest;
 import org.example.RestAPI.request.wallet.UpdateWalletRequest;
 import org.example.RestAPI.response.wallet.CreateWalletResponse;
+import org.example.RestAPI.response.wallet.DeleteWalletResponse;
 import org.example.RestAPI.response.wallet.GetListWalletResponse;
 import org.example.RestAPI.response.wallet.UpdateWalletResponse;
 import org.example.RestAPI.service.IUserService;
@@ -96,6 +97,9 @@ public class WalletController {
     
     @DeleteMapping("/delete")
     public ResponseEntity deleteWallet(@RequestBody DeleteWalletRequest request){
+        Optional<Wallet> findWallet = walletService.findById(request.getWallet_id());
+        Message<DeleteWalletResponse> message;
 
+        
     }
 }
