@@ -1,5 +1,6 @@
 package org.example.RestAPI.service;
 
+import org.example.RestAPI.model.Record;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.repository.RecordRepository;
@@ -54,8 +55,10 @@ public class WalletService implements IWalletService{
 
             for (Record record : listRecord){
                 updateWallet(wallet_id, -record.getAmount());
-
+                recordRepository.delete(record);
             }
+
+            walletRepository.delete(wallet);
         }
     }
 }
