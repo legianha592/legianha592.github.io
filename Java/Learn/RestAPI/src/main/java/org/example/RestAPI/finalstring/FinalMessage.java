@@ -22,6 +22,8 @@ public class FinalMessage {
     public static final String INVALID_NEW_WALLET_NAME_LENGTH = "Độ dài của tên ví mới không hợp lệ";
     //Update ví
     public static final String CHANGE_WALLET_NAME_SUCCESS = "Đổi tên ví thành công";
+    //Xóa ví
+    public static final String DELETE_WALLET_SUCCESS = "Xóa ví thành công";
     //Lấy danh sách ví theo user id
     public static final String GET_LIST_WALLET_SUCCESS = "Lấy danh sách ví thành công";
     //Tạo record
