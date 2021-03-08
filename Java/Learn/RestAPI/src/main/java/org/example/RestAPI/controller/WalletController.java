@@ -100,6 +100,11 @@ public class WalletController {
         Optional<Wallet> findWallet = walletService.findById(request.getWallet_id());
         Message<DeleteWalletResponse> message;
 
-        
+        if(findWallet.isEmpty()){
+
+        }
+        else{
+            
+        }
     }
 }
