@@ -40,4 +40,12 @@ public class WalletService implements IWalletService{
             walletRepository.saveAndFlush(wallet);
         }
     }
+
+    @Override
+    public void deleteWallet(long wallet_id) {
+        Optional<Wallet> findWallet = walletRepository.findById(wallet_id);
+        if (findWallet.isPresent()){
+            
+        }
+    }
 }

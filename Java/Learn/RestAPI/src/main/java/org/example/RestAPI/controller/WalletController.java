@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -104,7 +106,7 @@ public class WalletController {
             message = new Message<>(FinalMessage.NO_WALLET, null);
         }
         else{
-
+            walletService.deleteWallet(request.getWallet_id());
         }
     }
 }
