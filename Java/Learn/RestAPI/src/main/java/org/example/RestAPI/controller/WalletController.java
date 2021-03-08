@@ -101,10 +101,10 @@ public class WalletController {
         Message<DeleteWalletResponse> message;
 
         if(findWallet.isEmpty()){
-
+            message = new Message<>(FinalMessage.NO_WALLET, null);
         }
         else{
-            
+
         }
     }
 }
