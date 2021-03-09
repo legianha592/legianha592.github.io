@@ -17,7 +17,7 @@ public class WalletService implements IWalletService{
     WalletRepository walletRepository;
 
     @Autowired
-    RecordRepository recordRepository;
+    IRecordService recordService;
 
     @Override
     public void addWallet(Wallet wallet){
@@ -54,11 +54,11 @@ public class WalletService implements IWalletService{
             System.out.println("id = " + wallet.getId());
             List<Record> listRecord = wallet.getListRecord();
             System.out.println("size = " + listRecord.size());
-            for (int i=0; i<listRecord.size(); i++){
+            for (int i=listRecord.size()-1; i>=0; i--){
                 Record record = listRecord.get(i);
                 System.out.println("record = " + record.getId());
                 updateWallet(wallet_id, -record.getAmount());
-                recordRepository.delete(record);
+                recordService.deleteRecord(record);
             }
 
             walletRepository.delete(wallet);
