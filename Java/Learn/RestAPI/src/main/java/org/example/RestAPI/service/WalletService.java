@@ -50,13 +50,16 @@ public class WalletService implements IWalletService{
     public void deleteWallet(long wallet_id) {
         Optional<Wallet> findWallet = walletRepository.findById(wallet_id);
         if (findWallet.isPresent()){
-            Wallet wallet = findWallet.get();
-            List<Record> listRecord = wallet.getListRecord();
 
-            for (Record record : listRecord){
-                updateWallet(wallet_id, -record.getAmount());
-                recordRepository.delete(record);
-            }
+            Wallet wallet = findWallet.get();
+            System.out.println("id = " + wallet.getId());
+            List<Record> listRecord = wallet.getListRecord();
+            System.out.println("size = " + listRecord.size());
+//            for (Record record : listRecord){
+//                System.out.println("record = " + record.getId());
+//                updateWallet(wallet_id, -record.getAmount());
+//                recordRepository.delete(record);
+//            }
 
             walletRepository.delete(wallet);
         }
