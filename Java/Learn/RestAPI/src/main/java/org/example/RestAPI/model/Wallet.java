@@ -39,7 +39,8 @@ public class Wallet {
         this.user = user;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wallet")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wallet",
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Record> listRecord = new ArrayList<>();
     public void addRecord(Record record){
         record.setWallet(this);
