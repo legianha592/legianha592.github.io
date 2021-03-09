@@ -108,7 +108,8 @@ public class WalletController {
         else{
             walletService.deleteWallet(request.getWallet_id());
 
-            message = new Message<>(FinalMessage.)
+            message = new Message<>(FinalMessage.DELETE_WALLET_SUCCESS, new DeleteWalletResponse(
+                    request.getWallet_id()));
         }
     }
 }
