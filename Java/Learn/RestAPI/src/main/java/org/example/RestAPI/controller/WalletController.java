@@ -111,5 +111,6 @@ public class WalletController {
             message = new Message<>(FinalMessage.DELETE_WALLET_SUCCESS, new DeleteWalletResponse(
                     request.getWallet_id()));
         }
+        return new ResponseEntity<Message<DeleteWalletResponse>>(message, HttpStatus.OK);
     }
 }
