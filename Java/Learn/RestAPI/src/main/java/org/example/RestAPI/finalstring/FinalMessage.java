@@ -37,4 +37,7 @@ public class FinalMessage {
     public static final String GET_LIST_RECORD_SUCCESS = "Lấy danh sách bản ghi thành công";
     //Xóa record
     public static final String DELETE_RECORD_SUCCESS = "Xóa bản ghi thành công";
+    //Import excel file
+    public static final String IMPORT_EXCEL_FILE_SUCCESS = "Import file thành công";
+    public static final String IMPORT_EXCEL_FILE_FAIL = "Import file không thành công";
 }
