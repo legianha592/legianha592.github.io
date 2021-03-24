@@ -65,14 +65,6 @@ public class UserExcelImporter {
                             user.setPassword(currentCell.getStringCellValue());
                             break;
 
-//                        case 2:
-//                            user.setCreated_date(convertToLocalDateTime(currentCell.getDateCellValue()));
-//                            break;
-//
-//                        case 3:
-//                            user.setModified_date(convertToLocalDateTime(currentCell.getDateCellValue()));
-//                            break;
-
                         default:
                             break;
                     }

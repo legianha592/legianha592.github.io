@@ -17,7 +17,7 @@ import java.util.List;
 
 public class UserExcelExporter {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    static String[] HEADERs = { "Id", "User name", "Password", "Created date", "Modified date", "List wallet" };
+    static String[] HEADERs = { "Id", "User name", "Password", "Created date", "Modified date"};
     static String SHEET = "User";
 
     public static ByteArrayInputStream UserEntityToExcel(List<User> listUser){
@@ -41,7 +41,7 @@ public class UserExcelExporter {
                 row.createCell(2).setCellValue(user.getPassword());
                 row.createCell(3).setCellValue(user.getCreated_date().toString());
                 row.createCell(4).setCellValue(user.getModified_date().toString());
-                row.createCell(5).setCellValue(user.getListWallet().toString());
+
             }
 
             workbook.write(out);
