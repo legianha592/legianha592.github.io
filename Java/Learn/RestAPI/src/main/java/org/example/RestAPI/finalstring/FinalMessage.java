@@ -40,4 +40,5 @@ public class FinalMessage {
     //Import excel file
     public static final String IMPORT_EXCEL_FILE_SUCCESS = "Import file thành công";
     public static final String IMPORT_EXCEL_FILE_FAIL = "Import file không thành công";
+    public static final String NOT_EXCEL_FILE = "Không phải file excel";
 }

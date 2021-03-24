@@ -19,8 +19,8 @@ import java.util.List;
 
 public class UserExcelImporter {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    static String[] HEADERs = { "Id", "User name", "Password", "Created date", "Modified date"};
-    static String SHEET = "Tutorials";
+    static String[] HEADERs = { "User name", "Password"};
+    static String SHEET = "User";
 
     public static boolean hasExcelFormat(MultipartFile file) {
         if (!TYPE.equals(file.getContentType())) {
@@ -58,24 +58,20 @@ public class UserExcelImporter {
 
                     switch (cellIdx) {
                         case 0:
-                            user.setId((long) currentCell.getNumericCellValue());
-                            break;
-
-                        case 1:
                             user.setUser_name(currentCell.getStringCellValue());
                             break;
 
-                        case 2:
+                        case 1:
                             user.setPassword(currentCell.getStringCellValue());
                             break;
 
-                        case 3:
-                            user.setCreated_date(convertToLocalDateTime(currentCell.getDateCellValue()));
-                            break;
-
-                        case 4:
-                            user.setModified_date(convertToLocalDateTime(currentCell.getDateCellValue()));
-                            break;
+//                        case 2:
+//                            user.setCreated_date(convertToLocalDateTime(currentCell.getDateCellValue()));
+//                            break;
+//
+//                        case 3:
+//                            user.setModified_date(convertToLocalDateTime(currentCell.getDateCellValue()));
+//                            break;
 
                         default:
                             break;

@@ -126,7 +126,7 @@ public class UserController {
                 .body(file);
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/import/excel")
     public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) {
 
         if (UserExcelImporter.hasExcelFormat(file)) {
@@ -139,7 +139,7 @@ public class UserController {
             }
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserExcelImporterResponse(FinalMessage.IMPORT_EXCEL_FILE_FAIL));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserExcelImporterResponse(FinalMessage.NOT_EXCEL_FILE));
     }
 
     @GetMapping("/getalluser")
