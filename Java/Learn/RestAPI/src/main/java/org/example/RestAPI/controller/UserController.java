@@ -12,7 +12,11 @@ import org.example.RestAPI.response.user.LoginResponse;
 import org.example.RestAPI.response.user.SignupResponse;
 import org.example.RestAPI.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +37,11 @@ public class UserController {
     @GetMapping("/all")
     public List<User> findAll(){
         return userService.findAll();
+    }
+
+    @GetMapping("/")
+    public String rootPage(){
+        return "rootpage";
     }
 
     @PostMapping("/signup")
@@ -103,20 +112,14 @@ public class UserController {
         return new ResponseEntity<Message<ChangePasswordResponse>>(message, HttpStatus.OK);
     }
 
-    @GetMapping("export/excel")
-    public void exportExcelFile(HttpServletResponse response) throws Exception{
-        response.setContentType("application/octet-stream");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
+    @GetMapping("/export/excel")
+    public ResponseEntity<Resource> getFile(){
+        String filename = "user.xlsx";
+        InputStreamResource file = new InputStreamResource(userService.load());
 
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
-
-        List<User> listUsers = userService.findAll();
-
-        UserExcelExporter excelExporter = new UserExcelExporter(listUsers);
-
-        excelExporter.export(response);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
     }
 }

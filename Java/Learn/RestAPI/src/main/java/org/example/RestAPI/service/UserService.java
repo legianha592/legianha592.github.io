@@ -1,10 +1,12 @@
 package org.example.RestAPI.service;
 
+import org.example.RestAPI.exporter.UserExcelExporter;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +29,12 @@ public class UserService implements IUserService{
 
     public Optional<User> findById(Long id){
         return userRepository.findById(id);
+    }
+
+    public ByteArrayInputStream load() {
+        List<User> listUser = userRepository.findAll();
+
+        ByteArrayInputStream in = UserExcelExporter.UserEntityToExcel(listUser);
+        return in;
     }
 }
