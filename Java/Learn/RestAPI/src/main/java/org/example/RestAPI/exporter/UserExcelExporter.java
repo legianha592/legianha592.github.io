@@ -86,4 +86,5 @@ public class UserExcelExporter {
         workbook.close();
 
         outputStream.close();
+    }
 }
