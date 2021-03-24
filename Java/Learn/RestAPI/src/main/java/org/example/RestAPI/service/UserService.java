@@ -1,12 +1,15 @@
 package org.example.RestAPI.service;
 
 import org.example.RestAPI.exporter.UserExcelExporter;
+import org.example.RestAPI.importer.UserExcelImporter;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,5 +39,14 @@ public class UserService implements IUserService{
 
         ByteArrayInputStream in = UserExcelExporter.UserEntityToExcel(listUser);
         return in;
+    }
+
+    public void save(MultipartFile file) {
+        try {
+            List<User> listUser = UserExcelImporter.ExcelToUserEntity(file.getInputStream());
+            userRepository.saveAll(listUser);
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store excel data: " + e.getMessage());
+        }
     }
 }

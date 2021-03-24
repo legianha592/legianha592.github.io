@@ -1,6 +1,7 @@
 package org.example.RestAPI.service;
 
 import org.example.RestAPI.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -16,4 +17,6 @@ public interface IUserService {
     Optional<User> findById(Long id);
 
     ByteArrayInputStream load();
+
+    void save(MultipartFile file);
 }
