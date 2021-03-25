@@ -20,7 +20,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Wallet {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String wallet_name;
     private LocalDateTime created_date;

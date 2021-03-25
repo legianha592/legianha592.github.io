@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "record")
@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Record {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double amount;
     private String title;
@@ -36,4 +36,10 @@ public class Record {
     public void setWallet(Wallet wallet){
         this.wallet = wallet;
     }
+
+    @ManyToMany
+    @JoinTable(name = "record_typerecord",
+                joinColumns = @JoinColumn(name = "record_id"),
+                inverseJoinColumns = @JoinColumn(name = "typerecord_id"))
+    private Set<TypeRecord> setTyperecord = new HashSet<>();
 }
