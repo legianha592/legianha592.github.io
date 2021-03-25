@@ -1,6 +1,6 @@
 package org.example.RestAPI.service;
 
-import org.example.RestAPI.response.exporter.UserExcelExporter;
+import org.example.RestAPI.response.exporter.UserExcelExporterResponse;
 import org.example.RestAPI.importer.UserExcelImporter;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.repository.UserRepository;
@@ -37,7 +37,7 @@ public class UserService implements IUserService{
     public ByteArrayInputStream load() {
         List<User> listUser = userRepository.findAll();
 
-        ByteArrayInputStream in = UserExcelExporter.UserEntityToExcel(listUser);
+        ByteArrayInputStream in = UserExcelExporterResponse.UserEntityToExcel(listUser);
         return in;
     }
 

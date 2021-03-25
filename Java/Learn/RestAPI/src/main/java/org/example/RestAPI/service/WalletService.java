@@ -1,6 +1,6 @@
 package org.example.RestAPI.service;
 
-import org.example.RestAPI.response.exporter.WalletExcelExporter;
+import org.example.RestAPI.response.exporter.WalletExcelExporterResponse;
 import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class WalletService implements IWalletService{
     public ByteArrayInputStream load() {
         List<Wallet> listWallet = walletRepository.findAll();
 
-        ByteArrayInputStream in = WalletExcelExporter.WalletEntityToExcel(listWallet);
+        ByteArrayInputStream in = WalletExcelExporterResponse.WalletEntityToExcel(listWallet);
         return in;
     }
 }

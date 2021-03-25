@@ -1,23 +1,21 @@
 package org.example.RestAPI.response.exporter;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.example.RestAPI.model.Wallet;
+import org.example.RestAPI.model.User;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-public class WalletExcelExporter {
+public class UserExcelExporterResponse {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    static String[] HEADERs = { "Id", "Wallet name", "Created date", "Modified date", "Total amount", "User Id"};
-    static String SHEET = "Wallet";
+    static String[] HEADERs = { "Id", "User name", "Password", "Created date", "Modified date"};
+    static String SHEET = "User";
 
-    public static ByteArrayInputStream WalletEntityToExcel(List<Wallet> listWallet){
+    public static ByteArrayInputStream UserEntityToExcel(List<User> listUser){
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
             Sheet sheet = workbook.createSheet(SHEET);
 
@@ -30,15 +28,14 @@ public class WalletExcelExporter {
             }
 
             int rowIdx = 1;
-            for (Wallet wallet : listWallet) {
+            for (User user : listUser) {
                 Row row = sheet.createRow(rowIdx++);
 
-                row.createCell(0).setCellValue(wallet.getId());
-                row.createCell(1).setCellValue(wallet.getWallet_name());
-                row.createCell(2).setCellValue(wallet.getCreated_date().toString());
-                row.createCell(3).setCellValue(wallet.getModified_date().toString());
-                row.createCell(4).setCellValue(wallet.getTotal_amount());
-                row.createCell(5).setCellValue(wallet.getUser().getId());
+                row.createCell(0).setCellValue(user.getId());
+                row.createCell(1).setCellValue(user.getUser_name());
+                row.createCell(2).setCellValue(user.getPassword());
+                row.createCell(3).setCellValue(user.getCreated_date().toString());
+                row.createCell(4).setCellValue(user.getModified_date().toString());
 
             }
 
