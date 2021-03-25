@@ -18,7 +18,7 @@ public class WalletExcelExporter {
     static String[] HEADERs = { "Id", "Wallet name", "Created date", "Modified date", "Total amount", "User Id"};
     static String SHEET = "Wallet";
 
-    public static ByteArrayInputStream UserEntityToExcel(List<Wallet> listWallet){
+    public static ByteArrayInputStream WalletEntityToExcel(List<Wallet> listWallet){
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
             Sheet sheet = workbook.createSheet(SHEET);
 
@@ -40,7 +40,7 @@ public class WalletExcelExporter {
                 row.createCell(3).setCellValue(wallet.getModified_date().toString());
                 row.createCell(4).setCellValue(wallet.getTotal_amount());
                 row.createCell(5).setCellValue(wallet.getUser().getId());
-                
+
             }
 
             workbook.write(out);
