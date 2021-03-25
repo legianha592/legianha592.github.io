@@ -136,18 +136,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserExcelImporterResponse(FinalMessage.NOT_EXCEL_FILE));
     }
 
-    @GetMapping("/getalluser")
-    public ResponseEntity<List<User>> getAllTutorials() {
-        try {
-            List<User> listUser = userService.findAll();
-
-            if (listUser.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(listUser, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @GetMapping("/getalluser")
+//    public ResponseEntity<List<User>> getAllUser() {
+//        try {
+//            List<User> listUser = userService.findAll();
+//
+//            if (listUser.isEmpty()) {
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//
+//            return new ResponseEntity<>(listUser, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 }
