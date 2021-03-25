@@ -1,11 +1,10 @@
-package org.example.RestAPI.exporter;
+package org.example.RestAPI.response.exporter;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
 
 import java.io.ByteArrayInputStream;

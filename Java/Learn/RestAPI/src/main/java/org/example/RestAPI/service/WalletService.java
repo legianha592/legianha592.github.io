@@ -1,13 +1,12 @@
 package org.example.RestAPI.service;
 
-import org.example.RestAPI.model.Record;
-import org.example.RestAPI.model.User;
+import org.example.RestAPI.response.exporter.WalletExcelExporter;
 import org.example.RestAPI.model.Wallet;
-import org.example.RestAPI.repository.RecordRepository;
 import org.example.RestAPI.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,5 +48,14 @@ public class WalletService implements IWalletService{
         if (findWallet.isPresent()){
             walletRepository.delete(findWallet.get());
         }
+    }
+
+
+    @Override
+    public ByteArrayInputStream load() {
+        List<Wallet> listWallet = walletRepository.findAll();
+
+        ByteArrayInputStream in = WalletExcelExporter.WalletEntityToExcel(listWallet);
+        return in;
     }
 }
