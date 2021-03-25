@@ -12,13 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class WalletService implements IWalletService{
     @Autowired
     WalletRepository walletRepository;
+
+    @Autowired
+    IUserService userService;
 
     @Override
     public void addWallet(Wallet wallet){
@@ -67,8 +69,18 @@ public class WalletService implements IWalletService{
     @Override
     public void save(MultipartFile file) {
         try {
-            WalletExcelImporter importer = new WalletExcelImporter();
-            List<Wallet> listWallet = importer.ExcelToWalletEntity(file.getInputStream());
+            HashMap<Wallet, Long> mapWallet = WalletExcelImporter.ExcelToWalletEntity(file.getInputStream());
+            List<Wallet> listWallet = new ArrayList<>();
+            for (Map.Entry<Wallet, Long> entry : mapWallet.entrySet()){
+                Optional<User> user = userService.findById(entry.getValue());
+                if(user.isPresent()){
+                    entry.getKey().setUser(user.get());
+                }
+                else{
+                    entry.getKey().setUser(null);
+                }
+                listWallet.add(entry.getKey());
+            }
             walletRepository.saveAll(listWallet);
         } catch (IOException e) {
             throw new RuntimeException("fail to store excel data: " + e.getMessage());

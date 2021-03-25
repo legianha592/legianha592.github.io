@@ -1,12 +1,16 @@
 package org.example.RestAPI.controller;
 
 import org.example.RestAPI.finalstring.FinalMessage;
+import org.example.RestAPI.importer.UserExcelImporter;
+import org.example.RestAPI.importer.WalletExcelImporter;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.wallet.CreateWalletRequest;
 import org.example.RestAPI.request.wallet.DeleteWalletRequest;
 import org.example.RestAPI.request.wallet.UpdateWalletRequest;
+import org.example.RestAPI.response.importer.UserExcelImporterResponse;
+import org.example.RestAPI.response.importer.WalletExcelImporterResponse;
 import org.example.RestAPI.response.wallet.CreateWalletResponse;
 import org.example.RestAPI.response.wallet.DeleteWalletResponse;
 import org.example.RestAPI.response.wallet.GetListWalletResponse;
@@ -21,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
@@ -127,5 +132,20 @@ public class WalletController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(file);
+    }
+
+    @PostMapping("/import/excel")
+    public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) {
+        if (WalletExcelImporter.hasExcelFormat(file)) {
+            try {
+                walletService.save(file);
+                return ResponseEntity.status(HttpStatus.OK).body(new WalletExcelImporterResponse(FinalMessage.IMPORT_EXCEL_FILE_SUCCESS));
+
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new WalletExcelImporterResponse(FinalMessage.IMPORT_EXCEL_FILE_FAIL));
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new WalletExcelImporterResponse(FinalMessage.NOT_EXCEL_FILE));
     }
 }
