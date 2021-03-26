@@ -10,13 +10,15 @@ public class UpdateRecordRequest {
     private String title;
     private String note;
     private double amount;
+    private long typerecord_id;
     private String result;
 
-    public UpdateRecordRequest(long record_id, String title, String note, double amount) {
+    public UpdateRecordRequest(long record_id, String title, String note, double amount, long typerecord_id) {
         this.record_id = record_id;
         this.title = title;
         this.note = note;
         this.amount = amount;
+        this.typerecord_id = typerecord_id;
         this.checkValidRequest();
     }
 
