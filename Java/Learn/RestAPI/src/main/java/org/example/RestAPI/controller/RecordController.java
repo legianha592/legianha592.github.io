@@ -3,6 +3,7 @@ package org.example.RestAPI.controller;
 import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.Record;
+import org.example.RestAPI.model.TypeRecord;
 import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.record.CreateRecordRequest;
 import org.example.RestAPI.request.record.DeleteRecordRequest;
@@ -12,6 +13,7 @@ import org.example.RestAPI.response.record.DeleteRecordResponse;
 import org.example.RestAPI.response.record.GetListRecordResponse;
 import org.example.RestAPI.response.record.UpdateRecordResponse;
 import org.example.RestAPI.service.IRecordService;
+import org.example.RestAPI.service.ITypeRecordService;
 import org.example.RestAPI.service.IWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,13 +32,20 @@ public class RecordController {
     @Autowired
     IRecordService recordService;
 
+    @Autowired
+    ITypeRecordService typerecordService;
+
     @PostMapping("/create")
     public ResponseEntity createRecord(@RequestBody CreateRecordRequest request){
         Optional<Wallet> findWallet = walletService.findById(request.getWallet_id());
+        Optional<TypeRecord> findTyperecord = typerecordService.findById(request.getTyperecord_id());
         Message<CreateRecordResponse> message;
 
         if (findWallet.isEmpty()){
             message = new Message<>(FinalMessage.NO_WALLET, null);
+        }
+        else if(findTyperecord.isEmpty()){
+            message = new Message<>(FinalMessage.NO_TYPERECORD, null);
         }
         else{
             if (!request.getResult().equals("OK")){
