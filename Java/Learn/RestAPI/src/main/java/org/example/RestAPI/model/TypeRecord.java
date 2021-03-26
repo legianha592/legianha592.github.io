@@ -33,4 +33,7 @@ public class TypeRecord {
 
     @ManyToMany(mappedBy = "setTyperecord")
     private List<Record> listRecord = new ArrayList<>();
+    public void addRecord(Record record){
+        listRecord.add(record);
+    }
 }

@@ -52,11 +52,17 @@ public class RecordController {
                 message = new Message<>(request.getResult(), null);
             }
             else{
+                //Tạo đối tượng record mới + lấy type record từ db
                 Record record = new Record();
+                TypeRecord typerecord = findTyperecord.get();
+                //setup phía record
                 record.setTitle(request.getTitle());
                 record.setNote(request.getNote());
                 record.setAmount(request.getAmount());
-
+                record.addTyperecord(typerecord);
+                //setup phía type record
+                typerecord.addRecord(record);
+                //add record vào ví
                 findWallet.get().addRecord(record);
 
                 //sau khi add record cần cập nhật ngay total amount của ví tại db
@@ -64,7 +70,7 @@ public class RecordController {
                 walletService.updateWallet(request.getWallet_id(), record.getAmount());
 
                 message = new Message<>(FinalMessage.CREATE_RECORD_SUCCESS, new CreateRecordResponse(
-                       record.getId(), request.getWallet_id()));
+                       record.getId(), request.getWallet_id(), request.getTyperecord_id()));
             }
         }
         return new ResponseEntity<Message<CreateRecordResponse>>(message, HttpStatus.OK);

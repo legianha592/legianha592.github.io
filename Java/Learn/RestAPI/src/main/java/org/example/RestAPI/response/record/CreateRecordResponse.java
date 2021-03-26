@@ -8,4 +8,5 @@ import lombok.Data;
 public class CreateRecordResponse {
     private long record_id;
     private long wallet_id;
+    private long typerecord_id;
 }

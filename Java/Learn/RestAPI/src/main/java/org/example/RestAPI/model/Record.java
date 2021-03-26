@@ -42,4 +42,7 @@ public class Record {
                 joinColumns = @JoinColumn(name = "record_id"),
                 inverseJoinColumns = @JoinColumn(name = "typerecord_id"))
     private Set<TypeRecord> setTyperecord = new HashSet<>();
+    public void addTyperecord(TypeRecord typerecord){
+        setTyperecord.add(typerecord);
+    }
 }
