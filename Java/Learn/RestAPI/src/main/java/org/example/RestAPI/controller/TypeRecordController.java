@@ -1,5 +1,6 @@
 package org.example.RestAPI.controller;
 
+import org.example.RestAPI.request.typerecord.CreateTypeRecordRequest;
 import org.example.RestAPI.service.ITypeRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

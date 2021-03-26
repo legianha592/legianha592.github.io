@@ -14,6 +14,8 @@ public class FinalMessage {
     //Đăng nhập
     public static final String LOGIN_SUCCESS = "Đăng nhập thành công";
     public static final String NO_USER = "Không tồn tại người dùng";
+
+
     //Tạo ví
     public static final String WRONG_PASSWORD = "Sai mật khẩu";
     public static final String CREATE_WALLET_SUCCESS = "Tạo ví thành công";
@@ -26,6 +28,9 @@ public class FinalMessage {
     public static final String DELETE_WALLET_SUCCESS = "Xóa ví thành công";
     //Lấy danh sách ví theo user id
     public static final String GET_LIST_WALLET_SUCCESS = "Lấy danh sách ví thành công";
+
+
+
     //Tạo record
     public static final String INVALID_TITLE_RECORD_LENGTH = "Độ dài tiêu đề bản ghi không hợp lệ";
     public static final String INVALID_NOTE_RECORD_LENGTH = "Độ dài nội dung bản ghi không hợp lệ";
@@ -37,8 +42,16 @@ public class FinalMessage {
     public static final String GET_LIST_RECORD_SUCCESS = "Lấy danh sách bản ghi thành công";
     //Xóa record
     public static final String DELETE_RECORD_SUCCESS = "Xóa bản ghi thành công";
+
+
+
+    //Tạo type record
+    public static final String INVALID_TYPERECORD_NAME_LENGTH = "Độ dài của phân loại bản ghi không hợp lệ";
     //Update type record
     public static final String NO_TYPERECORD = "Không tồn tại phân loại bản ghi";
+
+
+
     //Import excel file
     public static final String IMPORT_EXCEL_FILE_SUCCESS = "Import file thành công";
     public static final String IMPORT_EXCEL_FILE_FAIL = "Import file không thành công";
