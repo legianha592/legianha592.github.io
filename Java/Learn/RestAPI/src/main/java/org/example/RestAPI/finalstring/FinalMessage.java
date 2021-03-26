@@ -47,6 +47,8 @@ public class FinalMessage {
 
     //Tạo type record
     public static final String INVALID_TYPERECORD_NAME_LENGTH = "Độ dài của phân loại bản ghi không hợp lệ";
+    public static final String TYPERECORD_EXISTED = "Phân loại bản ghi đã tồn tại";
+    public static final String CREATE_TYPERECORD_SUCCESS = "Tạo phân loại bản ghi thành công";
     //Update type record
     public static final String NO_TYPERECORD = "Không tồn tại phân loại bản ghi";
 

@@ -16,4 +16,14 @@ public class TypeRecordService implements ITypeRecordService{
     public Optional<TypeRecord> findById(long id) {
         return typerecordRepository.findById(id);
     }
+
+    @Override
+    public Optional<TypeRecord> findByTyperecord_name(String typerecord_name){
+        return typerecordRepository.findByTyperecord_name(typerecord_name);
+    }
+
+    @Override
+    public void addTyperecord(TypeRecord typerecord){
+        typerecordRepository.saveAndFlush(typerecord);
+    }
 }
