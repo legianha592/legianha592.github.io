@@ -5,7 +5,6 @@ import lombok.Data;
 import org.example.RestAPI.finalstring.FinalMessage;
 
 @Data
-@AllArgsConstructor
 public class CreateTypeRecordRequest {
     private final int MAX_LENGTH = 50;
     private String typerecord_name;
