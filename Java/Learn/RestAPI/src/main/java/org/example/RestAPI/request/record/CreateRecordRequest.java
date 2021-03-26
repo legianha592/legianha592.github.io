@@ -10,15 +10,15 @@ public class CreateRecordRequest {
     private String note;
     private double amount;
     private long wallet_id;
-    private long typerecord_id;
+    private long typeRecord_id;
     private String result;
 
-    public CreateRecordRequest(String title, String note, double amount, long wallet_id, long typerecord_id) {
+    public CreateRecordRequest(String title, String note, double amount, long wallet_id, long typeRecord_id) {
         this.title = title;
         this.note = note;
         this.amount = amount;
         this.wallet_id = wallet_id;
-        this.typerecord_id = typerecord_id;
+        this.typeRecord_id = typeRecord_id;
         this.checkValidRequest();
     }
 

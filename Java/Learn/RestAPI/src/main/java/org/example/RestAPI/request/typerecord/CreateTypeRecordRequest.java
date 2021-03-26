@@ -7,18 +7,18 @@ import org.example.RestAPI.finalstring.FinalMessage;
 @Data
 public class CreateTypeRecordRequest {
     private final int MAX_LENGTH = 50;
-    private String typerecord_name;
+    private String typeRecord_name;
     private String image_url;
     private String result;
 
-    public CreateTypeRecordRequest(String typerecord_name, String image_url){
-        this.typerecord_name = typerecord_name;
+    public CreateTypeRecordRequest(String typeRecord_name, String image_url){
+        this.typeRecord_name = typeRecord_name;
         this.image_url = image_url;
         this.checkValidRequest();
     }
 
     private void checkValidRequest(){
-        if (typerecord_name.length() > MAX_LENGTH){
+        if (typeRecord_name.length() > MAX_LENGTH){
             result = FinalMessage.INVALID_TYPERECORD_NAME_LENGTH;
             return;
         }

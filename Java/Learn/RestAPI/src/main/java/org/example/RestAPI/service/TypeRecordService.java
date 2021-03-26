@@ -10,20 +10,20 @@ import java.util.Optional;
 @Service
 public class TypeRecordService implements ITypeRecordService{
     @Autowired
-    TypeRecordRepository typerecordRepository;
+    TypeRecordRepository typeRecordRepository;
 
     @Override
     public Optional<TypeRecord> findById(long id) {
-        return typerecordRepository.findById(id);
+        return typeRecordRepository.findById(id);
     }
 
     @Override
-    public Optional<TypeRecord> findByTyperecord_name(String typerecord_name){
-        return typerecordRepository.findByTyperecord_name(typerecord_name);
+    public Optional<TypeRecord> findByTypeRecord_name(String typeRecord_name){
+        return typeRecordRepository.findByTypeRecord_name(typeRecord_name);
     }
 
     @Override
-    public void addTyperecord(TypeRecord typerecord){
-        typerecordRepository.saveAndFlush(typerecord);
+    public void addTypeRecord(TypeRecord typerecord){
+        typeRecordRepository.saveAndFlush(typerecord);
     }
 }

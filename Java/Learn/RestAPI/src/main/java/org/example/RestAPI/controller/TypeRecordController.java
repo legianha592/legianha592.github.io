@@ -21,20 +21,20 @@ import java.util.Optional;
 @RequestMapping("/typerecord")
 public class TypeRecordController {
     @Autowired
-    ITypeRecordService typerecordService;
+    ITypeRecordService typeRecordService;
 
     @PostMapping("/create")
     public ResponseEntity createTypeRecord(@RequestBody CreateTypeRecordRequest request){
-        Optional<TypeRecord> findTyperecord = typerecordService.findByTyperecord_name(request.getTyperecord_name());
+        Optional<TypeRecord> findTypeRecord = typeRecordService.findByTypeRecord_name(request.getTypeRecord_name());
         Message<CreateTypeRecordResponse> message;
 
-        if (findTyperecord.isEmpty()){
+        if (findTypeRecord.isEmpty()){
             if (request.getResult().equals("OK")){
                 TypeRecord typerecord = new TypeRecord();
-                typerecord.setTyperecord_name(request.getTyperecord_name());
+                typerecord.setTypeRecord_name(request.getTypeRecord_name());
                 typerecord.setImage_url(request.getImage_url());
 
-                typerecordService.addTyperecord(typerecord);
+                typeRecordService.addTypeRecord(typerecord);
 
                 message = new Message<>(FinalMessage.CREATE_TYPERECORD_SUCCESS, new CreateTypeRecordResponse(
                         typerecord.getId()));

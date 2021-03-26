@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "typerecord")
+@Table(name = "typeRecord")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class TypeRecord {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String typerecord_name;
+    private String typeRecord_name;
     private String image_url;
     private LocalDateTime created_date;
     @PrePersist
@@ -31,9 +31,16 @@ public class TypeRecord {
         modified_date = LocalDateTime.now();
     }
 
-    @ManyToMany(mappedBy = "setTyperecord")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeRecord",
+            cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Record> listRecord = new ArrayList<>();
     public void addRecord(Record record){
-        listRecord.add(record);
+        record.setTypeRecord(this);
+    }
+
+    @ManyToMany(mappedBy = "setTypeRecord")
+    private List<Wallet> listWallet = new ArrayList<>();
+    public void addWallet(Wallet wallet){
+        listWallet.add(wallet);
     }
 }

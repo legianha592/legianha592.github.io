@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Entity
 @Table(name = "wallet")
@@ -47,5 +44,14 @@ public class Wallet {
     private List<Record> listRecord = new ArrayList<>();
     public void addRecord(Record record){
         record.setWallet(this);
+    }
+
+    @ManyToMany
+    @JoinTable(name = "wallet_typeRecord",
+                joinColumns = @JoinColumn(name = "wallet_id"),
+                inverseJoinColumns = @JoinColumn(name = "typeRecord_id"))
+    private Set<TypeRecord> setTypeRecord = new HashSet<>();
+    public void addTypeRecord(TypeRecord typeRecord){
+        setTypeRecord.add(typeRecord);
     }
 }

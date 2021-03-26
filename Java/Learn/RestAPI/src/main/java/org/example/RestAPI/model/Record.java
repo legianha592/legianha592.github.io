@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -37,12 +38,10 @@ public class Record {
         this.wallet = wallet;
     }
 
-    @ManyToMany
-    @JoinTable(name = "record_typerecord",
-                joinColumns = @JoinColumn(name = "record_id"),
-                inverseJoinColumns = @JoinColumn(name = "typerecord_id"))
-    private Set<TypeRecord> setTyperecord = new HashSet<>();
-    public void addTyperecord(TypeRecord typerecord){
-        setTyperecord.add(typerecord);
+    @ManyToOne(fetch = FetchType.EAGER)
+    private TypeRecord typeRecord;
+    public void setTypeRecord(TypeRecord typeRecord){
+        this.typeRecord = typeRecord;
     }
+
 }

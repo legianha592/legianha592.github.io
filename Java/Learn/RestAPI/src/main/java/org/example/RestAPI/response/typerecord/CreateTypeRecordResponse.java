@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CreateTypeRecordResponse {
-    private long typerecord_id;
+    private long typeRecord_id;
 }

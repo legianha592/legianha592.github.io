@@ -33,18 +33,18 @@ public class RecordController {
     IRecordService recordService;
 
     @Autowired
-    ITypeRecordService typerecordService;
+    ITypeRecordService typeRecordService;
 
     @PostMapping("/create")
     public ResponseEntity createRecord(@RequestBody CreateRecordRequest request){
         Optional<Wallet> findWallet = walletService.findById(request.getWallet_id());
-        Optional<TypeRecord> findTyperecord = typerecordService.findById(request.getTyperecord_id());
+        Optional<TypeRecord> findTypeRecord = typeRecordService.findById(request.getTypeRecord_id());
         Message<CreateRecordResponse> message;
 
         if (findWallet.isEmpty()){
             message = new Message<>(FinalMessage.NO_WALLET, null);
         }
-        else if(findTyperecord.isEmpty()){
+        else if(findTypeRecord.isEmpty()){
             message = new Message<>(FinalMessage.NO_TYPERECORD, null);
         }
         else{
@@ -54,23 +54,28 @@ public class RecordController {
             else{
                 //Tạo đối tượng record mới + lấy type record từ db
                 Record record = new Record();
-                TypeRecord typerecord = findTyperecord.get();
-                //setup phía record
+                TypeRecord typeRecord = findTypeRecord.get();
+
+                //setup thông tin phía record
                 record.setTitle(request.getTitle());
                 record.setNote(request.getNote());
                 record.setAmount(request.getAmount());
-                record.addTyperecord(typerecord);
-                //setup phía type record
-                typerecord.addRecord(record);
-                //add record vào ví
+                record.setTypeRecord(typeRecord);
+
+                //setup phía type record: 1 type record gồm nhiều record, nhiều wallet
+                typeRecord.addRecord(record);
+                typeRecord.addWallet(findWallet.get());
+
+                //setup phía wallet: 1 wallet gồm nhiều record, nhiều type record
                 findWallet.get().addRecord(record);
+                findWallet.get().addTypeRecord(typeRecord);
 
                 //sau khi add record cần cập nhật ngay total amount của ví tại db
                 recordService.addRecord(record);
                 walletService.updateWallet(request.getWallet_id(), record.getAmount());
 
                 message = new Message<>(FinalMessage.CREATE_RECORD_SUCCESS, new CreateRecordResponse(
-                       record.getId(), request.getWallet_id(), request.getTyperecord_id()));
+                       record.getId(), request.getWallet_id(), request.getTypeRecord_id()));
             }
         }
         return new ResponseEntity<Message<CreateRecordResponse>>(message, HttpStatus.OK);
@@ -89,13 +94,16 @@ public class RecordController {
                 message = new Message<>(request.getResult(), null);
             }
             else{
+                //lấy record cần sửa + ví chủ quản để sửa amount của ví
                 Record record = findRecord.get();
                 Wallet wallet = record.getWallet();
+
                 //sự chênh lệch giữa số cũ và số mới trong bản ghi
                 double delta = request.getAmount() - record.getAmount();
                 record.setTitle(request.getTitle());
                 record.setNote(request.getNote());
                 record.setAmount(request.getAmount());
+
 
                 recordService.addRecord(record);
                 walletService.updateWallet(wallet.getId(), delta);

@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ITypeRecordService {
     Optional<TypeRecord> findById(long id);
 
-    Optional<TypeRecord> findByTyperecord_name(String typerecord_name);
+    Optional<TypeRecord> findByTypeRecord_name(String typeRecord_name);
 
-    void addTyperecord(TypeRecord typeRecord);
+    void addTypeRecord(TypeRecord typeRecord);
 }
