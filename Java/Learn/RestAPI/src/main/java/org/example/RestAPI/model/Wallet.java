@@ -54,4 +54,7 @@ public class Wallet {
     public void addTypeRecord(TypeRecord typeRecord){
         setTypeRecord.add(typeRecord);
     }
+    public void deleteTypeRecord(TypeRecord typeRecord){
+        setTypeRecord.remove(typeRecord);
+    }
 }

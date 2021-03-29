@@ -1,5 +1,6 @@
 package org.example.RestAPI.service;
 
+import org.example.RestAPI.model.TypeRecord;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,8 @@ public interface IWalletService {
     void addWallet(Wallet wallet);
 
     void updateWallet(long wallet_id, double amount);
+
+    void updateTypeRecordConnection(long wallet_id, TypeRecord old_type, TypeRecord new_type);
 
     void deleteWallet(long wallet_id);
 

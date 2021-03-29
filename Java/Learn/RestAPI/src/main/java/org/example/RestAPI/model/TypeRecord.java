@@ -43,4 +43,7 @@ public class TypeRecord {
     public void addWallet(Wallet wallet){
         listWallet.add(wallet);
     }
+    public void deleteWallet(Wallet wallet){
+        listWallet.remove(wallet);
+    }
 }
