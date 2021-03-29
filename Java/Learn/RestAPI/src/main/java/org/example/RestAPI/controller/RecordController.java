@@ -84,29 +84,38 @@ public class RecordController {
     @PutMapping("/update")
     public ResponseEntity updateRecord(@RequestBody UpdateRecordRequest request){
         Optional<Record> findRecord = recordService.findById(request.getRecord_id());
+        Optional<TypeRecord> findTypeRecord = typeRecordService.findById(request.getTypeRecord_id());
         Message<UpdateRecordResponse> message;
 
         if (findRecord.isEmpty()){
             message = new Message<>(FinalMessage.NO_RECORD, null);
         }
+        else if (findTypeRecord.isEmpty()){
+            message = new Message<>(FinalMessage.NO_TYPERECORD, null);
+        }
         else{
-            if (!request.getResult().equals("OK")){
+            if (!request.getResult().equals("OK")) {
                 message = new Message<>(request.getResult(), null);
             }
             else{
                 //lấy record cần sửa + ví chủ quản để sửa amount của ví
                 Record record = findRecord.get();
                 Wallet wallet = record.getWallet();
+                TypeRecord typeRecord = record.getTypeRecord();
 
-                //sự chênh lệch giữa số cũ và số mới trong bản ghi
+                //Các thông số quan trọng có thể update: total_amount của ví chủ + mối liên hệ wallet - typeRecord
                 double delta = request.getAmount() - record.getAmount();
                 record.setTitle(request.getTitle());
                 record.setNote(request.getNote());
                 record.setAmount(request.getAmount());
+                record.setTypeRecord(findTypeRecord.get());
 
-
+                //B1: Vi moi + record moi
                 recordService.addRecord(record);
+                //B2: Vi cu cap nhat lai total_amount
                 walletService.updateWallet(wallet.getId(), delta);
+                //B3: Vi cu cap nhat lai moi lien he voi type record
+                walletService.updateTypeRecordConnection(wallet.getId(), typeRecord, findTypeRecord.get());
 
                 message = new Message<>(FinalMessage.UPDATE_RECORD_SUCCESS, new UpdateRecordResponse(
                         record.getId(), record.getTitle(), record.getNote(), record.getAmount(), wallet.getId()
