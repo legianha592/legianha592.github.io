@@ -110,12 +110,18 @@ public class RecordController {
                 record.setAmount(request.getAmount());
                 record.setTypeRecord(findTypeRecord.get());
 
+                //setup phía type record: 1 type record gồm nhiều record, nhiều wallet
+                findTypeRecord.get().addRecord(record);
+                findTypeRecord.get().addWallet(wallet);
+
+                //setup phía wallet: 1 wallet gồm nhiều record, nhiều type record
+                wallet.addTypeRecord(findTypeRecord.get());
+
                 //B1: Vi co record moi
                 recordService.addRecord(record);
                 //B2: Vi cap nhat lai total_amount
                 walletService.updateWallet(wallet.getId(), delta);
-                //B3: Vi cap nhat lai moi lien he voi type record
-                walletService.updateTypeRecordConnection(wallet.getId(), typeRecord, findTypeRecord.get());
+
 
                 message = new Message<>(FinalMessage.UPDATE_RECORD_SUCCESS, new UpdateRecordResponse(
                         record.getId(), record.getTitle(), record.getNote(), record.getAmount(), wallet.getId(), request.getTypeRecord_id()

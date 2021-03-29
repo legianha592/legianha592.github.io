@@ -55,37 +55,6 @@ public class WalletService implements IWalletService{
         }
     }
 
-    @Override
-    public void updateTypeRecordConnection(long wallet_id, TypeRecord old_type, TypeRecord new_type) {
-        if (old_type.getId() == new_type.getId()){
-            return;
-        }
-
-        Optional<Wallet> findWallet = walletRepository.findById(wallet_id);
-        //Duyet qua record cua vi, neu co >1 record cung type thi khong xoa lien ket cu, con neu == 1 thi phai xoa lien ket cu
-        if (findWallet.isPresent()){
-            Wallet wallet = findWallet.get();
-            int count = 0;
-            for (Record record : wallet.getListRecord()){
-                if (record.getTypeRecord().getId() == old_type.getId()){
-                    count++;
-                }
-                if (count > 1){
-                    return;
-                }
-            }
-            //Xoa lien he cu
-            wallet.deleteTypeRecord(old_type);
-            old_type.deleteWallet(wallet);
-            //Them lien he moi
-            wallet.addTypeRecord(new_type);
-            new_type.addWallet(wallet);
-
-            walletRepository.saveAndFlush(wallet);
-            typeRecordRepository.saveAndFlush(old_type);
-            typeRecordRepository.saveAndFlush(new_type);
-        }
-    }
 
 
     @Override

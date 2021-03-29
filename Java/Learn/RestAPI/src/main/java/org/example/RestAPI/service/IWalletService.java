@@ -1,5 +1,6 @@
 package org.example.RestAPI.service;
 
+import org.example.RestAPI.model.Record;
 import org.example.RestAPI.model.TypeRecord;
 import org.example.RestAPI.model.User;
 import org.example.RestAPI.model.Wallet;
@@ -14,7 +15,6 @@ public interface IWalletService {
 
     void updateWallet(long wallet_id, double amount);
 
-    void updateTypeRecordConnection(long wallet_id, TypeRecord old_type, TypeRecord new_type);
 
     void deleteWallet(long wallet_id);
 
