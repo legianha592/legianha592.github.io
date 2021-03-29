@@ -118,7 +118,7 @@ public class RecordController {
                 walletService.updateTypeRecordConnection(wallet.getId(), typeRecord, findTypeRecord.get());
 
                 message = new Message<>(FinalMessage.UPDATE_RECORD_SUCCESS, new UpdateRecordResponse(
-                        record.getId(), record.getTitle(), record.getNote(), record.getAmount(), wallet.getId()
+                        record.getId(), record.getTitle(), record.getNote(), record.getAmount(), wallet.getId(), request.getTypeRecord_id()
                 ));
             }
         }

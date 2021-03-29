@@ -11,4 +11,5 @@ public class UpdateRecordResponse {
     private String note;
     private double amount;
     private long wallet_id;
+    private long typeRecord_id;
 }
