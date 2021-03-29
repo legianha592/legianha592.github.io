@@ -111,7 +111,6 @@ public class RecordController {
                 record.setTypeRecord(findTypeRecord.get());
 
                 //setup phía type record: 1 type record gồm nhiều record, nhiều wallet
-                findTypeRecord.get().addRecord(record);
                 findTypeRecord.get().addWallet(wallet);
 
                 //setup phía wallet: 1 wallet gồm nhiều record, nhiều type record
