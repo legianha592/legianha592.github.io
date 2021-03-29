@@ -20,6 +20,7 @@ public class GetListRecordResponse {
         LocalDateTime created_date;
         LocalDateTime modified_date;
         double amount;
+        long typeRecord_id;
     }
 
     public GetListRecordResponse(Wallet wallet){
@@ -35,7 +36,7 @@ public class GetListRecordResponse {
             Record record = list.get(i);
 
             MyRecord myRecord = new MyRecord(record.getId(), record.getTitle(), record.getNote(),
-                    record.getCreated_date(), record.getModified_date(), record.getAmount());
+                    record.getCreated_date(), record.getModified_date(), record.getAmount(), record.getTypeRecord().getId());
             this.list_record.add(myRecord);
         }
     }
