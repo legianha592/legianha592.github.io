@@ -51,6 +51,7 @@ public class FinalMessage {
     public static final String CREATE_TYPERECORD_SUCCESS = "Tạo phân loại bản ghi thành công";
     //Update type record
     public static final String NO_TYPERECORD = "Không tồn tại phân loại bản ghi";
+    public static final String UPDATE_TYPERECORD_SUCCESS = "Cập nhật phân loại bản ghi thành công";
 
 
 

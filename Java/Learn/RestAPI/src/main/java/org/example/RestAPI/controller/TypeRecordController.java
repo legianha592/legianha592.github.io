@@ -5,7 +5,9 @@ import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.TypeRecord;
 import org.example.RestAPI.request.typerecord.CreateTypeRecordRequest;
+import org.example.RestAPI.request.typerecord.UpdateTypeRecordRequest;
 import org.example.RestAPI.response.typerecord.CreateTypeRecordResponse;
+import org.example.RestAPI.response.typerecord.UpdateTypeRecordResponse;
 import org.example.RestAPI.service.ITypeRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,14 +29,14 @@ public class TypeRecordController {
 
         if (findTypeRecord.isEmpty()){
             if (request.getResult().equals("OK")){
-                TypeRecord typerecord = new TypeRecord();
-                typerecord.setTypeRecord_name(request.getTypeRecord_name());
-                typerecord.setImage_url(request.getImage_url());
+                TypeRecord typeRecord = new TypeRecord();
+                typeRecord.setTypeRecord_name(request.getTypeRecord_name());
+                typeRecord.setImage_url(request.getImage_url());
 
-                typeRecordService.addTypeRecord(typerecord);
+                typeRecordService.addTypeRecord(typeRecord);
 
                 message = new Message<>(FinalMessage.CREATE_TYPERECORD_SUCCESS, new CreateTypeRecordResponse(
-                        typerecord.getId()));
+                        typeRecord.getId()));
             }
             else{
                 message = new Message<>(request.getResult(), null);
@@ -46,4 +48,31 @@ public class TypeRecordController {
         return new ResponseEntity<Message<CreateTypeRecordResponse>>(message, HttpStatus.OK);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity updateTypeRecord(@RequestBody UpdateTypeRecordRequest request){
+        Optional<TypeRecord> findTypeRecord = typeRecordService.findById(request.getTypeRecord_id());
+        Message<UpdateTypeRecordResponse> message;
+
+        if (findTypeRecord.isEmpty()){
+            message = new Message<>(FinalMessage.NO_TYPERECORD, null);
+        }
+        else{
+            if (request.getResult().equals("OK")){
+                TypeRecord typeRecord = findTypeRecord.get();
+                typeRecord.setTypeRecord_name(request.getTypeRecord_name());
+                typeRecord.setImage_url(request.getImage_url());
+
+                typeRecordService.addTypeRecord(typeRecord);
+
+                message = new Message<>(FinalMessage.UPDATE_TYPERECORD_SUCCESS, new UpdateTypeRecordResponse(
+                        typeRecord.getId(), typeRecord.getTypeRecord_name(), typeRecord.getImage_url()
+                ));
+            }
+            else{
+                message = new Message<>(request.getResult(), null);
+            }
+        }
+
+        return new ResponseEntity<Message<UpdateTypeRecordResponse>>(message, HttpStatus.OK);
+    }
 }
