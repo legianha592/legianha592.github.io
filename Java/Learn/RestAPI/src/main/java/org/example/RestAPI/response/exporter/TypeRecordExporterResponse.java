@@ -22,11 +22,13 @@ public class TypeRecordExporterResponse {
     static String[] SHEET = {"TypeRecord", "Wallet", "Wallet_TypeRecord"};
     static List<TypeRecord> classListTypeRecord;
     static List<Wallet> classListWallet;
-    static Workbook workbook = new XSSFWorkbook();
-    static ByteArrayOutputStream classOut = new ByteArrayOutputStream();
+    static Workbook workbook;
+    static ByteArrayOutputStream classOut;
 
     public static ByteArrayInputStream TypeRecordEntityToExcel(List<TypeRecord> listTypeRecord, List<Wallet> listWallet){
         //class export multiple sheet in excel file
+        workbook = new XSSFWorkbook();
+        classOut = new ByteArrayOutputStream();
         classListTypeRecord = listTypeRecord;
         classListWallet = listWallet;
 
