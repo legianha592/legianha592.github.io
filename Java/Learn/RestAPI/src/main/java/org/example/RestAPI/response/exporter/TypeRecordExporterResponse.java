@@ -26,11 +26,12 @@ public class TypeRecordExporterResponse {
     static ByteArrayOutputStream classOut = new ByteArrayOutputStream();
 
     public static ByteArrayInputStream TypeRecordEntityToExcel(List<TypeRecord> listTypeRecord, List<Wallet> listWallet){
+        //class export multiple sheet in excel file
         classListTypeRecord = listTypeRecord;
         classListWallet = listWallet;
 
         try (ByteArrayOutputStream out = classOut;) {
-
+            //step 1: export type record
             Sheet sheet = workbook.createSheet(SHEET[0]);
 
             // Header
@@ -53,8 +54,10 @@ public class TypeRecordExporterResponse {
 
             }
 
+            //step 2: export wallet
             WalletEntityToExcel();
 
+            //step 3: export communication table
             TypeRecord_WalletTableToExcel();
 
             return new ByteArrayInputStream(out.toByteArray());
