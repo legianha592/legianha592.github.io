@@ -42,7 +42,6 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
                 cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Wallet> listWallet = new ArrayList<>();
     public void addWallet(Wallet wallet){
 //        listWallet.add(wallet);

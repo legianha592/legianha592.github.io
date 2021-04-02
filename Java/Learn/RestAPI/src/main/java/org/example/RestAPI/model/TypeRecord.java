@@ -38,14 +38,12 @@ public class TypeRecord {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeRecord",
             cascade = CascadeType.ALL, orphanRemoval = false)
-    @JsonManagedReference
     private List<Record> listRecord = new ArrayList<>();
     public void addRecord(Record record){
         record.setTypeRecord(this);
     }
 
     @ManyToMany(mappedBy = "setTypeRecord")
-    @JsonBackReference
     private List<Wallet> listWallet = new ArrayList<>();
     public void addWallet(Wallet wallet){
         listWallet.add(wallet);

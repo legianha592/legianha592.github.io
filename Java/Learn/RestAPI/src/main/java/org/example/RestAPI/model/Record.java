@@ -35,14 +35,12 @@ public class Record {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
     private Wallet wallet;
     public void setWallet(Wallet wallet){
         this.wallet = wallet;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
     private TypeRecord typeRecord;
     public void setTypeRecord(TypeRecord typeRecord){
         this.typeRecord = typeRecord;

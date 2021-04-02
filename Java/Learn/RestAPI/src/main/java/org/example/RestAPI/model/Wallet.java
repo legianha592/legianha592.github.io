@@ -37,7 +37,6 @@ public class Wallet {
     private double total_amount;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
     private User user;
     public void setUser(User user){
         this.user = user;
@@ -45,7 +44,6 @@ public class Wallet {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wallet",
             cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Record> listRecord = new ArrayList<>();
     public void addRecord(Record record){
         record.setWallet(this);
@@ -55,7 +53,6 @@ public class Wallet {
     @JoinTable(name = "wallet_typeRecord",
                 joinColumns = @JoinColumn(name = "wallet_id"),
                 inverseJoinColumns = @JoinColumn(name = "typeRecord_id"))
-    @JsonBackReference
     private Set<TypeRecord> setTypeRecord = new HashSet<>();
     public void addTypeRecord(TypeRecord typeRecord){
         setTypeRecord.add(typeRecord);
