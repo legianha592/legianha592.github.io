@@ -76,9 +76,10 @@ public class TypeRecordController {
                 message = new Message<>(request.getResult(), null);
             }
         }
-
         return new ResponseEntity<Message<UpdateTypeRecordResponse>>(message, HttpStatus.OK);
     }
+
+
 
 
     @GetMapping("/export/excel")
