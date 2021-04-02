@@ -37,6 +37,11 @@ public class TypeRecordService implements ITypeRecordService{
     }
 
     @Override
+    public void deleteTypeRecord(TypeRecord typeRecord) {
+        typeRecordRepository.delete(typeRecord);
+    }
+
+    @Override
     public ByteArrayInputStream loadTypeRecord() {
         List<TypeRecord> listTypeRecord = typeRecordRepository.findAll();
         List<Wallet> listWallet = walletRepository.findAll();

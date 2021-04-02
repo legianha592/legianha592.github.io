@@ -96,7 +96,7 @@ public class TypeRecordController {
                 message = new Message<>(FinalMessage.UNABLE_TO_DELETE_TYPERECORD, null);
             }
             else{
-                typeRecordService.deleteTypeRecord(request.getTypeRecord_id());
+                typeRecordService.deleteTypeRecord(typeRecord);
 
                 message = new Message<>(FinalMessage.DELETE_TYPERECORD_SUCCESS, new DeleteTypeRecordResponse(
                         request.getTypeRecord_id()

@@ -13,5 +13,7 @@ public interface ITypeRecordService {
 
     void addTypeRecord(TypeRecord typeRecord);
 
+    void deleteTypeRecord(TypeRecord typeRecord);
+
     ByteArrayInputStream loadTypeRecord();
 }
