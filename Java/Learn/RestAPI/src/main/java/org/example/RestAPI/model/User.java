@@ -1,6 +1,7 @@
 package org.example.RestAPI.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     public User(String user_name, String password) {
         this.user_name = user_name;
@@ -42,6 +42,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
                 cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Wallet> listWallet = new ArrayList<>();
     public void addWallet(Wallet wallet){
 //        listWallet.add(wallet);

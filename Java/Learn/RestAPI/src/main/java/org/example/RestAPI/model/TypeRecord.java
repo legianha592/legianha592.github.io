@@ -1,6 +1,8 @@
 package org.example.RestAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class TypeRecord {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -37,12 +38,14 @@ public class TypeRecord {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeRecord",
             cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonManagedReference
     private List<Record> listRecord = new ArrayList<>();
     public void addRecord(Record record){
         record.setTypeRecord(this);
     }
 
     @ManyToMany(mappedBy = "setTypeRecord")
+    @JsonBackReference
     private List<Wallet> listWallet = new ArrayList<>();
     public void addWallet(Wallet wallet){
         listWallet.add(wallet);
