@@ -5,8 +5,10 @@ import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.TypeRecord;
 import org.example.RestAPI.request.typerecord.CreateTypeRecordRequest;
+import org.example.RestAPI.request.typerecord.DeleteTypeRecordRequest;
 import org.example.RestAPI.request.typerecord.UpdateTypeRecordRequest;
 import org.example.RestAPI.response.typerecord.CreateTypeRecordResponse;
+import org.example.RestAPI.response.typerecord.DeleteTypeRecordResponse;
 import org.example.RestAPI.response.typerecord.UpdateTypeRecordResponse;
 import org.example.RestAPI.service.ITypeRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +82,29 @@ public class TypeRecordController {
     }
 
 
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteTypeRecord(@RequestBody DeleteTypeRecordRequest request){
+        Optional<TypeRecord> findTypeRecord = typeRecordService.findById(request.getTypeRecord_id());
+        Message<DeleteTypeRecordResponse> message;
 
+        if (findTypeRecord.isEmpty()){
+            message = new Message<>(FinalMessage.NO_TYPERECORD, null);
+        }
+        else{
+            TypeRecord typeRecord = findTypeRecord.get();
+            if (typeRecord.getListRecord().size() != 0 || typeRecord.getListWallet().size() != 0){
+                message = new Message<>(FinalMessage.UNABLE_TO_DELETE_TYPERECORD, null);
+            }
+            else{
+                typeRecordService.deleteTypeRecord(request.getTypeRecord_id());
+
+                message = new Message<>(FinalMessage.DELETE_TYPERECORD_SUCCESS, new DeleteTypeRecordResponse(
+                        request.getTypeRecord_id()
+                ));
+            }
+        }
+        return new ResponseEntity<Message<DeleteTypeRecordResponse>>(message, HttpStatus.OK);
+    }
 
     @GetMapping("/export/excel")
     public ResponseEntity<Resource> getFile(){

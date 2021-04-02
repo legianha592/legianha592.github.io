@@ -52,7 +52,9 @@ public class FinalMessage {
     //Update type record
     public static final String NO_TYPERECORD = "Không tồn tại phân loại bản ghi";
     public static final String UPDATE_TYPERECORD_SUCCESS = "Cập nhật phân loại bản ghi thành công";
-
+    //Xóa record
+    public static final String UNABLE_TO_DELETE_TYPERECORD = "Không thể xóa phân loại bản ghi do có liên kết với ví/bản ghi";
+    public static final String DELETE_TYPERECORD_SUCCESS = "Xóa bản ghi thành công";
 
 
     //Import excel file
