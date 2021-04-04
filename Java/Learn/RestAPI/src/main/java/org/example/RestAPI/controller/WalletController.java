@@ -1,7 +1,6 @@
 package org.example.RestAPI.controller;
 
 import org.example.RestAPI.finalstring.FinalMessage;
-import org.example.RestAPI.importer.UserExcelImporter;
 import org.example.RestAPI.importer.WalletExcelImporter;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
@@ -9,12 +8,8 @@ import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.wallet.CreateWalletRequest;
 import org.example.RestAPI.request.wallet.DeleteWalletRequest;
 import org.example.RestAPI.request.wallet.UpdateWalletRequest;
-import org.example.RestAPI.response.importer.UserExcelImporterResponse;
 import org.example.RestAPI.response.importer.WalletExcelImporterResponse;
-import org.example.RestAPI.response.wallet.CreateWalletResponse;
-import org.example.RestAPI.response.wallet.DeleteWalletResponse;
-import org.example.RestAPI.response.wallet.GetListWalletResponse;
-import org.example.RestAPI.response.wallet.UpdateWalletResponse;
+import org.example.RestAPI.response.wallet.*;
 import org.example.RestAPI.service.IUserService;
 import org.example.RestAPI.service.IWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -104,6 +98,21 @@ public class WalletController {
             message = new Message<>(FinalMessage.GET_LIST_WALLET_SUCCESS, response);
         }
         return new ResponseEntity<Message<GetListWalletResponse>>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/listTypeRecordOfWallet")
+    public ResponseEntity getListTypeRecordOfWallet(@RequestParam(name = "wallet_id") long wallet_id){
+        Optional<Wallet> findWallet = walletService.findById(wallet_id);
+        Message<GetListTypeRecordOfWalletResponse> message;
+
+        if (findWallet.isEmpty()){
+            message = new Message<>(FinalMessage.NO_WALLET, null);
+        }
+        else{
+            GetListTypeRecordOfWalletResponse response = new GetListTypeRecordOfWalletResponse(findWallet.get());
+            message = new Message<>(FinalMessage.GET_LIST_TYPE_RECORD_OF_WALLET, response);
+        }
+        return new ResponseEntity<Message<GetListTypeRecordOfWalletResponse>>(message, HttpStatus.OK);
     }
     
     @DeleteMapping("/delete")

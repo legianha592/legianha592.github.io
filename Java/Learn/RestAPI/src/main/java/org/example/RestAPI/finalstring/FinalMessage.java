@@ -28,7 +28,8 @@ public class FinalMessage {
     public static final String DELETE_WALLET_SUCCESS = "Xóa ví thành công";
     //Lấy danh sách ví theo user id
     public static final String GET_LIST_WALLET_SUCCESS = "Lấy danh sách ví thành công";
-
+    //Lấy danh sách loại theo wallet id
+    public static final String GET_LIST_TYPE_RECORD_OF_WALLET = "Lấy danh sách loại bản ghi của ví thành công";
 
 
     //Tạo record
