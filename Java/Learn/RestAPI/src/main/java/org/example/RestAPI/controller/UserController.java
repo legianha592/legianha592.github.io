@@ -4,6 +4,7 @@ import org.example.RestAPI.finalstring.FinalMessage;
 import org.example.RestAPI.importer.UserExcelImporter;
 import org.example.RestAPI.model.Message;
 import org.example.RestAPI.model.User;
+import org.example.RestAPI.model.Wallet;
 import org.example.RestAPI.request.user.ChangePasswordRequest;
 import org.example.RestAPI.request.user.LoginRequest;
 import org.example.RestAPI.request.user.SignupRequest;
@@ -12,6 +13,8 @@ import org.example.RestAPI.response.user.ChangePasswordResponse;
 import org.example.RestAPI.response.user.LoginResponse;
 import org.example.RestAPI.response.user.SignupResponse;
 import org.example.RestAPI.service.IUserService;
+import org.example.RestAPI.service.IWalletService;
+import org.example.RestAPI.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -30,6 +33,10 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     IUserService userService;
+
+    @Autowired
+    IWalletService walletService;
+
 
     @GetMapping("/all")
     public List<User> findAll(){
@@ -50,6 +57,14 @@ public class UserController {
             if (request.getResult().equals("OK")){
                 User user = new User(request.getUser_name(), request.getPassword());
                 userService.addUser(user);
+                //add wallet
+                Wallet wallet = new Wallet();
+                wallet.setWallet_name("Wallet");
+
+                user.addWallet(wallet);
+
+                walletService.addWallet(wallet);
+
                 message = new Message<>(FinalMessage.SIGNUP_SUCCESS, new SignupResponse(user.getId()));
             }
             else{
