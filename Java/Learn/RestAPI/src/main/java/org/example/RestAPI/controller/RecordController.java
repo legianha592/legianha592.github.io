@@ -156,7 +156,7 @@ public class RecordController {
         Message<GetListRecordResponse> message;
 
         if (findUser.isEmpty()){
-            message = new Message<>(FinalMessage.NO_RECORD, null);
+            message = new Message<>(FinalMessage.NO_USER, null);
         }
         else{
             GetListRecordResponse response = new GetListRecordResponse(findUser.get());
